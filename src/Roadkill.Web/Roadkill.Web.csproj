@@ -529,9 +529,7 @@
     <Content Include="Themes\Mediawiki\Theme.print.css" />
     <Content Include="Themes\Plain\Theme.css" />
     <Content Include="Themes\Plain\Theme.print.css" />
-    <Content Include="Views\Help\MediaWikiReference.cshtml" />
     <Content Include="Views\Help\MarkdownReference.cshtml" />
-    <Content Include="Views\Help\CreoleReference.cshtml" />
     <Content Include="Assets\Scripts\jquery\jquery.timeago.js" />
     <Content Include="Assets\Images\white-loading.gif" />
     <Content Include="Themes\BlackBar\Theme.css" />

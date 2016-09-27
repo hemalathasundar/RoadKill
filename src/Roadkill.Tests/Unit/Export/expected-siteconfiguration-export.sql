@@ -9,7 +9,6 @@ INSERT INTO roadkill_siteconfiguration (id, version, content) VALUES ('b960e8e5-
   "AllowedFileTypes": ".exe,.vbscript",
   "AllowUserSignup": false,
   "IsRecaptchaEnabled": false,
-  "MarkupType": "Creole",
   "RecaptchaPrivateKey": "",
   "RecaptchaPublicKey": "",
   "SiteUrl": "",

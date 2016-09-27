@@ -126,9 +126,6 @@
 					@Html.BootstrapCheckBoxFor(s => s.IgnoreSearchIndexErrors, SiteStrings.SiteSettings_Configuration_IgnoreSearchIndexErrors_Help)
 				</label>
 
-				<label for="MarkupType">@SiteStrings.SiteSettings_Configuration_MarkupType</label>
-				@Html.BootstrapDropDownListFor(x => x.MarkupType, new SelectList(Model.MarkupTypesAvailable, Model.MarkupType), SiteStrings.SiteSettings_Configuration_MarkupType_Help)
-
 				<label for="Theme">@SiteStrings.SiteSettings_Configuration_Theme</label>
 				@Html.BootstrapDropDownListFor(x => x.Theme, new SelectList(Model.ThemesAvailable, Model.Theme), SiteStrings.SiteSettings_Configuration_Theme_Help)
 

@@ -69,7 +69,6 @@ namespace Roadkill.Tests.Unit
 			// Repositories
 			SettingsRepository = new SettingsRepositoryMock();
 			SettingsRepository.SiteSettings = new SiteSettings();
-			SettingsRepository.SiteSettings.MarkupType = "Creole";
 			UserRepository = new UserRepositoryMock();
 			PageRepository = new PageRepositoryMock();
 			InstallerRepository = new InstallerRepositoryMock();

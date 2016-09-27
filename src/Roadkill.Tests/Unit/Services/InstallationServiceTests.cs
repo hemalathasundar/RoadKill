@@ -46,7 +46,6 @@ namespace Roadkill.Tests.Unit.Services
 				SiteUrl = "SiteUrl",
 				RecaptchaPrivateKey = "RecaptchaPrivateKey",
 				RecaptchaPublicKey = "RecaptchaPublicKey",
-				MarkupType = "MarkupType",
 				IsRecaptchaEnabled = true,
 				OverwriteExistingFiles = true,
 				HeadContent = "some head content",
@@ -71,7 +70,6 @@ namespace Roadkill.Tests.Unit.Services
 			Assert.That(siteSettings.SiteUrl, Is.EqualTo(expectedModel.SiteUrl));
 			Assert.That(siteSettings.RecaptchaPrivateKey, Is.EqualTo(expectedModel.RecaptchaPrivateKey));
 			Assert.That(siteSettings.RecaptchaPublicKey, Is.EqualTo(expectedModel.RecaptchaPublicKey));
-			Assert.That(siteSettings.MarkupType, Is.EqualTo(expectedModel.MarkupType));
 			Assert.That(siteSettings.IsRecaptchaEnabled, Is.EqualTo(expectedModel.IsRecaptchaEnabled));
 			Assert.That(siteSettings.OverwriteExistingFiles, Is.EqualTo(expectedModel.OverwriteExistingFiles));
 			Assert.That(siteSettings.HeadContent, Is.EqualTo(expectedModel.HeadContent));

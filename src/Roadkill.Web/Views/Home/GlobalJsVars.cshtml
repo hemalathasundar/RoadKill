@@ -10,8 +10,7 @@ var ROADKILL_LINK_CONFIRM = "@SiteStrings.Shared_ConfirmLink";
 // Edit page constants
 var ROADKILL_TAGAJAXURL = "@Url.Action("AllTagsAsJson", "Pages")/";
 var ROADKILL_PREVIEWURL = "@Url.Action("GetPreview", "Pages")/";
-var ROADKILL_MARKUPTYPE = "@SiteSettings.MarkupType";
-var ROADKILL_WIKIMARKUPHELP = "@Url.Action(SiteSettings.MarkupType + "Reference", "Help")";
+var ROADKILL_WIKIMARKUPHELP = "@Url.Action("MarkdownReference", "Help")";
 
 @{
 IMarkupParser parser = MarkupConverter.Parser;

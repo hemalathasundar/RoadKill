@@ -47,7 +47,6 @@ namespace Roadkill.Core.Services
 				siteSettings.AllowedFileTypes = model.AllowedFileTypes;
 				siteSettings.AllowUserSignup = model.AllowUserSignup;
 				siteSettings.IsRecaptchaEnabled = model.IsRecaptchaEnabled;
-				siteSettings.MarkupType = model.MarkupType;
 				siteSettings.RecaptchaPrivateKey = model.RecaptchaPrivateKey;
 				siteSettings.RecaptchaPublicKey = model.RecaptchaPublicKey;
 				siteSettings.SiteUrl = model.SiteUrl;

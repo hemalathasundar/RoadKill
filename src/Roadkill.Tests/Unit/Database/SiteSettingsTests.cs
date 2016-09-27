@@ -16,7 +16,6 @@ namespace Roadkill.Tests.Unit.Database
 							  ""AllowedFileTypes"": ""pdf, swf, avi"",
 							  ""AllowUserSignup"": true,
 							  ""IsRecaptchaEnabled"": true,
-							  ""MarkupType"": ""Markdown"",
 							  ""RecaptchaPrivateKey"": ""captchaprivatekey"",
 							  ""RecaptchaPublicKey"": ""captchapublickey"",
 							  ""SiteUrl"": ""http://siteurl"",
@@ -38,7 +37,6 @@ namespace Roadkill.Tests.Unit.Database
 			Assert.That(settings.AllowedFileTypesList, Contains.Item("avi"));
 			Assert.That(settings.AllowUserSignup, Is.EqualTo(true));
 			Assert.That(settings.IsRecaptchaEnabled, Is.EqualTo(true));
-			Assert.That(settings.MarkupType, Is.EqualTo("Markdown"));
 			Assert.That(settings.RecaptchaPrivateKey, Is.EqualTo("captchaprivatekey"));
 			Assert.That(settings.RecaptchaPublicKey, Is.EqualTo("captchapublickey"));
 			Assert.That(settings.SiteUrl, Is.EqualTo("http://siteurl"));
@@ -61,7 +59,6 @@ namespace Roadkill.Tests.Unit.Database
 							  ""AllowedFileTypes"": ""pdf, swf, avi"",
 							  ""AllowUserSignup"": true,
 							  ""IsRecaptchaEnabled"": true,
-							  ""MarkupType"": ""Markdown"",
 							  ""RecaptchaPrivateKey"": ""captchaprivatekey"",
 							  ""RecaptchaPublicKey"": ""captchapublickey"",
 							  ""SiteUrl"": ""http://siteurl"",
@@ -84,7 +81,6 @@ namespace Roadkill.Tests.Unit.Database
 			Assert.That(settings.AllowedFileTypesList, Contains.Item("avi"));
 			Assert.That(settings.AllowUserSignup, Is.EqualTo(true));
 			Assert.That(settings.IsRecaptchaEnabled, Is.EqualTo(true));
-			Assert.That(settings.MarkupType, Is.EqualTo("Markdown"));
 			Assert.That(settings.RecaptchaPrivateKey, Is.EqualTo("captchaprivatekey"));
 			Assert.That(settings.RecaptchaPublicKey, Is.EqualTo("captchapublickey"));
 			Assert.That(settings.SiteUrl, Is.EqualTo("http://siteurl"));
@@ -99,7 +95,6 @@ namespace Roadkill.Tests.Unit.Database
 		{
 			// Arrange
 			string json = @"{
-							  ""MarkupType"": ""Markdown"",
 							  ""RecaptchaPrivateKey"": ""captchaprivatekey"",
 							  ""RecaptchaPublicKey"": ""captchapublickey"",
 							  ""SiteUrl"": ""http://siteurl"",
@@ -110,7 +105,6 @@ namespace Roadkill.Tests.Unit.Database
 			SiteSettings settings = SiteSettings.LoadFromJson(json);
 
 			// Assert
-			Assert.That(settings.MarkupType, Is.EqualTo("Markdown"));
 			Assert.That(settings.RecaptchaPrivateKey, Is.EqualTo("captchaprivatekey"));
 			Assert.That(settings.RecaptchaPublicKey, Is.EqualTo("captchapublickey"));
 			Assert.That(settings.SiteUrl, Is.EqualTo("http://siteurl"));
@@ -134,7 +128,6 @@ namespace Roadkill.Tests.Unit.Database
 			Assert.That(settings.AllowedFileTypesList, Contains.Item("gif"));
 			Assert.That(settings.AllowUserSignup, Is.EqualTo(false));
 			Assert.That(settings.IsRecaptchaEnabled, Is.EqualTo(false));
-			Assert.That(settings.MarkupType, Is.EqualTo("Creole"));
 			Assert.That(settings.RecaptchaPrivateKey, Is.EqualTo(""));
 			Assert.That(settings.RecaptchaPublicKey, Is.EqualTo(""));
 			Assert.That(settings.SiteUrl, Is.EqualTo(""));
@@ -165,7 +158,6 @@ namespace Roadkill.Tests.Unit.Database
 			Assert.That(settings.AllowedFileTypesList, Contains.Item("gif"));
 			Assert.That(settings.AllowUserSignup, Is.EqualTo(false));
 			Assert.That(settings.IsRecaptchaEnabled, Is.EqualTo(false));
-			Assert.That(settings.MarkupType, Is.EqualTo("Creole"));
 			Assert.That(settings.RecaptchaPrivateKey, Is.EqualTo(""));
 			Assert.That(settings.RecaptchaPublicKey, Is.EqualTo(""));
 			Assert.That(settings.SiteUrl, Is.EqualTo(""));
@@ -187,7 +179,6 @@ namespace Roadkill.Tests.Unit.Database
 							  ""AllowedFileTypes"": ""pdf, swf, avi"",
 							  ""AllowUserSignup"": true,
 							  ""IsRecaptchaEnabled"": true,
-							  ""MarkupType"": ""Markdown"",
 							  ""RecaptchaPrivateKey"": ""captchaprivatekey"",
 							  ""RecaptchaPublicKey"": ""captchapublickey"",
 							  ""SiteUrl"": ""http://siteurl"",
@@ -210,7 +201,6 @@ namespace Roadkill.Tests.Unit.Database
   ""AllowedFileTypes"": ""pdf, swf, avi"",
   ""AllowUserSignup"": true,
   ""IsRecaptchaEnabled"": true,
-  ""MarkupType"": ""Markdown"",
   ""RecaptchaPrivateKey"": ""captchaprivatekey"",
   ""RecaptchaPublicKey"": ""captchapublickey"",
   ""SiteUrl"": ""http://siteurl"",
@@ -228,7 +218,6 @@ namespace Roadkill.Tests.Unit.Database
 			settings.AllowedFileTypes = "pdf, swf, avi";
 			settings.AllowUserSignup = true;
 			settings.IsRecaptchaEnabled = true;
-			settings.MarkupType = "Markdown";
 			settings.RecaptchaPrivateKey = "captchaprivatekey";
 			settings.RecaptchaPublicKey = "captchapublickey";
 			settings.SiteUrl = "http://siteurl";
@@ -252,7 +241,6 @@ namespace Roadkill.Tests.Unit.Database
 							  ""AllowedFileTypes"": ""pdf, swf, avi"",
 							  ""AllowUserSignup"": true,
 							  ""IsRecaptchaEnabled"": true,
-							  ""MarkupType"": ""Markdown"",
 							  ""RecaptchaPrivateKey"": ""captchaprivatekey"",
 							  ""RecaptchaPublicKey"": ""captchapublickey"",
 							  ""SiteUrl"": ""http://siteurl"",

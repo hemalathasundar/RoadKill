@@ -15,7 +15,6 @@ declare var ROADKILL_LINK_CONFIRM;
 // Edit page constants
 declare var ROADKILL_TAGAJAXURL;
 declare var ROADKILL_PREVIEWURL;
-declare var ROADKILL_MARKUPTYPE;
 declare var ROADKILL_WIKIMARKUPHELP;
 
 // Tokens for the edit toolbar

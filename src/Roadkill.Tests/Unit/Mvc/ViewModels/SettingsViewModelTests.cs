@@ -38,7 +38,6 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 				AllowedFileTypes = "jpg,png,gif",
 				AllowUserSignup = true,
 				IsRecaptchaEnabled = true,
-				MarkupType = "markuptype",
 				RecaptchaPrivateKey = "privatekey",
 				RecaptchaPublicKey = "publickey",
 				SiteName = "sitename",
@@ -69,7 +68,6 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			Assert.That(model.AllowedFileTypes, Is.EqualTo(siteSettings.AllowedFileTypes));
 			Assert.That(model.AllowUserSignup, Is.EqualTo(siteSettings.AllowUserSignup));
 			Assert.That(model.IsRecaptchaEnabled, Is.EqualTo(siteSettings.IsRecaptchaEnabled));
-			Assert.That(model.MarkupType, Is.EqualTo(siteSettings.MarkupType));
 			Assert.That(model.RecaptchaPrivateKey, Is.EqualTo(siteSettings.RecaptchaPrivateKey));
 			Assert.That(model.RecaptchaPublicKey, Is.EqualTo(siteSettings.RecaptchaPublicKey));
 			Assert.That(model.SiteName, Is.EqualTo(siteSettings.SiteName));

@@ -28,7 +28,7 @@ namespace Roadkill.Tests.Unit.Text
 			Page page = new Page() { Id = 1, Title = "My first page" };
 
 			var settingsRepository = new SettingsRepositoryMock();
-			settingsRepository.SiteSettings = new SiteSettings() { MarkupType = "Markdown" };
+			settingsRepository.SiteSettings = new SiteSettings();
 
 			PageRepositoryMock pageRepositoryStub = new PageRepositoryMock();
 			pageRepositoryStub.AddNewPage(page, "My first page", "admin", DateTime.UtcNow);
@@ -67,7 +67,7 @@ namespace Roadkill.Tests.Unit.Text
 			pageRepositoryStub.AddNewPage(page, "My first page", "admin", DateTime.UtcNow);
 
 			var settingsRepository = new SettingsRepositoryMock();
-			settingsRepository.SiteSettings = new SiteSettings() { MarkupType = "Markdown" };
+			settingsRepository.SiteSettings = new SiteSettings();
 
 			ApplicationSettings settings = new ApplicationSettings();
 			settings.Installed = true;
@@ -98,7 +98,7 @@ namespace Roadkill.Tests.Unit.Text
 			pageRepositoryStub.AddNewPage(page, "My first page", "admin", DateTime.UtcNow);
 
 			var settingsRepository = new SettingsRepositoryMock();
-			settingsRepository.SiteSettings = new SiteSettings() { MarkupType = "Markdown" };
+			settingsRepository.SiteSettings = new SiteSettings();
 
 			ApplicationSettings settings = new ApplicationSettings();
 			settings.Installed = true;
@@ -131,7 +131,7 @@ namespace Roadkill.Tests.Unit.Text
 			pageRepositoryStub.AddNewPage(page, "My first page", "admin", DateTime.UtcNow);
 
 			var settingsRepository = new SettingsRepositoryMock();
-			settingsRepository.SiteSettings = new SiteSettings() { MarkupType = "Markdown" };
+			settingsRepository.SiteSettings = new SiteSettings() ;
 
 			ApplicationSettings settings = new ApplicationSettings();
 			settings.Installed = true;

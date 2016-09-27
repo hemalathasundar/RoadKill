@@ -37,7 +37,6 @@ namespace Roadkill.Tests.Unit.Services
 			expectedSettings.SiteUrl = "SiteUrl";
 			expectedSettings.RecaptchaPrivateKey = "RecaptchaPrivateKey";
 			expectedSettings.RecaptchaPublicKey = "RecaptchaPublicKey";
-			expectedSettings.MarkupType = "MarkupType";
 			expectedSettings.IsRecaptchaEnabled = true;
 			expectedSettings.AllowedFileTypes = "AllowedFileTypes";
 			expectedSettings.OverwriteExistingFiles = true;
@@ -54,7 +53,6 @@ namespace Roadkill.Tests.Unit.Services
 			Assert.That(actualSettings.SiteUrl, Is.EqualTo(expectedSettings.SiteUrl));
 			Assert.That(actualSettings.RecaptchaPrivateKey, Is.EqualTo(expectedSettings.RecaptchaPrivateKey));
 			Assert.That(actualSettings.RecaptchaPublicKey, Is.EqualTo(expectedSettings.RecaptchaPublicKey));
-			Assert.That(actualSettings.MarkupType, Is.EqualTo(expectedSettings.MarkupType));
 			Assert.That(actualSettings.IsRecaptchaEnabled, Is.EqualTo(expectedSettings.IsRecaptchaEnabled));
 			Assert.That(actualSettings.AllowedFileTypes, Is.EqualTo(expectedSettings.AllowedFileTypes));
 			Assert.That(actualSettings.OverwriteExistingFiles, Is.EqualTo(expectedSettings.OverwriteExistingFiles));
@@ -73,7 +71,6 @@ namespace Roadkill.Tests.Unit.Services
 			expectedSettings.SiteUrl = "SiteUrl";
 			expectedSettings.RecaptchaPrivateKey = "RecaptchaPrivateKey";
 			expectedSettings.RecaptchaPublicKey = "RecaptchaPublicKey";
-			expectedSettings.MarkupType = "MarkupType";
 			expectedSettings.IsRecaptchaEnabled = true;
 			expectedSettings.OverwriteExistingFiles = true;
 			expectedSettings.HeadContent = "some head content";
@@ -90,7 +87,6 @@ namespace Roadkill.Tests.Unit.Services
 			Assert.That(actualSettings.SiteUrl, Is.EqualTo(expectedSettings.SiteUrl));
 			Assert.That(actualSettings.RecaptchaPrivateKey, Is.EqualTo(expectedSettings.RecaptchaPrivateKey));
 			Assert.That(actualSettings.RecaptchaPublicKey, Is.EqualTo(expectedSettings.RecaptchaPublicKey));
-			Assert.That(actualSettings.MarkupType, Is.EqualTo(expectedSettings.MarkupType));
 			Assert.That(actualSettings.IsRecaptchaEnabled, Is.EqualTo(expectedSettings.IsRecaptchaEnabled));
 			Assert.That(actualSettings.OverwriteExistingFiles, Is.EqualTo(expectedSettings.OverwriteExistingFiles));
 			Assert.That(actualSettings.HeadContent, Is.EqualTo(expectedSettings.HeadContent));
@@ -107,7 +103,6 @@ namespace Roadkill.Tests.Unit.Services
 				AllowedFileTypes = "jpg, png, gif",
 				AllowUserSignup = true,
 				IsRecaptchaEnabled = true,
-				MarkupType = "markuptype",
 				RecaptchaPrivateKey = "privatekey",
 				RecaptchaPublicKey = "publickey",
 				SiteName = "sitename",
@@ -119,7 +114,6 @@ namespace Roadkill.Tests.Unit.Services
 				AllowedFileTypes = "jpg, png, gif",
 				AllowUserSignup = true,
 				IsRecaptchaEnabled = true,
-				MarkupType = "markuptype",
 				RecaptchaPrivateKey = "privatekey",
 				RecaptchaPublicKey = "publickey",
 				SiteName = "sitename",
@@ -140,7 +134,6 @@ namespace Roadkill.Tests.Unit.Services
 			Assert.That(actualSettings.AllowedFileTypes.Contains("png"), "AllowedFileTypes png");
 			Assert.That(actualSettings.AllowUserSignup, Is.True, "AllowUserSignup");
 			Assert.That(actualSettings.IsRecaptchaEnabled, Is.True, "IsRecaptchaEnabled");
-			Assert.That(actualSettings.MarkupType, Is.EqualTo("markuptype"), "MarkupType");
 			Assert.That(actualSettings.RecaptchaPrivateKey, Is.EqualTo("privatekey"), "RecaptchaPrivateKey");
 			Assert.That(actualSettings.RecaptchaPublicKey, Is.EqualTo("publickey"), "RecaptchaPublicKey");
 			Assert.That(actualSettings.SiteName, Is.EqualTo("sitename"), "SiteName");

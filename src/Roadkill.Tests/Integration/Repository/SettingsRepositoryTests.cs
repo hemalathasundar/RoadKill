@@ -47,7 +47,6 @@ namespace Roadkill.Tests.Integration.Repository
 				AllowedFileTypes = "exe, virus, trojan",
 				AllowUserSignup = true,
 				IsRecaptchaEnabled = true,
-				MarkupType = "Test",
 				RecaptchaPrivateKey = "RecaptchaPrivateKey",
 				RecaptchaPublicKey = "RecaptchaPublicKey",
 				SiteName = "NewSiteName",
@@ -63,7 +62,6 @@ namespace Roadkill.Tests.Integration.Repository
 			Assert.That(actualSettings.AllowedFileTypes, Is.EqualTo(expectedSettings.AllowedFileTypes));
 			Assert.That(actualSettings.AllowUserSignup, Is.EqualTo(expectedSettings.AllowUserSignup));
 			Assert.That(actualSettings.IsRecaptchaEnabled, Is.EqualTo(expectedSettings.IsRecaptchaEnabled));
-			Assert.That(actualSettings.MarkupType, Is.EqualTo(expectedSettings.MarkupType));
 			Assert.That(actualSettings.RecaptchaPrivateKey, Is.EqualTo(expectedSettings.RecaptchaPrivateKey));
 			Assert.That(actualSettings.RecaptchaPublicKey, Is.EqualTo(expectedSettings.RecaptchaPublicKey));
 			Assert.That(actualSettings.SiteName, Is.EqualTo(expectedSettings.SiteName));

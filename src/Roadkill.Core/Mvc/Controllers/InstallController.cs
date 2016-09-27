@@ -67,7 +67,6 @@ namespace Roadkill.Core.Mvc.Controllers
 			settingsModel.ConnectionString = connectionString;
 			settingsModel.AllowedFileTypes = "jpg,png,gif,zip,xml,pdf";
 			settingsModel.AttachmentsFolder = "~/App_Data/Attachments";
-			settingsModel.MarkupType = "Creole";
 			settingsModel.Theme = "Responsive";
 			settingsModel.UseObjectCache = true;
 			settingsModel.UseBrowserCache = true;
@@ -170,7 +169,6 @@ namespace Roadkill.Core.Mvc.Controllers
 		{
 			model.AllowedFileTypes = "jpg,png,gif,zip,xml,pdf";
 			model.AttachmentsFolder = "~/App_Data/Attachments";
-			model.MarkupType = "Creole";
 			model.Theme = "Responsive";
 			model.UseObjectCache = true;
 			model.UseBrowserCache = false;

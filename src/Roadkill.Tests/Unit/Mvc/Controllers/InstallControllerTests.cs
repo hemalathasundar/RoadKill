@@ -213,7 +213,6 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 
 			Assert.That(model.AllowedFileTypes, Is.EqualTo("jpg,png,gif,zip,xml,pdf"));
 			Assert.That(model.AttachmentsFolder, Is.EqualTo("~/App_Data/Attachments"));
-			Assert.That(model.MarkupType, Is.EqualTo("Creole"));
 			Assert.That(model.Theme, Is.EqualTo("Responsive"));
 			Assert.That(model.UseObjectCache, Is.True);
 			Assert.That(model.UseBrowserCache, Is.False);
@@ -302,7 +301,6 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 
 			SiteSettings settings = _installerRepository.SiteSettings;	
 			Assert.That(settings.AllowedFileTypes, Is.EqualTo("jpg,png,gif,zip,xml,pdf"));
-			Assert.That(settings.MarkupType, Is.EqualTo("Creole"));
 			Assert.That(settings.Theme, Is.EqualTo("Responsive"));
 			Assert.That(settings.SiteName, Is.EqualTo("my site"));
 			Assert.That(settings.SiteUrl, Is.EqualTo("http://localhost"));

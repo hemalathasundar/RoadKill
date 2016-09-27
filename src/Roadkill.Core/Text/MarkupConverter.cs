@@ -84,35 +84,13 @@ namespace Roadkill.Core.Converters
 				return;
 			}
 
-			CreateParserForMarkupType();
+			CreateParser();
 		}
 
-		private void CreateParserForMarkupType()
+		private void CreateParser()
 		{
-			string markupType = "";
-			SiteSettings siteSettings = _settingsRepository.GetSiteSettings();
-			if (siteSettings != null && !string.IsNullOrEmpty(siteSettings.MarkupType))
-			{
-				markupType = siteSettings.MarkupType.ToLower();
-			}
-
-			switch (markupType)
-			{
-				case "creole":
-                    throw new NotImplementedException("Sorry, Creole markup is no longer supported.");
-					break;
-
-				case "mediawiki":
-					throw new NotImplementedException("Sorry, Mediawiki markup is no longer supported.");
-					break;
-
-				case "markdown":
-					default:
-					_parser = new MarkdigParser();
-					break;
-			}
-
-			_parser.LinkParsed += LinkParsed;
+            _parser = new MarkdigParser();
+            _parser.LinkParsed += LinkParsed;
 			_parser.ImageParsed += ImageParsed;
 		}
 

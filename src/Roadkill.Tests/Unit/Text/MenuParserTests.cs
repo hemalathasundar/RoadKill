@@ -32,7 +32,6 @@ namespace Roadkill.Tests.Unit.Text
 
 			_settingsRepository = new SettingsRepositoryMock();
 			_settingsRepository.SiteSettings = new SiteSettings();
-			_settingsRepository.SiteSettings.MarkupType = "Markdown";
 
 			_userContext = new UserContextStub();
 
@@ -111,9 +110,8 @@ namespace Roadkill.Tests.Unit.Text
 		}
 
 		[Test]
-		[TestCase("Creole", "<a href=\"/\">Main Page</a>")]
-		[TestCase("Markdown", "<a href=\"/\">Main Page</a>")]
-		public void Should_Remove_Empty_UL_Tags_For_Logged_In_Tokens_When_Not_Logged_In(string markupType, string expectedHtml)
+		[TestCase("<a href=\"/\">Main Page</a>")]
+		public void Should_Remove_Empty_UL_Tags_For_Logged_In_Tokens_When_Not_Logged_In(string expectedHtml)
 		{
 			// Arrange - \r\n is important so the markdown is valid
 			string menuMarkup = "%mainpage%\r\n\r\n* %newpage%\r\n* %managefiles%\r\n* %sitesettings%\r\n";

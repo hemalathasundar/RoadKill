@@ -93,16 +93,6 @@
 		</fieldset>
 	</div>
 
-	<!-- Markup type -->
-	<div class="form-group">
-		<fieldset>
-			<legend>@SiteStrings.SiteSettings_Configuration_MarkupType</legend>
-			<label for="MarkupType">@SiteStrings.SiteSettings_Configuration_MarkupType_Help</label>
-
-			@Html.BootstrapDropDownListFor(s => s.MarkupType, new SelectList(Model.MarkupTypesAvailable, Model.MarkupType), SiteStrings.SiteSettings_Configuration_MarkupType)
-		</fieldset>
-	</div>
-
 	<!-- Use object cache -->
 	<fieldset>
 		<legend>@SiteStrings.SiteSettings_Configuration_CachingTitle</legend>

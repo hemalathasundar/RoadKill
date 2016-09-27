@@ -49,7 +49,6 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		public void index_should_return_viewresult()
 		{
 			// Arrange
-			_settingsRepository.SiteSettings.MarkupType = "Mediawiki";
 
 			// Act
 			ViewResult result = _helpController.Index() as ViewResult;
@@ -98,32 +97,6 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			Assert.That(result.RouteValues["action"], Is.EqualTo("New"));
 			Assert.That(result.RouteValues["title"], Is.EqualTo("about"));
 			Assert.That(result.RouteValues["tags"], Is.EqualTo("about"));
-		}
-
-		[Test]
-		public void creolereference_should_return_view()
-		{
-			// Arrange
-
-
-			// Act
-			ViewResult result = _helpController.CreoleReference() as ViewResult;
-
-			// Assert
-			Assert.That(result, Is.Not.Null);
-		}
-
-		[Test]
-		public void mediawikireference_should_return_view()
-		{
-			// Arrange
-
-
-			// Act
-			ViewResult result = _helpController.MediaWikiReference() as ViewResult;
-
-			// Assert
-			Assert.That(result, Is.Not.Null);
 		}
 
 		[Test]

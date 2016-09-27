@@ -20,9 +20,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 		private static string _themesRoot;
 		private List<SelectListItem> _supportedDatabasesSelectList;
 
-		[Required(ErrorMessageResourceType = typeof(SiteStrings), ErrorMessageResourceName = "SiteSettings_Validation_MarkupTypeEmpty")]
-		public string MarkupType { get; set; }
-
 		[Required(ErrorMessageResourceType = typeof(SiteStrings), ErrorMessageResourceName = "SiteSettings_Validation_SiteNameEmpty")]
 		public string SiteName { get; set; }
 
@@ -154,7 +151,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 			AllowedFileTypes = string.Join(",", siteSettings.AllowedFileTypesList);
 			AllowUserSignup = siteSettings.AllowUserSignup;
 			IsRecaptchaEnabled = siteSettings.IsRecaptchaEnabled;
-			MarkupType = siteSettings.MarkupType;
 			RecaptchaPrivateKey = siteSettings.RecaptchaPrivateKey;
 			RecaptchaPublicKey = siteSettings.RecaptchaPublicKey;
 			SiteName = siteSettings.SiteName;

@@ -54,13 +54,6 @@ namespace Roadkill.Core.Configuration
 		public bool IsRecaptchaEnabled { get; set; }
 
 		/// <summary>
-		/// The type of markup used: Three available options are: Creole, Markdown, MediaWiki.
-		/// The default is Creole.
-		/// </summary>
-		/// <remarks>This is a string because it's easier with the Javascript interaction.</remarks>
-		public string MarkupType { get; set; }
-
-		/// <summary>
 		/// The private key for the recaptcha service, if enabled. This is optained when you sign up for the free service at https://www.google.com/recaptcha/.
 		/// </summary>
 		public string RecaptchaPrivateKey { get; set; }
@@ -153,7 +146,6 @@ namespace Roadkill.Core.Configuration
 			AllowUserSignup = false;
 			IsRecaptchaEnabled = false;
 			Theme = "Mediawiki";
-			MarkupType = "Creole";
 			SiteName = "Your site";
 			SiteUrl = "";
 			RecaptchaPrivateKey = "";

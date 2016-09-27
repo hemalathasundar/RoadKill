@@ -40,16 +40,6 @@ namespace Roadkill.Core.Mvc.Controllers
 				return View("../Wiki/Index", model);
 		}
 
-		public ActionResult CreoleReference()
-		{
-			return View(_customTokenParser.Tokens);
-		}
-
-		public ActionResult MediaWikiReference()
-		{
-			return View(_customTokenParser.Tokens);
-		}
-
 		public ActionResult MarkdownReference()
 		{
 			return View(_customTokenParser.Tokens);
