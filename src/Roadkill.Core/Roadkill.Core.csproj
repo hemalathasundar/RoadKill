@@ -563,7 +563,7 @@
     <Compile Include="Mvc\ViewModels\PageHistoryViewModel.cs" />
     <Compile Include="Mvc\ViewModels\TagViewModel.cs" />
     <Compile Include="Text\HtmlDiff.cs" />
-    <Compile Include="Text\Parsers\Markdown.cs" />
+    <Compile Include="Text\Parsers\Legacy\Markdown.cs" />
     <Compile Include="Text\MarkupConverter.cs" />
     <Compile Include="Exceptions\InstallerException.cs" />
     <Compile Include="Security\UserContext.cs" />

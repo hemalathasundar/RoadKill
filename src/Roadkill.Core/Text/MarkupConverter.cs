@@ -22,8 +22,10 @@ namespace Roadkill.Core.Converters
 	{
 		private static Regex _imgFileRegex = new Regex("^File:", RegexOptions.IgnoreCase);
 		private static Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
+        private string _cacheKey = "whitelist";
+        internal static MemoryCache _memoryCache = new MemoryCache("MarkupSanitizer");
 
-		private ApplicationSettings _applicationSettings;
+        private ApplicationSettings _applicationSettings;
 		private ISettingsRepository _settingsRepository;
 		private readonly IPageRepository _pageRepository;
 		private IMarkupParser _parser;
@@ -328,9 +330,6 @@ namespace Roadkill.Core.Converters
 				e.Cancel = true;
 			}
 		}
-
-		private string _cacheKey = "whitelist";
-		internal static MemoryCache _memoryCache = new MemoryCache("MarkupSanitizer");
 
 		/// <summary>
 		/// Changes the key name used for the cache'd version of the HtmlWhiteList object.

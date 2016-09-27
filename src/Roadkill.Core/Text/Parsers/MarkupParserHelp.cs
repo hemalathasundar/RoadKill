@@ -54,5 +54,19 @@
 		/// The start and end tokens for headings. H5 headings are assumed to repeat this token 5 times.
 		/// </summary>
 		public string HeadingToken { get; set; }
+
+	    public MarkupParserHelp()
+	    {
+            BoldToken = "**";
+			ItalicToken = "*";
+			UnderlineToken = "";
+			LinkStartToken = "[%LINKTEXT%";
+			LinkEndToken = "](%URL%)";
+			ImageStartToken = "![%ALT%";
+			ImageEndToken = "](%FILENAME%)";
+			BulletListToken = "*";
+			NumberedListToken = "1.";
+			HeadingToken = "#";
+	    }
 	}
 }

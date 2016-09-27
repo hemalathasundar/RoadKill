@@ -61,7 +61,7 @@ namespace Roadkill.Core.Converters
 			return match.Value;
 		}
 
-		/// <summary>
+		/// <summary>-=
 		/// Gets a regex to update all links in a page.
 		/// </summary>
 		private string GetRegexForTitle(string pageName)
