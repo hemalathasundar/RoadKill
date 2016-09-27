@@ -5,6 +5,7 @@ using System.Runtime.Caching;
 using System.Web;
 using System.Text.RegularExpressions;
 using Ganss.XSS;
+using Markdig.Parsers;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Database;
@@ -12,6 +13,7 @@ using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Text;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Text.Parsers.Markdig;
 
 namespace Roadkill.Core.Converters
 {
@@ -106,7 +108,7 @@ namespace Roadkill.Core.Converters
 
 				case "markdown":
 					default:
-					_parser = new MarkdownParser();
+					_parser = new MarkdigParser();
 					break;
 			}
 

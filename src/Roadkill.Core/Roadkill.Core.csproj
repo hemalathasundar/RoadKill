@@ -525,12 +525,12 @@
     <Compile Include="Services\LocalFileService.cs" />
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Text\MarkupLinkUpdater.cs" />
+    <Compile Include="Text\Parsers\MarkupLinkUpdater.cs" />
     <Compile Include="Text\Parsers\MarkupParserHelp.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigParser.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigWalker.cs" />
     <Compile Include="Text\TextPluginRunner.cs" />
-    <Compile Include="Text\UrlResolver.cs" />
+    <Compile Include="Text\Parsers\UrlResolver.cs" />
     <Compile Include="Text\MenuParser.cs" />
     <Compile Include="Text\PageHtml.cs" />
     <Compile Include="Text\TextToken.cs" />
@@ -538,9 +538,9 @@
     <Compile Include="Text\Sanitizer\HtmlWhiteList.cs" />
     <Compile Include="Text\Sanitizer\HtmlAttribute.cs" />
     <Compile Include="Text\Sanitizer\HtmlElement.cs" />
-    <Compile Include="Text\ImageEventArgs.cs" />
-    <Compile Include="Text\IMarkupParser.cs" />
-    <Compile Include="Text\LinkEventArgs.cs" />
+    <Compile Include="Text\Parsers\ImageEventArgs.cs" />
+    <Compile Include="Text\Parsers\IMarkupParser.cs" />
+    <Compile Include="Text\Parsers\LinkEventArgs.cs" />
     <Compile Include="Security\Windows\ActiveDirectoryUserService.cs" />
     <Compile Include="Security\FormsAuthUserService.cs" />
     <Compile Include="Security\UserServiceBase.cs" />
@@ -562,7 +562,6 @@
     <Compile Include="Mvc\ViewModels\PageHistoryViewModel.cs" />
     <Compile Include="Mvc\ViewModels\TagViewModel.cs" />
     <Compile Include="Text\HtmlDiff.cs" />
-    <Compile Include="Text\Parsers\Legacy\Markdown.cs" />
     <Compile Include="Text\MarkupConverter.cs" />
     <Compile Include="Exceptions\InstallerException.cs" />
     <Compile Include="Security\UserContext.cs" />
