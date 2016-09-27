@@ -19,7 +19,7 @@ namespace Roadkill.Tests.Unit.Text
             parser.LinkParsed += Parser_LinkParsed;
 
             // when
-            string html = parser.Transform("[i am a link](http://www.google.com){.main}");
+            string html = parser.ToHtml("[i am a link](http://www.google.com){.main}");
 
             // then
             Console.WriteLine(html);

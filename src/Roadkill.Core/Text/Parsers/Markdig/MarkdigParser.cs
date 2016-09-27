@@ -11,12 +11,14 @@ namespace Roadkill.Core.Text.Parsers.Markdig
     {
         public event EventHandler<ImageEventArgs> ImageParsed;
         public event EventHandler<LinkEventArgs> LinkParsed;
-        public MarkupParserHelp MarkupParserHelp { get; }
 
-        public string Transform(string transform)
+        public string ToHtml(string markdown)
         {
+            if (string.IsNullOrEmpty(markdown))
+                return "";
+
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            var doc = Markdown.Parse(transform, pipeline);
+            var doc = Markdown.Parse(markdown, pipeline);
             var walker = new MarkdigWalker(OnImageParsed, OnLinkParsed);
 
             walker.WalkAndBindParseEvents(doc);

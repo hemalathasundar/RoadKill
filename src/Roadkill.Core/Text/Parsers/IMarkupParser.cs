@@ -14,7 +14,7 @@ namespace Roadkill.Core.Converters
 		/// <summary>
 		/// Transforms the provided specific markup text to HTML
 		/// </summary>
-		string Transform(string transform);
+		string ToHtml(string markdown);
 
 		/// <summary>
 		/// Occurs when an image tag is parsed.
@@ -25,10 +25,5 @@ namespace Roadkill.Core.Converters
 		/// Occurs when a hyperlink is parsed.
 		/// </summary>
 		event EventHandler<LinkEventArgs> LinkParsed;
-
-		/// <summary>
-		/// Help/documentation for the parser's tokens.
-		/// </summary>
-		MarkupParserHelp MarkupParserHelp { get; }
 	}
 }

@@ -99,7 +99,7 @@ namespace Roadkill.Core.Converters
 		/// </summary>
 		public string ParseMenuMarkup(string menuMarkup)
 		{
-			return _parser.Transform(menuMarkup);
+			return _parser.ToHtml(menuMarkup);
 		}
 
 		/// <summary>
@@ -117,7 +117,7 @@ namespace Roadkill.Core.Converters
 			text = runner.BeforeParse(text, pageHtml);			
 
 			// Parse the markup into HTML
-			string html = _parser.Transform(text);
+			string html = _parser.ToHtml(text);
 			
 			// Remove bad HTML tags
 			html = RemoveHarmfulTags(html);
