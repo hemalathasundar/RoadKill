@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Converters;
+using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
 namespace Roadkill.Tests.Unit.Text
@@ -38,7 +39,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void containspagelink_should_return_true_when_title_exists_in_creole()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = "here is a nice [[the internal wiki page title|the link text]]";
@@ -86,7 +87,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void containspagelink_should_return_false_when_title_does_not_exist_in_creole()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = "here is a nice [[the internal wiki page title|the link text]]";
@@ -118,7 +119,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void replacepagelinks_should_rename_basic_creole_title()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = "here is a nice [[the internal wiki page title|the link text]]";
@@ -135,7 +136,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void replacepagelinks_should_rename_multiple_creole_titles()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = @"here is a nice [[the internal wiki page title|the link text]] and 
@@ -157,7 +158,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void replacepagelinks_should_rename_title_inside_creole_markup_block()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = @"//here is a nice **[[the internal wiki page title|the link text]]** and// 
@@ -179,7 +180,7 @@ namespace Roadkill.Tests.Unit.Text
 		public void replacepagelinks_should_not_rename_title_that_is_not_found_in_creole()
 		{
 			// Arrange
-			CreoleParser parser = new CreoleParser(_applicationSettings, _siteSettings);
+			var parser = new MarkdigParser();
 			MarkupLinkUpdater updater = new MarkupLinkUpdater(parser);
 
 			string text = @"here is a nice [[the internal wiki page title|the link text]] and 

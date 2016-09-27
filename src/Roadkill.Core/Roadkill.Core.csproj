@@ -526,8 +526,7 @@
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Text\MarkupLinkUpdater.cs" />
-    <Compile Include="Text\MarkupParserHelp.cs" />
-    <Compile Include="Text\Parsers\Legacy\CreoleParser.cs" />
+    <Compile Include="Text\Parsers\MarkupParserHelp.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigParser.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigWalker.cs" />
     <Compile Include="Text\TextPluginRunner.cs" />

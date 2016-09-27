@@ -97,7 +97,7 @@ namespace Roadkill.Core.Converters
 			switch (markupType)
 			{
 				case "creole":
-					_parser = new CreoleParser(_applicationSettings, siteSettings);
+                    throw new NotImplementedException("Sorry, Creole markup is no longer supported.");
 					break;
 
 				case "mediawiki":
