@@ -20,10 +20,8 @@ namespace Roadkill.Tests.Unit.Text
 		}
 
 		[Test]
-		public void internal_links_should_resolve_with_id()
+		public void internal_links_with_spaces_should_resolve()
 		{
-			// Bug #87
-
 			// Arrange
 			Page page = new Page() { Id = 1, Title = "My first page" };
 
@@ -45,15 +43,15 @@ namespace Roadkill.Tests.Unit.Text
 			string invalidMarkdownText = "[Link](My first page)";
 
 			// Act
-			string expectedHtml = "<p><a href=\"blah\">Link</a></p>\n";
+			string expectedHtml = "<p><a href=\"My-first-page\" class=\"missing-page-link\" target=\"\">Link</a></p>\n";
 			string expectedInvalidLinkHtml = "<p>[Link](My first page)</p>\n";
 
 			string actualHtml = converter.ToHtml(markdownText);
 			string actualHtmlInvalidLink = converter.ToHtml(invalidMarkdownText);
 
 			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
-			Assert.That(actualHtmlInvalidLink, Is.EqualTo(expectedInvalidLinkHtml));
+			Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
+			Assert.That(actualHtmlInvalidLink, Is.EqualTo(expectedInvalidLinkHtml), actualHtmlInvalidLink);
 		}
 
 		[Test]
@@ -77,8 +75,8 @@ namespace Roadkill.Tests.Unit.Text
 			string markdownText = "Here is some `// code with a 'quote' in it and another \"quote\"`\n\n" +
 				"    var x = \"some tabbed code\";\n\n"; // 2 line breaks followed by 4 spaces (tab stop) at the start indicates a code block
 
-			string expectedHtml = "<p>Here is some <code>// code with a 'quote' in it and another \"quote\"</code></p>\n\n" +
-								"<pre><code>var x = \"some tabbed code\";\n" +
+			string expectedHtml = "<p>Here is some <code>// code with a 'quote' in it and another &quot;quote&quot;</code></p>\n" +
+								"<pre><code>var x = &quot;some tabbed code&quot;;\n" +
 								"</code></pre>\n";
 
 			// Act		
@@ -105,46 +103,13 @@ namespace Roadkill.Tests.Unit.Text
 
 			MarkupConverter converter = new MarkupConverter(settings, settingsRepository, pageRepositoryStub, _pluginFactory);
 
-			string markdownText = "Here is an image:![Image](/Image1.png) \n\n" +
-								  "And another with equal dimensions ![Square](/Image1.png =250x) \n\n" +
-								  "And this one is a rectangle ![Rectangle](/Image1.png =250x350)";
+			string markdownText = "Here is an image:![Image](/Image1.png){style=width:200px;height:200px;} \n\n" +
+								  "And another with equal dimensions ![Square](/Image1.png){style=width:200px;height:200px;} \n\n" +
+                                  "And this one is a rectangle ![Rectangle](/Image1.png){style='width:250px;height:350px;'}";
 
-			string expectedHtml = "<p>Here is an image:<img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Image\" width=\"\" height=\"\" /> </p>\n\n" +
-									"<p>And another with equal dimensions <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Square\" width=\"250px\" height=\"\" /> </p>\n\n" +
-									"<p>And this one is a rectangle <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Rectangle\" width=\"250px\" height=\"350px\" /></p>\n";
-
-
-			// Act		
-			string actualHtml = converter.ToHtml(markdownText);
-
-			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
-		}
-
-		[Test]
-		public void images_should_support_dimensions_and_titles()
-		{
-			// Arrange
-			Page page = new Page() { Id = 1, Title = "My first page" };
-
-			PageRepositoryMock pageRepositoryStub = new PageRepositoryMock();
-			pageRepositoryStub.AddNewPage(page, "My first page", "admin", DateTime.UtcNow);
-
-			var settingsRepository = new SettingsRepositoryMock();
-			settingsRepository.SiteSettings = new SiteSettings() ;
-
-			ApplicationSettings settings = new ApplicationSettings();
-			settings.Installed = true;
-
-			MarkupConverter converter = new MarkupConverter(settings, settingsRepository, pageRepositoryStub, _pluginFactory);
-
-			string markdownText = "Here is an image with a title:![Image](/Image1.png \"Image\") \n\n" +
-								  "And another with equal dimensions ![Square](/Image1.png \"Square\" =250x) \n\n" +
-								  "And this one is a rectangle ![Rectangle](/Image1.png \"Rectangle\" =250x350)";
-
-			string expectedHtml = "<p>Here is an image with a title:<img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Image\" width=\"\" height=\"\" title=\"Image\" /> </p>\n\n" +
-									"<p>And another with equal dimensions <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Square\" width=\"250px\" height=\"\" title=\"Square\" /> </p>\n\n" +
-									"<p>And this one is a rectangle <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" border=\"0\" alt=\"Rectangle\" width=\"250px\" height=\"350px\" title=\"Rectangle\" /></p>\n";
+			string expectedHtml = "<p>Here is an image:<img src=\"/Attachments/Image1.png\" class=\"img-responsive\" style=\"width:200px;height:200px;\" border=\"0\" alt=\"Image\" title=\"Image\" /></p>\n" +
+                                    "<p>And another with equal dimensions <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" style=\"width:200px;height:200px;\" border=\"0\" alt=\"Square\" title=\"Square\" /></p>\n" +
+                                    "<p>And this one is a rectangle <img src=\"/Attachments/Image1.png\" class=\"img-responsive\" style=\"width:250px;height:350px;\" border=\"0\" alt=\"Rectangle\" title=\"Rectangle\" /></p>\n";
 
 
 			// Act		

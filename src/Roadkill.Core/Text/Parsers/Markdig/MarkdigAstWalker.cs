@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
@@ -7,12 +8,12 @@ using Roadkill.Core.Converters;
 
 namespace Roadkill.Core.Text.Parsers.Markdig
 {
-    public class MarkdigWalker
+    public class MarkdigAstWalker
     {
         private readonly Action<ImageEventArgs> _imageDelegate;
         private readonly Action<LinkEventArgs> _linkDelegate;
 
-        public MarkdigWalker(Action<ImageEventArgs> imageDelegate, Action<LinkEventArgs> linkDelegate)
+        public MarkdigAstWalker(Action<ImageEventArgs> imageDelegate, Action<LinkEventArgs> linkDelegate)
         {
             _imageDelegate = imageDelegate;
             _linkDelegate = linkDelegate;
@@ -22,7 +23,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
         {
             foreach (MarkdownObject child in markdownObject.Descendants())
             {
-                // LinkInline can be both an image or a <a href="...">
+                // LinkInline can be both an <img.. or a <a href="...">
                 LinkInline link = child as LinkInline;
                 if (link != null)
                 {
@@ -30,11 +31,27 @@ namespace Roadkill.Core.Text.Parsers.Markdig
 
                     if (link.IsImage)
                     {
-                        ImageEventArgs args = InvokeImageParsedEvent(link.Url, link.Title);
+                        string altText = "";
+
+                        var descendentForAltTag = child.Descendants().FirstOrDefault();
+                        if (descendentForAltTag != null)
+                            altText = descendentForAltTag.ToString();
+
+                        ImageEventArgs args = InvokeImageParsedEvent(link.Url, altText);
 
                         // Update the HTML from the data the event gives back
                         link.Url = args.Src;
-                        AddAttribute(link, "alt", args.Alt);
+                        link.Title = altText;
+
+                        // Replace to alt= attribute, it's a literal
+                        var literalInline = new LiteralInline(altText);
+                        link.FirstChild.ReplaceBy(literalInline);
+
+                        // Necessary for links and Bootstrap 3
+                        AddAttribute(link, "border", "0");
+
+                        // Make all images expand via this Bootstrap class 
+                        AddClass(link, "img-responsive"); 
                     }
                     else
                     {
@@ -43,7 +60,19 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                         // Update the HTML from the data the event gives back
                         link.Url = args.Href;
                         AddAttribute(link, "target", args.Target);
-                        AddClass(link, args.CssClass);
+
+                        // TODO: make these configurable (external-links: [])
+                        if (!string.IsNullOrEmpty(link.Url) && 
+                            (link.Url.ToLower().StartsWith("http://") || 
+                            link.Url.ToLower().StartsWith("https://") ||
+                            link.Url.ToLower().StartsWith("mailto:"))
+                            )
+                        {
+                            AddAttribute(link, "rel", "nofollow");
+                        }
+
+                        if (!string.IsNullOrEmpty(args.CssClass))
+                            AddClass(link, args.CssClass);
                     }
                 }
 
@@ -83,7 +112,9 @@ namespace Roadkill.Core.Text.Parsers.Markdig
 
         private ImageEventArgs InvokeImageParsedEvent(string url, string altText)
         {
-            string linkID = altText.ToLowerInvariant();
+            // Markdig TODO
+            //string linkID = altText.ToLowerInvariant();
+
             ImageEventArgs args = new ImageEventArgs(url, url, altText, "");
             _imageDelegate(args);
 

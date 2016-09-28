@@ -19,7 +19,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
 
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
             var doc = Markdown.Parse(markdown, pipeline);
-            var walker = new MarkdigWalker(OnImageParsed, OnLinkParsed);
+            var walker = new MarkdigAstWalker(OnImageParsed, OnLinkParsed);
 
             walker.WalkAndBindParseEvents(doc);
 

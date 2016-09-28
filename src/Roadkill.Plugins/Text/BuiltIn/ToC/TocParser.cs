@@ -49,6 +49,8 @@ namespace Roadkill.Plugins.Text.BuiltIn.ToC
 			// Parse the HTML for H tags
 			var parser = new HtmlParser();
 			IHtmlDocument document = parser.Parse(html);
+
+            // Markdig TODO - this can be removed?
 			ParseHTagsAndAddAnchors(document, document.QuerySelector("body"));
 
 			string outputHtml = GenerateHtml();

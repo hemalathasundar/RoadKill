@@ -164,7 +164,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			Assert.That(model.Tags, Contains.Item("tag3"));
 
 			// (this extra html is from the plugin)
-			Assert.That(model.ContentAsHtml, Is.EqualTo("<p>some text <strong style='color:green'><iframe src='javascript:alert(test)'>in bold</strong>\n</p>"), model.ContentAsHtml);
+			Assert.That(model.ContentAsHtml, Is.EqualTo("<p>some text <strong style='color:green'><iframe src='javascript:alert(test)'>in bold</strong></p>\n"), model.ContentAsHtml);
 			
 			Assert.That(model.IsCacheable, Is.EqualTo(plugin.IsCacheable));
 			Assert.That(model.PluginHeadHtml, Is.EqualTo(plugin.HeadContent));

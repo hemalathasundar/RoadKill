@@ -47,8 +47,8 @@ namespace Roadkill.Tests.Unit.Plugins
 		public void should_parse_and_fill_precontainerhtml()
 		{
 			// Arrange
-			string markup = "Here is some ===Heading 1=== markup \n[[[jumbotron==Welcome=\n==This the subheading==]]]";
-			string expectedHtml = Jumbotron.HTMLTEMPLATE.Replace("${inner}", "<p><h1>Welcome</h1><h2>This the subheading</h2></p>");
+			string markup = "Here is some # Heading 1\n markup \n[[[jumbotron=# Welcome\n## This is a subheading]]]";
+			string expectedHtml = Jumbotron.HTMLTEMPLATE.Replace("${inner}", "<h1 id=\"welcome\">Welcome</h1>\n<h2 id=\"this-is-a-subheading\">This is a subheading</h2>\n");
 
 			Jumbotron jumbotron = new Jumbotron(_container.MarkupConverter);
 
@@ -57,7 +57,7 @@ namespace Roadkill.Tests.Unit.Plugins
 			string actualHtml = jumbotron.GetPreContainerHtml();
 
 			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
+			Assert.That(actualHtml, Is.EqualTo(expectedHtml),actualHtml);
 		}
 	}
 }

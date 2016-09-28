@@ -69,7 +69,7 @@ namespace Roadkill.Tests.Unit.Extensions
 			MvcHtmlString htmlString = _htmlHelper.RenderPageByTag("software");
 
 			// Assert
-			Assert.That(htmlString.ToHtmlString(), Is.EqualTo("<p>page 1 content\n</p>"));
+			Assert.That(htmlString.ToHtmlString(), Is.EqualTo("<p>page 1 content</p>\n"));
 		}
 
 		[Test]
@@ -83,7 +83,7 @@ namespace Roadkill.Tests.Unit.Extensions
 			MvcHtmlString htmlString = _htmlHelper.RenderPageByTag("page2");
 
 			// Assert
-			Assert.That(htmlString.ToHtmlString(), Is.EqualTo("<p>page 2 content\n</p>"));
+			Assert.That(htmlString.ToHtmlString(), Is.EqualTo("<p>page 2 content</p>\n"));
 		}
 
 		[Test]
