@@ -43,7 +43,7 @@ namespace Roadkill.Tests.Unit.Text
 			string invalidMarkdownText = "[Link](My first page)";
 
 			// Act
-			string expectedHtml = "<p><a href=\"My-first-page\" class=\"missing-page-link\" target=\"\">Link</a></p>\n";
+			string expectedHtml = "<p><a href=\"blah\" class=\"missing-page-link\" target=\"\">Link</a></p>\n";
 			string expectedInvalidLinkHtml = "<p>[Link](My first page)</p>\n";
 
 			string actualHtml = converter.ToHtml(markdownText);

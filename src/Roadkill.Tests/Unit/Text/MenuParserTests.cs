@@ -179,31 +179,31 @@ namespace Roadkill.Tests.Unit.Text
 		{
 			// Arrange
 			string menuMarkup = "* [First link](http://www.google.com)\r\n";
-			string expectedHtml = "<ul><li><a href=\"http://www.google.com\" rel=\"nofollow\" class=\"external-link\">First link</a></li></ul>";
+			string expectedHtml = "<ul><li><a href=\"http://www.google.com\" class=\"external-link\" rel=\"nofollow\">First link</a></li></ul>";
 			_settingsRepository.SiteSettings.MenuMarkup = menuMarkup;
 
 			// Act
 			string actualHtml = _menuParser.GetMenu();
 
 			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
+			Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
 		}
 
 		[Test]
 		public void should_replace_markdown_with_internal_link()
 		{
 			// Arrange
-			string menuMarkup = "* [First link](my-page)\r\n";
+			string menuMarkup = "* [First link](my-page)";
 			string expectedHtml = "<ul><li><a href=\"/wiki/1/my-page\">First link</a></li></ul>";
 			_settingsRepository.SiteSettings.MenuMarkup = menuMarkup;
 
-			_pageRepository.AddNewPage(new Page() { Title = "my page", Id = 1 }, "text", "user", DateTime.Now);
+            _pageRepository.AddNewPage(new Page() { Title = "my page", Id = 1 }, "text", "user", DateTime.Now);
 
 			// Act
 			string actualHtml = _menuParser.GetMenu();
 
 			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
+			Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
 		}
 	}
 }

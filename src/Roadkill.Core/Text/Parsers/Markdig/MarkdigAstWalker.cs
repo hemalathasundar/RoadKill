@@ -59,7 +59,11 @@ namespace Roadkill.Core.Text.Parsers.Markdig
 
                         // Update the HTML from the data the event gives back
                         link.Url = args.Href;
-                        AddAttribute(link, "target", args.Target);
+
+                        if (!string.IsNullOrEmpty(args.Target))
+                        {
+                            AddAttribute(link, "target", args.Target);
+                        }
 
                         // TODO: make these configurable (external-links: [])
                         if (!string.IsNullOrEmpty(link.Url) && 
@@ -89,6 +93,11 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                 attributes.Classes = new List<string>();
             }
 
+            if (attributes.Properties == null)
+            {
+                attributes.Properties = new List<KeyValuePair<string, string>>();
+            }
+
             if (attributes.Classes == null)
             {
                 attributes.Classes = new List<string>();
@@ -98,16 +107,23 @@ namespace Roadkill.Core.Text.Parsers.Markdig
         private void AddAttribute(LinkInline link, string name, string value)
         {
             HtmlAttributes attributes = link.GetAttributes();
-            attributes.AddPropertyIfNotExist(name, value);
 
-            link.SetAttributes(attributes);
+            if (!attributes.Properties.Any(x => x.Key == name))
+            {
+                attributes.AddPropertyIfNotExist(name, value);
+                link.SetAttributes(attributes);
+            }
         }
 
         private void AddClass(LinkInline link, string cssClass)
         {
             HtmlAttributes attributes = link.GetAttributes();
-            attributes.Classes.Add(cssClass);
-            link.SetAttributes(attributes);
+
+            if (!attributes.Classes.Any(x => x == cssClass))
+            {
+                attributes.Classes.Add(cssClass);
+                link.SetAttributes(attributes);
+            }
         }
 
         private ImageEventArgs InvokeImageParsedEvent(string url, string altText)

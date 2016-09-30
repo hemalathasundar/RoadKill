@@ -246,15 +246,12 @@ namespace Roadkill.Core.Converters
 				title = href.Replace(anchorHash, "");
 			}
 
-			if (Parser is MarkdownParser)
-			{
-				// For markdown, only urls with "-" in them are valid, spaces are ignored.
-				// Remove these, so a match is made. No url has a "-" in, so replacing them is ok.
-				title = title.Replace("-", " ");
-			}
+            // For markdown, only urls with "-" in them are valid, spaces are ignored.
+            // Remove these, so a match is made. No url has a "-" in, so replacing them is ok.
+            title = title.Replace("-", " ");
 
-			// Find the page, or if it doesn't exist point to the new page url
-			Page page = _pageRepository.GetPageByTitle(title);
+            // Find the page, or if it doesn't exist point to the new page url
+            Page page = _pageRepository.GetPageByTitle(title);
 			if (page != null)
 			{
 				href = UrlResolver.GetInternalUrlForTitle(page.Id, page.Title);

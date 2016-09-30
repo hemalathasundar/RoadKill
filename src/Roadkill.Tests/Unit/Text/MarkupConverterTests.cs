@@ -248,7 +248,7 @@ namespace Roadkill.Tests.Unit.Text
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo" }, "foo", "admin", DateTime.Today);
             _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
 
-            string expectedHtml = "<p><a href=\"/wiki/1/foo#myanchor\">Some link text</a></p>\n"; // use /index/ as no routing exists
+            string expectedHtml = "<p><a href=\"/wiki/1/foo#myanchor\">Some link text</a></p>\n";
 
             // Act
             string actualHtml = _markupConverter.ToHtml("[Some link text](foo#myanchor)");
