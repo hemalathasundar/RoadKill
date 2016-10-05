@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
-using Roadkill.Core.Plugins;
 
 namespace Roadkill.Core.Services
 {
@@ -17,9 +15,9 @@ namespace Roadkill.Core.Services
 	/// </summary>
 	public class PageHistoryService
 	{
-		private MarkupConverter _markupConverter;
-		private IUserContext _context;
-		private PageViewModelCache _pageViewModelCache;
+		private readonly MarkupConverter _markupConverter;
+		private readonly IUserContext _context;
+		private readonly PageViewModelCache _pageViewModelCache;
 
 		public ApplicationSettings ApplicationSettings { get; set; }
 		public ISettingsRepository SettingsRepository { get; set; }

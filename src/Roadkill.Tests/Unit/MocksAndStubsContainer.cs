@@ -94,7 +94,7 @@ namespace Roadkill.Tests.Unit
 			UserService = new UserServiceMock(ApplicationSettings, UserRepository);
 			UserContext = new UserContext(UserService);
 
-            SearchService = new SearchServiceMock(ApplicationSettings, SettingsRepository, PageRepository, PluginFactory);
+            SearchService = new SearchServiceMock(ApplicationSettings, SettingsRepository, PageRepository, MarkupConverterFactory);
 			SearchService.PageContents = PageRepository.PageContents;
 			SearchService.Pages = PageRepository.Pages;
 

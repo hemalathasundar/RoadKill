@@ -11,23 +11,23 @@ namespace Roadkill.Tests.Unit.Text
 {
     public class MarkdigParserTests
     {
-        [Test]
-        public void should()
-        {
-            // given
-            var parser = new MarkdigParser();
-            parser.LinkParsed += Parser_LinkParsed;
+        //[Test]
+        //public void should()
+        //{
+        //    // given
+        //    var parser = new MarkdigParser();
+        //    parser.LinkParsed += Parser_LinkParsed;
 
-            // when
-            string html = parser.ToHtml("[i am a link](http://www.google.com){.main}");
+        //    // when
+        //    string html = parser.ToHtml("[i am a link](http://www.google.com){.main}");
 
-            // then
-            Console.WriteLine(html);
-        }
+        //    // then
+        //    Console.WriteLine(html);
+        //}
 
-        private void Parser_LinkParsed(object sender, Core.Converters.HtmlLinkTag e)
-        {
-            e.Href = "lol";
-        }
+        //private void Parser_LinkParsed(object sender, Core.Converters.HtmlLinkTag e)
+        //{
+        //    e.Href = "lol";
+        //}
     }
 }

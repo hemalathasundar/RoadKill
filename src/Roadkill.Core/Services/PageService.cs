@@ -37,9 +37,10 @@ namespace Roadkill.Core.Services
 		public ISettingsRepository SettingsRepository { get; set; }
 		public IPageRepository PageRepository { get; set; }
 
-		public PageService(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, SearchService searchService, 
-			PageHistoryService historyService, IUserContext context, 
-			ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IMarkupConverterFactory markupConverterFactory)
+		public PageService(ApplicationSettings settings, ISettingsRepository settingsRepository, 
+							IPageRepository pageRepository, SearchService searchService, PageHistoryService historyService, IUserContext context, 
+							ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, 
+							IMarkupConverterFactory markupConverterFactory)
 		{
 			_searchService = searchService;
 		    _markupConverter = markupConverterFactory.CreateConverter();
@@ -611,7 +612,7 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		public string GetMenu(IUserContext userContext)
 		{
-			MenuParser parser = new MenuParser(_markupConverter, SettingsRepository, _siteCache, userContext);
+			MenuParser parser = new MenuParser(_markupConverter.MarkupParser, SettingsRepository, _siteCache, userContext);
 
 			// TODO: turn this into a theme-based bit of template HTML
 			StringBuilder builder = new StringBuilder();
@@ -628,7 +629,7 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		public string GetBootStrapNavMenu(IUserContext userContext)
 		{
-			MenuParser parser = new MenuParser(_markupConverter, SettingsRepository, _siteCache, userContext);
+			MenuParser parser = new MenuParser(_markupConverter.MarkupParser, SettingsRepository, _siteCache, userContext);
 
 			// TODO: turn this into a theme-based bit of template HTML
 			StringBuilder builder = new StringBuilder();
