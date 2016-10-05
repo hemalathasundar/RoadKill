@@ -445,6 +445,7 @@
     <Compile Include="Unit\Text\MarkupConverterTests.cs" />
     <Compile Include="Unit\Text\CustomTokenParserTests.cs" />
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
+    <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
