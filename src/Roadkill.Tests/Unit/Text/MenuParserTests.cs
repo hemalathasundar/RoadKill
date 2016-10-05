@@ -20,10 +20,11 @@ namespace Roadkill.Tests.Unit.Text
 		private ApplicationSettings _applicationSettings;
 		private CacheMock _cache;
 		private SiteCache _siteCache;
-		private MarkupConverter _converter;
+		private MarkupConverter _markupConverter;
 		private MenuParser _menuParser;
+	    private MarkupConverterFactory _markupConverterFactory;
 
-		[SetUp]
+	    [SetUp]
 		public void Setup()
 		{
 			_pluginFactory = new PluginFactoryMock();
@@ -41,8 +42,10 @@ namespace Roadkill.Tests.Unit.Text
 			_cache = new CacheMock();
 			_siteCache = new SiteCache(_cache);
 
-			_converter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
-			_menuParser = new MenuParser(_converter, _settingsRepository, _siteCache, _userContext);
+            _markupConverterFactory = new MarkupConverterFactory(_applicationSettings, _pageRepository, _pluginFactory);
+	        _markupConverter = _markupConverterFactory.CreateConverter();
+
+            _menuParser = new MenuParser(_markupConverter, _settingsRepository, _siteCache, _userContext);
 		}
 
 		[Test]

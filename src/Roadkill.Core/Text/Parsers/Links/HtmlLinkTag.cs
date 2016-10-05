@@ -8,7 +8,7 @@ namespace Roadkill.Core.Converters
 	/// <summary>
 	/// Holds information when a hyperlink is processed, giving the caller the ability to translate the outputted HTML.
 	/// </summary>
-	public class LinkEventArgs : EventArgs
+	public class HtmlLinkTag
 	{
 		/// <summary>
 		/// The original href.
@@ -41,9 +41,9 @@ namespace Roadkill.Core.Converters
 		public bool IsInternalLink { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="LinkEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="HtmlLinkTag"/> class.
 		/// </summary>
-		public LinkEventArgs(string originalHref, string href, string text, string target)
+		public HtmlLinkTag(string originalHref, string href, string text, string target)
 		{
 			OriginalHref = originalHref;
 			Href = href;

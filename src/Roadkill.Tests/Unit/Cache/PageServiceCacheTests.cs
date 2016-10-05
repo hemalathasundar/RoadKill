@@ -9,6 +9,7 @@ using Moq;
 using NUnit.Framework;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
+using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Services;
 using Roadkill.Core.Mvc.Attributes;
@@ -457,8 +458,11 @@ namespace Roadkill.Tests.Unit.Cache
 			ListCache listCache = new ListCache(appSettings, listObjectCache);
 			SiteCache siteCache = new SiteCache(CacheMock.RoadkillCache);
 			SearchServiceMock searchService = new SearchServiceMock(appSettings, settingsRepository, pageRepository, _pluginFactory);
-			PageHistoryService historyService = new PageHistoryService(appSettings, settingsRepository, pageRepository, userContext, pageViewModelCache, _pluginFactory);
-			PageService pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, _pluginFactory);
+
+            var markupConverterFactory = new MarkupConverterFactory(appSettings, pageRepository, _pluginFactory);
+
+            PageHistoryService historyService = new PageHistoryService(settingsRepository, pageRepository, userContext, pageViewModelCache, markupConverterFactory);
+			PageService pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
 
 			return pageService;
 		}

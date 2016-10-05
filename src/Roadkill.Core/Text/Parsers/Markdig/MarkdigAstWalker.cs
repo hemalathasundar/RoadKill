@@ -10,10 +10,10 @@ namespace Roadkill.Core.Text.Parsers.Markdig
 {
     public class MarkdigAstWalker
     {
-        private readonly Action<ImageEventArgs> _imageDelegate;
-        private readonly Action<LinkEventArgs> _linkDelegate;
+        private readonly Action<HtmlImageTag> _imageDelegate;
+        private readonly Action<HtmlLinkTag> _linkDelegate;
 
-        public MarkdigAstWalker(Action<ImageEventArgs> imageDelegate, Action<LinkEventArgs> linkDelegate)
+        public MarkdigAstWalker(Action<HtmlImageTag> imageDelegate, Action<HtmlLinkTag> linkDelegate)
         {
             _imageDelegate = imageDelegate;
             _linkDelegate = linkDelegate;
@@ -37,7 +37,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                         if (descendentForAltTag != null)
                             altText = descendentForAltTag.ToString();
 
-                        ImageEventArgs args = InvokeImageParsedEvent(link.Url, altText);
+                        HtmlImageTag args = InvokeImageParsedEvent(link.Url, altText);
 
                         // Update the HTML from the data the event gives back
                         link.Url = args.Src;
@@ -55,7 +55,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                     }
                     else
                     {
-                        LinkEventArgs args = InvokeLinkParsedEvent(link.Url, link.Title, link.Label);
+                        HtmlLinkTag args = InvokeLinkParsedEvent(link.Url, link.Title, link.Label);
 
                         // Update the HTML from the data the event gives back
                         link.Url = args.Href;
@@ -126,20 +126,20 @@ namespace Roadkill.Core.Text.Parsers.Markdig
             }
         }
 
-        private ImageEventArgs InvokeImageParsedEvent(string url, string altText)
+        private HtmlImageTag InvokeImageParsedEvent(string url, string altText)
         {
             // Markdig TODO
             //string linkID = altText.ToLowerInvariant();
 
-            ImageEventArgs args = new ImageEventArgs(url, url, altText, "");
+            HtmlImageTag args = new HtmlImageTag(url, url, altText, "");
             _imageDelegate(args);
 
             return args;
         }
 
-        private LinkEventArgs InvokeLinkParsedEvent(string url, string text, string target)
+        private HtmlLinkTag InvokeLinkParsedEvent(string url, string text, string target)
         {
-            LinkEventArgs args = new LinkEventArgs(url, url, text, target);
+            HtmlLinkTag args = new HtmlLinkTag(url, url, text, target);
             _linkDelegate(args);
 
             return args;

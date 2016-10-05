@@ -16,14 +16,14 @@ namespace Roadkill.Core.Converters
 		/// </summary>
 		string ToHtml(string markdown);
 
-		/// <summary>
-		/// Occurs when an image tag is parsed.
-		/// </summary>
-		event EventHandler<ImageEventArgs> ImageParsed;
+        /// <summary>
+        /// Callback that's called when an image tag is parsed.
+        /// </summary>
+	    Func<HtmlImageTag, HtmlImageTag> ImageParsed { get; set; }
 
-		/// <summary>
-		/// Occurs when a hyperlink is parsed.
-		/// </summary>
-		event EventHandler<LinkEventArgs> LinkParsed;
+        /// <summary>
+        /// Callback when a link tag is parsed.
+        /// </summary>
+        Func<HtmlLinkTag, HtmlLinkTag> LinkParsed { get; set; }
 	}
 }

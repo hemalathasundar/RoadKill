@@ -25,10 +25,10 @@ namespace Roadkill.Core.Services
 		public ISettingsRepository SettingsRepository { get; set; }
 		public IPageRepository PageRepository { get; set; }
 
-		public PageHistoryService(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, IUserContext context, 
-			PageViewModelCache pageViewModelCache, IPluginFactory pluginFactory)
+		public PageHistoryService(ISettingsRepository settingsRepository, IPageRepository pageRepository, IUserContext context, 
+			PageViewModelCache pageViewModelCache, IMarkupConverterFactory markupConverterFactory)
 		{
-			_markupConverter = new MarkupConverter(settings, settingsRepository, pageRepository, pluginFactory);
+		    _markupConverter = markupConverterFactory.CreateConverter();
 			_context = context;
 			_pageViewModelCache = pageViewModelCache;
 

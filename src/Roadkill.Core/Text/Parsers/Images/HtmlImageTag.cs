@@ -8,7 +8,7 @@ namespace Roadkill.Core.Converters
 	/// <summary>
 	/// Holds information when an image is processed, giving the caller the ability to translate the outputted HTML.
 	/// </summary>
-	public class ImageEventArgs : EventArgs
+	public class HtmlImageTag
 	{
 		public enum HorizontalAlignment
 		{
@@ -44,9 +44,9 @@ namespace Roadkill.Core.Converters
 		public HorizontalAlignment HorizontalAlign { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ImageEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="HtmlImageTag"/> class.
 		/// </summary>
-		public ImageEventArgs(string originalSrc, string src, string alt, string title, HorizontalAlignment horizontalAlign = HorizontalAlignment.None)
+		public HtmlImageTag(string originalSrc, string src, string alt, string title, HorizontalAlignment horizontalAlign = HorizontalAlignment.None)
 		{
 			OriginalSrc = originalSrc;
 			Src = src;

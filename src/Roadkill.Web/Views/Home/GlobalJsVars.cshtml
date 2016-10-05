@@ -13,7 +13,7 @@ var ROADKILL_PREVIEWURL = "@Url.Action("GetPreview", "Pages")/";
 var ROADKILL_WIKIMARKUPHELP = "@Url.Action("MarkdownReference", "Help")";
 
 @{
-IMarkupParser parser = MarkupConverter.Parser;
+IMarkupParser parser = MarkupConverter.MarkupParser;
 }
 // Tokens for the edit toolbar
 var ROADKILL_EDIT_BOLD_TOKEN        = "@Html.Raw(parser.MarkupParserHelp.BoldToken)";

@@ -29,7 +29,8 @@ namespace Roadkill.Core.Services
 		private readonly ListCache _listCache;
 		private readonly PageViewModelCache _pageViewModelCache;
 		private readonly SiteCache _siteCache;
-		private readonly IPluginFactory _pluginFactory;
+	    private readonly IMarkupConverterFactory _markupConverterFactory;
+	    private readonly IPluginFactory _pluginFactory;
 		private readonly MarkupLinkUpdater _markupLinkUpdater;
 
 		public ApplicationSettings ApplicationSettings { get; set; }
@@ -38,17 +39,17 @@ namespace Roadkill.Core.Services
 
 		public PageService(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, SearchService searchService, 
 			PageHistoryService historyService, IUserContext context, 
-			ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory)
+			ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IMarkupConverterFactory markupConverterFactory)
 		{
 			_searchService = searchService;
-			_markupConverter = new MarkupConverter(settings, settingsRepository, pageRepository, pluginFactory);
+		    _markupConverter = markupConverterFactory.CreateConverter();
 			_historyService = historyService;
 			_context = context;
 			_listCache = listCache;
 			_pageViewModelCache = pageViewModelCache;
 			_siteCache = sitecache;
-			_pluginFactory = pluginFactory;
-			_markupLinkUpdater = new MarkupLinkUpdater(_markupConverter.Parser);
+		    _markupConverterFactory = markupConverterFactory;
+		    _markupLinkUpdater = new MarkupLinkUpdater(_markupConverter.MarkupParser);
 
 			ApplicationSettings = settings;
 			SettingsRepository = settingsRepository;
@@ -672,7 +673,7 @@ namespace Roadkill.Core.Services
 		/// <returns></returns>
 		public MarkupConverter GetMarkupConverter()
 		{
-			return new MarkupConverter(ApplicationSettings, SettingsRepository, PageRepository, _pluginFactory);
+		    return _markupConverterFactory.CreateConverter();
 		}
 
 		/// <summary>

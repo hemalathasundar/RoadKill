@@ -9,14 +9,23 @@ using Roadkill.Tests.Unit.StubsAndMocks;
 
 namespace Roadkill.Tests.Unit.Text
 {
+    public class MarkupParserMock : IMarkupParser
+    {
+        public Func<HtmlImageTag, HtmlImageTag> ImageParsed { get; set; }
+        public Func<HtmlLinkTag, HtmlLinkTag> LinkParsed { get; set; }
+
+        public string ToHtml(string markdown)
+        {
+            return markdown;
+        }
+    }
+
     [TestFixture]
     [Category("Unit")]
     public class MarkupConverterTests
     {
         private MocksAndStubsContainer _container;
-
         private ApplicationSettings _applicationSettings;
-        private SettingsRepositoryMock _settingsRepository;
         private PageRepositoryMock _pageRepository;
         private PluginFactoryMock _pluginFactory;
         private MarkupConverter _markupConverter;
@@ -30,25 +39,10 @@ namespace Roadkill.Tests.Unit.Text
             _applicationSettings.UseHtmlWhiteList = true;
             _applicationSettings.CustomTokensPath = Path.Combine(TestConstants.WEB_PATH, "App_Data", "customvariables.xml");
 
-            _settingsRepository = _container.SettingsRepository;
             _pageRepository = _container.PageRepository;
 
             _pluginFactory = _container.PluginFactory;
             _markupConverter = _container.MarkupConverter;
-            _markupConverter.UrlResolver = new UrlResolverMock();
-        }
-
-        [Test]
-        public void parser_should_not_be_null_for_markuptypes()
-        {
-            // Arrange, act
-
-            // Assert
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
-            Assert.NotNull(_markupConverter.Parser);
-
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
-            Assert.NotNull(_markupConverter.Parser);
         }
 
         [Test]
@@ -57,12 +51,12 @@ namespace Roadkill.Tests.Unit.Text
             // Arrange
             UrlResolverMock resolver = new UrlResolverMock();
             resolver.AbsolutePathSuffix = "123";
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
             _markupConverter.UrlResolver = resolver;
 
             // Act
             bool wasCalled = false;
-            _markupConverter.Parser.ImageParsed += (object sender, ImageEventArgs e) =>
+            _markupConverter.MarkupParser.ImageParsed += (object sender, HtmlImageTag e) =>
             {
                 wasCalled = (e.Src == "/Attachments/DSC001.jpg123");
             };
@@ -83,11 +77,11 @@ namespace Roadkill.Tests.Unit.Text
             UrlResolverMock resolver = new UrlResolverMock();
             resolver.AbsolutePathSuffix = "123";
 
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
             _markupConverter.UrlResolver = resolver;
 
             bool wasCalled = false;
-            _markupConverter.Parser.ImageParsed += (object sender, ImageEventArgs e) =>
+            _markupConverter.MarkupParser.ImageParsed += (object sender, HtmlImageTag e) =>
             {
                 wasCalled = (e.Src == imageUrl);
             };
@@ -103,7 +97,7 @@ namespace Roadkill.Tests.Unit.Text
         public void should_remove_script_link_iframe_frameset_frame_applet_tags_from_text()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
             string markdown = " some text <script type=\"text/html\">while(true)alert('lolz');</script>" +
                 "<iframe src=\"google.com\"></iframe><frame>blah</frame> <applet code=\"MyApplet.class\" width=100 height=140></applet>" +
                 "<frameset src='new.html'></frameset>";
@@ -121,7 +115,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_starting_with_hash_or_https_or_hash_are_not_rewritten_as_internal()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
 
@@ -136,7 +130,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_with_dashes_or_23_are_rewritten_and_not_parsed_as_encoded_hashes()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/some-page-23\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
 
@@ -151,7 +145,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_to_named_anchors_should_not_have_external_css_class()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a></p>\n";
 
@@ -166,7 +160,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_starting_with_tilde_should_resolve_as_attachment_paths()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/Attachments/my/folder/image1.jpg\">hello world</a></p>\n";
 
@@ -183,7 +177,7 @@ namespace Roadkill.Tests.Unit.Text
             // Issue #172
             // Arrange
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo" }, "foo", "admin", DateTime.Today);
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"http://www.google.com/?blah=xyz#myanchor\" class=\"external-link\" rel=\"nofollow\">Some link text</a></p>\n";
 
@@ -199,7 +193,7 @@ namespace Roadkill.Tests.Unit.Text
         {
             // Arrange
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo-page" }, "foo", "admin", DateTime.Today);
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/1/foo-page\">Some link text</a></p>\n";
 
@@ -214,7 +208,7 @@ namespace Roadkill.Tests.Unit.Text
         public void attachment_link_should_not_have_nofollow_attribute()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/Attachments/folder/myfile.jpg\">Some link text</a> <a href=\"/Attachments/folder2/myfile.jpg\">Some link text</a></p>\n";
 
@@ -229,7 +223,7 @@ namespace Roadkill.Tests.Unit.Text
         public void specialurl_link_should_not_have_nofollow_attribute()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/Special:Random\">Some link text</a></p>\n";
 
@@ -246,7 +240,7 @@ namespace Roadkill.Tests.Unit.Text
             // Issue #172
             // Arrange
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo" }, "foo", "admin", DateTime.Today);
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/1/foo#myanchor\">Some link text</a></p>\n";
 
@@ -263,7 +257,7 @@ namespace Roadkill.Tests.Unit.Text
             // Issue #172
             // Arrange
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo" }, "foo", "admin", DateTime.Today);
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/1/foo%23myanchor\">Some link text</a></p>\n";
 
@@ -280,7 +274,7 @@ namespace Roadkill.Tests.Unit.Text
             // Issue #172
             // Arrange
             _pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo" }, "foo", "admin", DateTime.Today);
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/1/foo#myanchor\">Some link text</a></p>\n"; // use /index/ as no routing exists
 
@@ -296,7 +290,7 @@ namespace Roadkill.Tests.Unit.Text
         {
             // Issue #159
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"http://msdn.microsoft.com/en-us/library/system.componentmodel.descriptionattribute.aspx\" class=\"external-link\" rel=\"nofollow\">ComponentModel.Description</a></p>\n";
 
@@ -312,7 +306,7 @@ namespace Roadkill.Tests.Unit.Text
         {
             // Issue #159
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"http://www.google.com/%22%3Ejavascript:alert(%27hello%27)\" class=\"external-link\" rel=\"nofollow\">ComponentModel</a></p>\n";
 
@@ -323,12 +317,11 @@ namespace Roadkill.Tests.Unit.Text
             Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
         }
 
-
         [Test]
         public void links_starting_with_attachmentcolon_should_resolve_as_attachment_paths()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/Attachments/my/folder/image1.jpg\">hello world</a></p>\n";
 
@@ -343,7 +336,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_starting_with_specialcolon_should_resolve_as_full_specialpage()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"/wiki/Special:Foo\">My special page</a></p>\n";
 
@@ -358,7 +351,7 @@ namespace Roadkill.Tests.Unit.Text
         public void links_starting_with_http_www_mailto_tag_are_no_rewritten_as_internal()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><a href=\"http://www.blah.com/\" class=\"external-link\" rel=\"nofollow\">link1</a> "+
                 "<a href=\"www.blah.com\" class=\"external-link\">link2</a> " +
@@ -376,10 +369,10 @@ namespace Roadkill.Tests.Unit.Text
         {
             // Arrange
             _applicationSettings.UseHtmlWhiteList = false;
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string htmlFragment = "<div onclick=\"javascript:alert('ouch');\">test</div>";
-            MarkupConverter converter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            MarkupConverter converter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             // Act
             string actualHtml = converter.ToHtml(htmlFragment);
@@ -393,7 +386,7 @@ namespace Roadkill.Tests.Unit.Text
         public void should_not_render_toc_with_multiple_curlies()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
             _markupConverter.UrlResolver = new UrlResolverMock();
 
             string htmlFragment = "Give me a {{TOC}} and a {{{TOC}}} - the should not render a TOC";
@@ -517,7 +510,7 @@ namespace Roadkill.Tests.Unit.Text
         public void should_allow_style_tags()
         {
             // Arrange
-            _markupConverter = new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory);
+            _markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
 
             string expectedHtml = "<p><b style=\"color: black\"></b></p>\n";
 

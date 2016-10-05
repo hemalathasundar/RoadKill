@@ -29,14 +29,14 @@ namespace Roadkill.Core.Services
 		private static Regex _removeTagsRegex = new Regex("<(.|\n)*?>");
 		private MarkupConverter _markupConverter;
 		protected virtual string IndexPath { get; set; }
-		private IPluginFactory _pluginFactory;
 		private static readonly LuceneVersion LUCENEVERSION = LuceneVersion.LUCENE_29;
 
 		public ApplicationSettings ApplicationSettings { get; set; }
 		public ISettingsRepository SettingsRepository { get; set; }
 		public IPageRepository PageRepository { get; set; }
 
-		public SearchService(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, IPluginFactory pluginFactory)
+		public SearchService(ApplicationSettings settings, ISettingsRepository settingsRepository, 
+            IPageRepository pageRepository, IMarkupConverterFactory markupConverterFactory)
 		{
 			if (settings == null)
 				throw new ArgumentNullException(nameof(settings));
@@ -47,10 +47,7 @@ namespace Roadkill.Core.Services
 			if (pageRepository == null)
 				throw new ArgumentNullException(nameof(pageRepository));
 
-			if (pluginFactory == null)
-				throw new ArgumentNullException(nameof(pluginFactory));
-
-			_markupConverter = new MarkupConverter(settings, settingsRepository, pageRepository, pluginFactory);
+		    _markupConverter = markupConverterFactory.CreateConverter();
 			IndexPath = settings.SearchIndexPath;
 
 			ApplicationSettings = settings;

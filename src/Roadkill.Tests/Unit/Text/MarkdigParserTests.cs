@@ -25,7 +25,7 @@ namespace Roadkill.Tests.Unit.Text
             Console.WriteLine(html);
         }
 
-        private void Parser_LinkParsed(object sender, Core.Converters.LinkEventArgs e)
+        private void Parser_LinkParsed(object sender, Core.Converters.HtmlLinkTag e)
         {
             e.Href = "lol";
         }

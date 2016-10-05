@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using NUnit.Framework;
 using Roadkill.Core.Configuration;
+using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
@@ -19,11 +20,12 @@ namespace Roadkill.Tests.Integration.Search
 	public class SearchServiceTests
 	{
 		private ISettingsRepository _settingsRepository;
-		private ApplicationSettings _config;
+		private ApplicationSettings _applicationSettings;
 		private PluginFactoryMock _pluginFactory;
 		private IPageRepository _pageRepository;
+	    private MarkupConverterFactory _markupConverterFactory;
 
-		[SetUp]
+	    [SetUp]
 		public void Initialize()
 		{
 			string indexPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\SearchTests";
@@ -33,14 +35,15 @@ namespace Roadkill.Tests.Integration.Search
 			_settingsRepository = new SettingsRepositoryMock();
 			_pageRepository = new PageRepositoryMock();
 
-			_config = new ApplicationSettings();
-			_config.Installed = true;
+			_applicationSettings = new ApplicationSettings();
+			_applicationSettings.Installed = true;
 			_pluginFactory = new PluginFactoryMock();
+		    _markupConverterFactory = new MarkupConverterFactory(_applicationSettings, _pageRepository, _pluginFactory);
 		}
 
 		private SearchService CreateSearchService()
 		{
-			return new SearchService(_config, _settingsRepository, _pageRepository, _pluginFactory);
+			return new SearchService(_applicationSettings, _settingsRepository, _pageRepository, _markupConverterFactory);
 		}
 
 		[Test]
