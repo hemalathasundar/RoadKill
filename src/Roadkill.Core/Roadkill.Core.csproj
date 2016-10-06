@@ -580,6 +580,7 @@
     <Compile Include="Database\Entities\Page.cs" />
     <Compile Include="Mvc\ViewModels\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Text\TextMiddlewareBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
