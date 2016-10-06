@@ -187,24 +187,26 @@ namespace Roadkill.Tests.Unit.Mvc.Attributes
 		private WikiController CreateWikiController(BrowserCacheAttribute attribute)
 		{
 			// Settings
-			ApplicationSettings appSettings = new ApplicationSettings() { Installed = true, UseBrowserCache = true };
-			UserContextStub userContext = new UserContextStub() { IsLoggedIn = false };
+			var appSettings = new ApplicationSettings() { Installed = true, UseBrowserCache = true };
+			var userContext = new UserContextStub() { IsLoggedIn = false };
+			var markupConverterFactory = _container.MarkupConverterFactory;
 
 			// PageService
-			PageViewModelCache pageViewModelCache = new PageViewModelCache(appSettings, CacheMock.RoadkillCache);
-			ListCache listCache = new ListCache(appSettings, CacheMock.RoadkillCache);
-			SiteCache siteCache = new SiteCache(CacheMock.RoadkillCache);
-			SearchServiceMock searchService = new SearchServiceMock(appSettings, _settingsRepository, _pageRepository, _pluginFactory);
-			PageHistoryService historyService = new PageHistoryService(appSettings, _settingsRepository, _pageRepository, userContext, pageViewModelCache, _pluginFactory);
-			PageService pageService = new PageService(appSettings, _settingsRepository, _pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, _pluginFactory);
+			var pageViewModelCache = new PageViewModelCache(appSettings, CacheMock.RoadkillCache);
+			var listCache = new ListCache(appSettings, CacheMock.RoadkillCache);
+			var siteCache = new SiteCache(CacheMock.RoadkillCache);
+			var searchService = new SearchServiceMock(appSettings, _settingsRepository, _pageRepository, markupConverterFactory);
+
+			var historyService = new PageHistoryService(_settingsRepository, _pageRepository, userContext, pageViewModelCache, markupConverterFactory);
+			var pageService = new PageService(appSettings, _settingsRepository, _pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
 
 			// WikiController
-			SettingsService settingsService = new SettingsService(new RepositoryFactoryMock(), appSettings);
-			UserServiceStub userManager = new UserServiceStub();
-			WikiController wikiController = new WikiController(appSettings, userManager, pageService, userContext, settingsService);
+			var settingsService = new SettingsService(new RepositoryFactoryMock(), appSettings);
+			var userManager = new UserServiceStub();
+			var wikiController = new WikiController(appSettings, userManager, pageService, userContext, settingsService);
 
 			// Create a page that the request is for
-			Page page = new Page() { Title = "title", ModifiedOn = _pageModifiedDate };
+			var page = new Page() { Title = "title", ModifiedOn = _pageModifiedDate };
 			_pageRepository.AddNewPage(page, "text", "user", _pageCreatedDate);
 
 			// Update the BrowserCacheAttribute

@@ -45,7 +45,7 @@ namespace Roadkill.Tests.Unit.Text
             _markupConverterFactory = new MarkupConverterFactory(_applicationSettings, _pageRepository, _pluginFactory);
 	        _markupConverter = _markupConverterFactory.CreateConverter();
 
-            _menuParser = new MenuParser(_markupConverter, _settingsRepository, _siteCache, _userContext);
+            _menuParser = new MenuParser(_markupConverter.MarkupParser, _settingsRepository, _siteCache, _userContext);
 		}
 
 		[Test]

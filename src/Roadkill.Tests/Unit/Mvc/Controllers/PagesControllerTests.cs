@@ -59,7 +59,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 
 			// Customise the page service so we can verify what was called
 			_pageServiceMock = new Mock<IPageService>();
-			_pageServiceMock.Setup(x => x.GetMarkupConverter()).Returns(new MarkupConverter(_applicationSettings, _settingsRepository, _pageRepository, _pluginFactory));
+			_pageServiceMock.Setup(x => x.GetMarkupConverter()).Returns(_container.MarkupConverterFactory.CreateConverter());
 			_pageServiceMock.Setup(x => x.GetById(It.IsAny<int>(), false)).Returns<int, bool>((int id, bool loadContent) =>
 				{
 					Page page = _pageRepository.GetPageById(id);

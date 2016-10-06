@@ -21,14 +21,14 @@ namespace Roadkill.Core.Text
 		private static readonly string MANAGEFILES_TOKEN = "%managefiles%";
 		private static readonly string SITESETTINGS_TOKEN = "%sitesettings%";
 
+		private readonly IMarkupParser _markupParser;
 		private readonly ISettingsRepository _settingsRepository;
 		private readonly SiteCache _siteCache;
-		private readonly MarkupConverter _markupConverter;
 		private readonly IUserContext _userContext;
 
-		public MenuParser(MarkupConverter markupConverter, ISettingsRepository settingsRepository, SiteCache siteCache, IUserContext userContext)
+		public MenuParser(IMarkupParser markupParser, ISettingsRepository settingsRepository, SiteCache siteCache, IUserContext userContext)
 		{
-			_markupConverter = markupConverter;
+			_markupParser = markupParser;
 			_settingsRepository = settingsRepository;
 			_siteCache = siteCache;
 			_userContext = userContext;
@@ -60,7 +60,7 @@ namespace Roadkill.Core.Text
 				SiteSettings siteSettings = _settingsRepository.GetSiteSettings();
 				html = siteSettings.MenuMarkup;
 
-				html = _markupConverter.ConvertMenuMarkupToHtml(html);
+				html = _markupParser.ToHtml(html);
 				html = ReplaceKnownTokens(html);
 
 				if (_userContext.IsLoggedIn)

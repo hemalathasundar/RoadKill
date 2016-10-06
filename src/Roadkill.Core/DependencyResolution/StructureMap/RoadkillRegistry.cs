@@ -20,6 +20,7 @@ using Roadkill.Core.Plugins;
 using Roadkill.Core.Security;
 using Roadkill.Core.Security.Windows;
 using Roadkill.Core.Services;
+using Roadkill.Core.Text.Parsers.Markdig;
 using StructureMap;
 using StructureMap.Building;
 using StructureMap.Graph;
@@ -105,7 +106,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			scanner.AddAllTypesOf<IInstallationService>();
 
 			// Text parsers
-			scanner.AddAllTypesOf<MarkupConverter>();
+			scanner.AddAllTypesOf<IMarkupConverterFactory>();
 			scanner.AddAllTypesOf<CustomTokenParser>();
 
 			// MVC Related
@@ -163,6 +164,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			// Emails
 			For<SignupEmail>().Use<SignupEmail>();
 			For<ResetPasswordEmail>().Use<ResetPasswordEmail>();
+
+			// Text
+			For<IMarkupConverterFactory>().Use<MarkupConverterFactory>().Singleton();
 
 			// Cache
 			For<ObjectCache>().Singleton().Use(new MemoryCache("Roadkill"));

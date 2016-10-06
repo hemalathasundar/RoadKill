@@ -450,19 +450,18 @@ namespace Roadkill.Tests.Unit.Cache
 				listObjectCache = CacheMock.RoadkillCache;
 
 			// Settings
-			ApplicationSettings appSettings = new ApplicationSettings() { Installed = true, UseObjectCache = true };
-			UserContextStub userContext = new UserContextStub() { IsLoggedIn = false };
+			var appSettings = new ApplicationSettings() { Installed = true, UseObjectCache = true };
+			var userContext = new UserContextStub() { IsLoggedIn = false };
+			var markupConverterFactory = new MarkupConverterFactory(appSettings, pageRepository, _pluginFactory);
 
 			// PageService
-			PageViewModelCache pageViewModelCache = new PageViewModelCache(appSettings, pageObjectCache);
-			ListCache listCache = new ListCache(appSettings, listObjectCache);
-			SiteCache siteCache = new SiteCache(CacheMock.RoadkillCache);
-			SearchServiceMock searchService = new SearchServiceMock(appSettings, settingsRepository, pageRepository, _pluginFactory);
+			var pageViewModelCache = new PageViewModelCache(appSettings, pageObjectCache);
+			var listCache = new ListCache(appSettings, listObjectCache);
+			var siteCache = new SiteCache(CacheMock.RoadkillCache);
+			var searchService = new SearchServiceMock(appSettings, settingsRepository, pageRepository, markupConverterFactory);
 
-            var markupConverterFactory = new MarkupConverterFactory(appSettings, pageRepository, _pluginFactory);
-
-            PageHistoryService historyService = new PageHistoryService(settingsRepository, pageRepository, userContext, pageViewModelCache, markupConverterFactory);
-			PageService pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
+            var historyService = new PageHistoryService(settingsRepository, pageRepository, userContext, pageViewModelCache, markupConverterFactory);
+			var pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
 
 			return pageService;
 		}
