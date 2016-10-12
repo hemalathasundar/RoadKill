@@ -449,6 +449,7 @@
     <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextPluginBeforeParseMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextMiddlewareBuilderTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\TextPluginMiddlewareTests.cs" />
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

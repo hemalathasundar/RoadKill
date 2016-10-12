@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
 
@@ -14,6 +12,7 @@ namespace Roadkill.Core.Text
 	/// </summary>
 	public class TextPluginRunner
 	{
+        // TODO: tests
 		private IEnumerable<TextPlugin> _plugins;
 		private IPluginFactory _pluginFactory;
 		public bool IsCacheable { get; set; }

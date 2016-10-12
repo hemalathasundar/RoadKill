@@ -582,6 +582,8 @@
     <Compile Include="Mvc\ViewModels\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Text\TextMiddleware\TextMiddlewareBuilder.cs" />
+    <Compile Include="Text\TextMiddleware\TextPluginAfterParseMiddleware.cs" />
+    <Compile Include="Text\TextMiddleware\TextPluginBeforeParseMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\TextPluginMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>
