@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppFunc = System.Func<string, System.Threading.Tasks.Task>;
 
 namespace Roadkill.Core.Text
 {
     public class TextMiddlewareBuilder
     {
         private readonly string _markdown;
-        private List<Middleware> _middleItems;
+        private readonly List<Middleware> _middleItems;
 
         public TextMiddlewareBuilder(string markdown)
         {
@@ -20,6 +16,9 @@ namespace Roadkill.Core.Text
 
         public void Use(Middleware middleware)
         {
+            if (middleware == null)
+                throw new ArgumentNullException(nameof(middleware));
+
             _middleItems.Add(middleware);
         }
 
@@ -28,15 +27,17 @@ namespace Roadkill.Core.Text
             string html = _markdown;
             foreach (Middleware item in _middleItems)
             {
-                html = item.Invoke(html);
+                try
+                {
+                    html = item.Invoke(html);
+                }
+                catch (Exception)
+                {
+                    // TODO: logging
+                }
             }
 
             return html;
         }
-    }
-
-    public abstract class Middleware
-    {
-        public abstract string Invoke(string markup);
     }
 }
