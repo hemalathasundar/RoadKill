@@ -447,7 +447,8 @@
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
     <Compile Include="Unit\StubsAndMocks\MiddleWareMock.cs" />
     <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
-    <Compile Include="Unit\Text\TextMiddlewareBuilderTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\TextPluginBeforeParseMiddlewareTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\TextMiddlewareBuilderTests.cs" />
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

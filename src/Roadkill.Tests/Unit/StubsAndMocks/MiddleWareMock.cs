@@ -7,9 +7,9 @@ namespace Roadkill.Tests.Unit.Text
         public string SearchString { get; set; }
         public string Replacement { get; set; }
 
-        public override string Invoke(string markup)
+        public override PageHtml Invoke(PageHtml pageHtml)
         {
-            return markup.Replace(SearchString, Replacement);
+            return pageHtml.Html.Replace(SearchString, Replacement);
         }
     }
 }

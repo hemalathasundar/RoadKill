@@ -2,6 +2,6 @@
 {
     public abstract class Middleware
     {
-        public abstract string Invoke(string markup);
+        public abstract PageHtml Invoke(PageHtml pageHtml);
     }
 }

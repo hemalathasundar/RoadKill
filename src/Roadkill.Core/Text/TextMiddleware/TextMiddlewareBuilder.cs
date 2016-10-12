@@ -22,14 +22,15 @@ namespace Roadkill.Core.Text
             _middleItems.Add(middleware);
         }
 
-        public string Execute()
+        public PageHtml Execute()
         {
-            string html = _markdown;
+            var pageHtml = new PageHtml() {Html = _markdown};
+
             foreach (Middleware item in _middleItems)
             {
                 try
                 {
-                    html = item.Invoke(html);
+                    pageHtml = item.Invoke(pageHtml);
                 }
                 catch (Exception)
                 {
@@ -37,7 +38,7 @@ namespace Roadkill.Core.Text
                 }
             }
 
-            return html;
+            return pageHtml;
         }
     }
 }

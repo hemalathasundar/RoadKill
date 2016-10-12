@@ -525,7 +525,7 @@
     <Compile Include="Services\LocalFileService.cs" />
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Text\Middleware.cs" />
+    <Compile Include="Text\TextMiddleware\Middleware.cs" />
     <Compile Include="Text\Parsers\Images\ImageTagProvider.cs" />
     <Compile Include="Text\Parsers\IMarkupConverterFactory.cs" />
     <Compile Include="Text\Parsers\Links\LinkTagProvider.cs" />
@@ -581,7 +581,8 @@
     <Compile Include="Database\Entities\Page.cs" />
     <Compile Include="Mvc\ViewModels\PageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Text\TextMiddlewareBuilder.cs" />
+    <Compile Include="Text\TextMiddleware\TextMiddlewareBuilder.cs" />
+    <Compile Include="Text\TextMiddleware\TextPluginMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
