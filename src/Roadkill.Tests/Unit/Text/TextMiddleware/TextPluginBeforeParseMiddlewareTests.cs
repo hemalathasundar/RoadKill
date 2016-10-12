@@ -1,7 +1,5 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Roadkill.Core.Cache;
-using Roadkill.Core.Configuration;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit.StubsAndMocks;
@@ -13,7 +11,6 @@ namespace Roadkill.Tests.Unit.Text
     public class TextPluginBeforeParseMiddlewareTests
     {
         private MocksAndStubsContainer _container;
-        private ApplicationSettings _applicationSettings;
         private TextPluginRunner _pluginRunner;
         private PluginFactoryMock _pluginFactory;
 
@@ -21,10 +18,6 @@ namespace Roadkill.Tests.Unit.Text
         public void Setup()
         {
             _container = new MocksAndStubsContainer();
-
-            _applicationSettings = _container.ApplicationSettings;
-            _applicationSettings.UseHtmlWhiteList = true;
-            _applicationSettings.CustomTokensPath = Path.Combine(TestConstants.WEB_PATH, "App_Data", "customvariables.xml");
 
             _pluginFactory = _container.PluginFactory;
             _pluginRunner = new TextPluginRunner(_pluginFactory);
