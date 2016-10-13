@@ -447,6 +447,7 @@
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
     <Compile Include="Unit\StubsAndMocks\MiddleWareMock.cs" />
     <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\MarkupParserMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextPluginBeforeParseMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextMiddlewareBuilderTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextPluginMiddlewareTests.cs" />
