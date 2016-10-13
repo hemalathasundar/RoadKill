@@ -61,23 +61,6 @@ namespace Roadkill.Tests.Unit.Text
         }
 
         [Test]
-        public void html_should_not_be_sanitized_if_usehtmlwhitelist_setting_is_false()
-        {
-            // Arrange
-			string htmlFragment = "<div onclick=\"javascript:alert('ouch');\">test</div>";
-
-			_applicationSettings.UseHtmlWhiteList = false;
-			_markupConverter = _container.MarkupConverterFactory.CreateConverter();
-
-            // Act
-            string actualHtml = _markupConverter.ToHtml(htmlFragment);
-
-            // Assert
-            string expectedHtml = htmlFragment + "\n";
-            Assert.That(actualHtml, Is.EqualTo(expectedHtml));
-        }
-
-        [Test]
         [Ignore("TODO: Fix this")]
         public void warningbox_token_with_nowiki_adds_pre_and_renders_token_html()
         {

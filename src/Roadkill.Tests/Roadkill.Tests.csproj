@@ -125,6 +125,10 @@
       <HintPath>..\..\packages\Fizzler.1.0.0\lib\net35\Fizzler.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlSanitizer, Version=3.0.0.0, Culture=neutral, PublicKeyToken=61c49a1a9e79cc28, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\HtmlSanitizer.3.3.132-beta\lib\net45\HtmlSanitizer.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -447,6 +451,7 @@
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
     <Compile Include="Unit\StubsAndMocks\MiddleWareMock.cs" />
     <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\HarmfulTagMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\MarkupParserMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextPluginBeforeParseMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextMiddlewareBuilderTests.cs" />

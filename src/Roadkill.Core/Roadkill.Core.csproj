@@ -525,6 +525,7 @@
     <Compile Include="Services\LocalFileService.cs" />
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Text\TextMiddleware\HarmfulTagMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\MarkupParserMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\Middleware.cs" />
     <Compile Include="Text\Parsers\Images\ImageTagProvider.cs" />

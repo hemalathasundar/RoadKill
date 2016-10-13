@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Ganss.XSS;
+using NUnit.Framework;
 using Roadkill.Core.Cache;
+using Roadkill.Core.Configuration;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.TextMiddleware;
@@ -9,19 +11,19 @@ namespace Roadkill.Tests.Unit.Text
 {
     [TestFixture]
     [Category("Unit")]
-    public class MarkupParserMiddlewareTests
+    public class HarmfulTagMiddlewareTests
     {
         [Test]
-        public void should_parser_markup_using_parser()
+        public void should_clean_html_using_sanitizer()
         {
             // Arrange
-            string markdown = "some **bold** text";
-            string expectedHtml = "<p>some <strong>bold</strong> text</p>\n";
+            string markdown = "<div onclick=\"javascript:alert('ouch');\">test</div>";
+            string expectedHtml = "<div>test</div>";
 
             var pagehtml = new PageHtml() {Html = markdown};
 
-            var parser = new MarkdigParser();
-            var middleware = new MarkupParserMiddleware(parser);
+            var sanitizer = new HtmlSanitizer();
+            var middleware = new HarmfulTagMiddleware(sanitizer);
 
             // Act
             PageHtml actualPageHtml = middleware.Invoke(pagehtml);

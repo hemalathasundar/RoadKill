@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace Roadkill.Core.Text.TextMiddleware
 {
-    public class HarmfulTagMiddleware
-    {
-        
-    }
-
     public class CustomTokenMiddleware
     {
         
