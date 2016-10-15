@@ -397,7 +397,6 @@
     <Compile Include="Attachments\IResponseWrapper.cs" />
     <Compile Include="Attachments\ResponseWrapper.cs" />
     <Compile Include="Database\Repositories\ISettingsRepository.cs" />
-    <Compile Include="DependencyResolution\StructureMap\LightSpeedRegistry.cs" />
     <Compile Include="DependencyResolution\StructureMap\RoadkillRegistry.cs" />
     <Compile Include="DependencyResolution\StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="DependencyResolution\StructureMap\StructureMapHttpModule.cs" />

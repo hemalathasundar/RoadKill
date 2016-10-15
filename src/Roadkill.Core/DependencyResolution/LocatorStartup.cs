@@ -41,7 +41,6 @@ namespace Roadkill.Core.DependencyResolution
 			IContainer container = new Container(c =>
 			{
 				c.AddRegistry(registry);
-				c.AddRegistry(new LightSpeedRegistry());
 			});
 
 			Locator = new StructureMapServiceLocator(container, isWeb);

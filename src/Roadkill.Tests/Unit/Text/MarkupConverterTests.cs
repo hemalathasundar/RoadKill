@@ -54,33 +54,5 @@ namespace Roadkill.Tests.Unit.Text
 
             _markupConverter = _container.MarkupConverter;
         }
-
-        [Test]
-        [Ignore("TODO: Fix this")]
-        public void warningbox_token_with_nowiki_adds_pre_and_renders_token_html()
-        {
-            // Arrange..make sure expectedHtml uses \n and not \r\n
-            string expectedHtml = @"<p><div class=""alert alert-warning"">ENTER YOUR CONTENT HERE 
-<pre>here is my C#code
-</pre>
-</p>
-<p></div><br style=""clear:both""/>
-</p>";
-
-            expectedHtml = expectedHtml.Replace("\r\n", "\n"); // fix line ending issues
-
-            // Act
-            ;
-            string actualHtml = _markupConverter.ToHtml(@"@@warningbox:ENTER YOUR CONTENT HERE 
-
-        here is my C#code
- 
-
-@@");
-            Console.WriteLine(actualHtml);
-
-            // Assert
-            Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
-        }
     }
 }

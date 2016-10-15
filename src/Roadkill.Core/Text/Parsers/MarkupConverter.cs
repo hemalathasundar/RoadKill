@@ -1,6 +1,7 @@
 ﻿using Ganss.XSS;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Converters
 {
@@ -29,6 +30,10 @@ namespace Roadkill.Core.Converters
 
 		public PageHtml ToHtml(string text)
 		{
+		    var builder = new TextMiddlewareBuilder(text);
+		    //builder.Use(new TextPluginRunner());
+            //builder.Use(new MarkupParserMiddleware())
+
             PageHtml pageHtml = new PageHtml();
 
             // Text plugins before parse
