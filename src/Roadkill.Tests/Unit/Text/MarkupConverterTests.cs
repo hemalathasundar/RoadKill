@@ -26,8 +26,6 @@ namespace Roadkill.Tests.Unit.Text
     {
         private MocksAndStubsContainer _container;
         private ApplicationSettings _applicationSettings;
-        private PageRepositoryMock _pageRepository;
-        private PluginFactoryMock _pluginFactory;
         private MarkupConverter _markupConverter;
 
 		// PluginRunner.BeforeParse
@@ -54,9 +52,6 @@ namespace Roadkill.Tests.Unit.Text
             _applicationSettings.UseHtmlWhiteList = true;
             _applicationSettings.CustomTokensPath = Path.Combine(TestConstants.WEB_PATH, "App_Data", "customvariables.xml");
 
-            _pageRepository = _container.PageRepository;
-
-            _pluginFactory = _container.PluginFactory;
             _markupConverter = _container.MarkupConverter;
         }
 
