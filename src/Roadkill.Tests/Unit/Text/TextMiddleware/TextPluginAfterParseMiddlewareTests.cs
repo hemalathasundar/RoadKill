@@ -8,7 +8,7 @@ namespace Roadkill.Tests.Unit.Text
 {
     [TestFixture]
     [Category("Unit")]
-    public class TextPluginMiddlewareTests
+    public class TextPluginAfterParseMiddlewareTests
     {
         private MocksAndStubsContainer _container;
         private TextPluginRunner _pluginRunner;
@@ -36,7 +36,7 @@ namespace Roadkill.Tests.Unit.Text
             plugin.Settings.IsEnabled = true;
             _pluginFactory.RegisterTextPlugin(plugin);
 
-            var middleware = new TextPluginMiddleware(_pluginRunner);
+            var middleware = new TextPluginAfterParseMiddleware(_pluginRunner);
             var pageHtml = new PageHtml();
             pageHtml.Html = markupFragment;
 
@@ -59,7 +59,7 @@ namespace Roadkill.Tests.Unit.Text
             plugin.PostContainerHtml = "post container html";
             _pluginFactory.RegisterTextPlugin(plugin);
 
-            var middleware = new TextPluginMiddleware(_pluginRunner);
+            var middleware = new TextPluginAfterParseMiddleware(_pluginRunner);
             var pageHtml = new PageHtml();
 
             // Act
@@ -81,7 +81,7 @@ namespace Roadkill.Tests.Unit.Text
             plugin.Settings.IsEnabled = true;
             _pluginFactory.RegisterTextPlugin(plugin);
 
-            var middleware = new TextPluginMiddleware(_pluginRunner);
+            var middleware = new TextPluginAfterParseMiddleware(_pluginRunner);
             var pageHtml = new PageHtml();
 
             // Act

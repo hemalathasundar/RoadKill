@@ -11,7 +11,7 @@ namespace Roadkill.Tests.Unit.Text
         {
             // given, when
             string markup = "";
-            var builder = new TextMiddlewareBuilder(markup);
+            var builder = new TextMiddlewareBuilder();
 
             // then
             Assert.Throws<ArgumentNullException>(() => builder.Use(null));
@@ -22,13 +22,13 @@ namespace Roadkill.Tests.Unit.Text
         {
             // given
             string markup = "item1 item2";
-            var builder = new TextMiddlewareBuilder(markup);
+            var builder = new TextMiddlewareBuilder();
             var middleware1 = new MiddleWareMock() { SearchString = null, Replacement = null };
 
             builder.Use(middleware1);
 
             // when
-            string result = builder.Execute();
+            string result = builder.Execute(markup);
 
             // then
             Assert.That(result, Is.EqualTo("item1 item2"));
@@ -39,7 +39,7 @@ namespace Roadkill.Tests.Unit.Text
         {
             // given
             string markup = "item1 item2";
-            var builder = new TextMiddlewareBuilder(markup);
+            var builder = new TextMiddlewareBuilder();
             var middleware1 = new MiddleWareMock() { SearchString = "item1", Replacement = "value1" };
             var middleware2 = new MiddleWareMock() { SearchString = "item2", Replacement = "value2" };
 
@@ -47,7 +47,7 @@ namespace Roadkill.Tests.Unit.Text
             builder.Use(middleware2);
 
             // when
-            string result = builder.Execute();
+            string result = builder.Execute(markup);
 
             // then
             Assert.That(result, Is.EqualTo("value1 value2"));

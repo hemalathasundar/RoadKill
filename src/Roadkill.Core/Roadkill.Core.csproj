@@ -397,6 +397,7 @@
     <Compile Include="Attachments\IResponseWrapper.cs" />
     <Compile Include="Attachments\ResponseWrapper.cs" />
     <Compile Include="Database\Repositories\ISettingsRepository.cs" />
+    <Compile Include="DependencyResolution\StructureMap\TextRegistry.cs" />
     <Compile Include="DependencyResolution\StructureMap\RoadkillRegistry.cs" />
     <Compile Include="DependencyResolution\StructureMap\StructureMapServiceLocator.cs" />
     <Compile Include="DependencyResolution\StructureMap\StructureMapHttpModule.cs" />
@@ -524,6 +525,8 @@
     <Compile Include="Services\LocalFileService.cs" />
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Text\Sanitizer\HtmlSanitizerFactory.cs" />
+    <Compile Include="Text\Sanitizer\IHtmlSanitizerFactory.cs" />
     <Compile Include="Text\TextMiddleware\HarmfulTagMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\MarkupParserMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\Middleware.cs" />

@@ -4,6 +4,7 @@ using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.Parsers.Markdig;
+using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
@@ -22,8 +23,8 @@ namespace Roadkill.Tests.Unit.Text
 
             var pagehtml = new PageHtml() {Html = markdown};
 
-            var sanitizer = new HtmlSanitizer();
-            var middleware = new HarmfulTagMiddleware(sanitizer);
+            var factory = new HtmlSanitizerFactory(new ApplicationSettings() { UseHtmlWhiteList = true });
+            var middleware = new HarmfulTagMiddleware(factory);
 
             // Act
             PageHtml actualPageHtml = middleware.Invoke(pagehtml);

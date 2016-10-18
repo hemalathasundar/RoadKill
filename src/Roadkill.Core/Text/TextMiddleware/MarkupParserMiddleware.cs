@@ -1,12 +1,13 @@
-﻿using Roadkill.Core.Text.Parsers.Markdig;
+﻿using Roadkill.Core.Converters;
+using Roadkill.Core.Text.Parsers.Markdig;
 
 namespace Roadkill.Core.Text.TextMiddleware
 {
     public class MarkupParserMiddleware : Middleware
     {
-        private MarkdigParser _parser;
+        private IMarkupParser _parser;
 
-        public MarkupParserMiddleware(MarkdigParser parser)
+        public MarkupParserMiddleware(IMarkupParser parser)
         {
             _parser = parser;
         }

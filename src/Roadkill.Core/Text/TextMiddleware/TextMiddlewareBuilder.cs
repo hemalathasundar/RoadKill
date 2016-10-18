@@ -5,13 +5,11 @@ namespace Roadkill.Core.Text
 {
     public class TextMiddlewareBuilder
     {
-        private readonly string _markdown;
-        private readonly List<Middleware> _middleItems;
+        public List<Middleware> MiddleItems { get; set; }
 
-        public TextMiddlewareBuilder(string markdown)
+        public TextMiddlewareBuilder()
         {
-            _markdown = markdown;
-            _middleItems = new List<Middleware>();
+            MiddleItems = new List<Middleware>();
         }
 
         public void Use(Middleware middleware)
@@ -19,14 +17,14 @@ namespace Roadkill.Core.Text
             if (middleware == null)
                 throw new ArgumentNullException(nameof(middleware));
 
-            _middleItems.Add(middleware);
+            MiddleItems.Add(middleware);
         }
 
-        public PageHtml Execute()
+        public PageHtml Execute(string markdown)
         {
-            var pageHtml = new PageHtml() {Html = _markdown};
+            var pageHtml = new PageHtml() {Html = markdown};
 
-            foreach (Middleware item in _middleItems)
+            foreach (Middleware item in MiddleItems)
             {
                 try
                 {

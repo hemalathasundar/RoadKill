@@ -1,14 +1,15 @@
 ﻿using Ganss.XSS;
+using Roadkill.Core.Text.Sanitizer;
 
 namespace Roadkill.Core.Text.TextMiddleware
 {
     public class HarmfulTagMiddleware : Middleware
     {
-        private HtmlSanitizer _sanitizer;
+        private readonly HtmlSanitizer _sanitizer;
 
-        public HarmfulTagMiddleware(HtmlSanitizer sanitizer)
+        public HarmfulTagMiddleware(IHtmlSanitizerFactory htmlSanitizerFactory)
         {
-            _sanitizer = sanitizer;
+            _sanitizer = htmlSanitizerFactory.CreateHtmlSanitizer();
         }
 
         public override PageHtml Invoke(PageHtml pageHtml)

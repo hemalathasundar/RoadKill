@@ -1,10 +1,10 @@
 ﻿namespace Roadkill.Core.Text.TextMiddleware
 {
-    public class TextPluginMiddleware : Middleware
+    public class TextPluginAfterParseMiddleware : Middleware
     {
         private readonly TextPluginRunner _textPluginRunner;
 
-        public TextPluginMiddleware(TextPluginRunner textPluginRunner)
+        public TextPluginAfterParseMiddleware(TextPluginRunner textPluginRunner)
         {
             _textPluginRunner = textPluginRunner;
         }

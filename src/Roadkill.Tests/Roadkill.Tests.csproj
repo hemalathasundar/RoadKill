@@ -339,6 +339,7 @@
     <Compile Include="Unit\Database\RepositoryInfoTests.cs" />
     <Compile Include="Unit\Database\SchemaTests.cs" />
     <Compile Include="Unit\DependencyResolution\LocatorStartupTests.cs" />
+    <Compile Include="Unit\DependencyResolution\TextRegistryTests.cs" />
     <Compile Include="Unit\Email\EmailTemplateTests.cs" />
     <Compile Include="Unit\Export\SqlExportBuilderTests.cs" />
     <Compile Include="Unit\Extensions\UrlHelperExtensionsTests.cs" />
@@ -456,7 +457,7 @@
     <Compile Include="Unit\Text\TextMiddleware\MarkupParserMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextPluginBeforeParseMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\TextMiddlewareBuilderTests.cs" />
-    <Compile Include="Unit\Text\TextMiddleware\TextPluginMiddlewareTests.cs" />
+    <Compile Include="Unit\Text\TextMiddleware\TextPluginAfterParseMiddlewareTests.cs" />
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

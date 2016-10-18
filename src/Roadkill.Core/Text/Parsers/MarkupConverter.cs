@@ -30,7 +30,7 @@ namespace Roadkill.Core.Converters
 
 		public PageHtml ToHtml(string text)
 		{
-		    var builder = new TextMiddlewareBuilder(text);
+		    var builder = new TextMiddlewareBuilder();
 		    //builder.Use(new TextPluginRunner());
             //builder.Use(new MarkupParserMiddleware())
 
