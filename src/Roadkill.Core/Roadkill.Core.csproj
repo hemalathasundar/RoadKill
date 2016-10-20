@@ -525,17 +525,15 @@
     <Compile Include="Services\LocalFileService.cs" />
     <Compile Include="Services\InstallationService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Text\Parsers\IMarkupParser.cs" />
     <Compile Include="Text\Sanitizer\HtmlSanitizerFactory.cs" />
     <Compile Include="Text\Sanitizer\IHtmlSanitizerFactory.cs" />
     <Compile Include="Text\TextMiddleware\HarmfulTagMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\MarkupParserMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\Middleware.cs" />
     <Compile Include="Text\Parsers\Images\ImageTagProvider.cs" />
-    <Compile Include="Text\Parsers\IMarkupConverterFactory.cs" />
     <Compile Include="Text\Parsers\Links\LinkTagProvider.cs" />
     <Compile Include="Text\Parsers\Links\MarkupLinkUpdater.cs" />
-    <Compile Include="Text\Parsers\MarkupConverterFactory.cs" />
-    <Compile Include="Text\Parsers\MarkupParserHelp.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigParser.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigAstWalker.cs" />
     <Compile Include="Text\Plugins\TextPluginRunner.cs" />
@@ -548,7 +546,6 @@
     <Compile Include="Text\Sanitizer\HtmlAttribute.cs" />
     <Compile Include="Text\Sanitizer\HtmlElement.cs" />
     <Compile Include="Text\Parsers\Images\HtmlImageTag.cs" />
-    <Compile Include="Text\Parsers\IMarkupParser.cs" />
     <Compile Include="Text\Parsers\Links\HtmlLinkTag.cs" />
     <Compile Include="Security\Windows\ActiveDirectoryUserService.cs" />
     <Compile Include="Security\FormsAuthUserService.cs" />
@@ -571,7 +568,6 @@
     <Compile Include="Mvc\ViewModels\PageHistoryViewModel.cs" />
     <Compile Include="Mvc\ViewModels\TagViewModel.cs" />
     <Compile Include="Text\HtmlDiff.cs" />
-    <Compile Include="Text\Parsers\MarkupConverter.cs" />
     <Compile Include="Exceptions\InstallerException.cs" />
     <Compile Include="Security\UserContext.cs" />
     <Compile Include="Extensions\Extensions.cs" />

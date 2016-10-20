@@ -7,6 +7,7 @@ using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Services;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Tests.Unit.StubsAndMocks
 {
@@ -16,8 +17,8 @@ namespace Roadkill.Tests.Unit.StubsAndMocks
 		public List<PageContent> PageContents { get; set; }
 		public bool CreatedNewIndex { get; set; }
 
-		public SearchServiceMock(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, IMarkupConverterFactory markupConverterFactory)
-			: base(settings, settingsRepository, pageRepository, markupConverterFactory)
+		public SearchServiceMock(ApplicationSettings settings, ISettingsRepository settingsRepository, IPageRepository pageRepository, TextMiddlewareBuilder textMiddlewareBuilder)
+			: base(settings, settingsRepository, pageRepository, textMiddlewareBuilder)
 		{
 			Pages = new List<Page>();
 			PageContents = new List<PageContent>();

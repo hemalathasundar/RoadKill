@@ -34,7 +34,7 @@ namespace Roadkill.Tests.Unit.Plugins
 		{
 			// Arrange
 			string markup = "Here is some ===Heading 1=== markup \n[[[jumbotron=\n==Welcome==\n==This the subheading==]]]";
-			Jumbotron jumbotron = new Jumbotron(_container.MarkupConverter);
+			Jumbotron jumbotron = new Jumbotron(_container.TextMiddlewareBuilder);
 
 			// Act
 			string actualMarkup = jumbotron.BeforeParse(markup);
@@ -50,7 +50,7 @@ namespace Roadkill.Tests.Unit.Plugins
 			string markup = "Here is some # Heading 1\n markup \n[[[jumbotron=# Welcome\n## This is a subheading]]]";
 			string expectedHtml = Jumbotron.HTMLTEMPLATE.Replace("${inner}", "<h1 id=\"welcome\">Welcome</h1>\n<h2 id=\"this-is-a-subheading\">This is a subheading</h2>\n");
 
-			Jumbotron jumbotron = new Jumbotron(_container.MarkupConverter);
+			Jumbotron jumbotron = new Jumbotron(_container.TextMiddlewareBuilder);
 
 			// Act
 			jumbotron.BeforeParse(markup);

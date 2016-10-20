@@ -5,7 +5,6 @@ using System.Web.Http;
 using Roadkill.Core.Attachments;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Domain.Export;
@@ -20,7 +19,6 @@ using Roadkill.Core.Plugins;
 using Roadkill.Core.Security;
 using Roadkill.Core.Security.Windows;
 using Roadkill.Core.Services;
-using Roadkill.Core.Text.Parsers.Markdig;
 using StructureMap;
 using StructureMap.Building;
 using StructureMap.Graph;
@@ -85,7 +83,6 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			// Plugins
 			scanner.With(new AbstractClassConvention<TextPlugin>());
 			scanner.With(new AbstractClassConvention<SpecialPagePlugin>());
-            scanner.AddAllTypesOf<IPluginFactory>();
 
 			// Config, context
 			scanner.AddAllTypesOf<ApplicationSettings>();
@@ -104,10 +101,6 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			scanner.AddAllTypesOf<IActiveDirectoryProvider>();
 			scanner.AddAllTypesOf<IFileService>();
 			scanner.AddAllTypesOf<IInstallationService>();
-
-			// Text parsers
-			scanner.AddAllTypesOf<IMarkupConverterFactory>();
-			scanner.AddAllTypesOf<CustomTokenParser>();
 
 			// MVC Related
 			scanner.AddAllTypesOf<UserViewModel>();
@@ -164,9 +157,6 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			// Emails
 			For<SignupEmail>().Use<SignupEmail>();
 			For<ResetPasswordEmail>().Use<ResetPasswordEmail>();
-
-			// Text
-			For<IMarkupConverterFactory>().Use<MarkupConverterFactory>().Singleton();
 
 			// Cache
 			For<ObjectCache>().Singleton().Use(new MemoryCache("Roadkill"));

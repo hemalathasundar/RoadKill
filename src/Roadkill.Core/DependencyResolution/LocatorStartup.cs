@@ -16,7 +16,7 @@ using StructureMap;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(LocatorStartup), "StartMVC")]
 [assembly: WebActivatorEx.PostApplicationStartMethod(typeof(LocatorStartup), "AfterInitialization")]
-//[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(LocatorStartup), "End")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(LocatorStartup), "End")]
 
 namespace Roadkill.Core.DependencyResolution
 {
@@ -41,6 +41,7 @@ namespace Roadkill.Core.DependencyResolution
 			IContainer container = new Container(c =>
 			{
 				c.AddRegistry(registry);
+			    c.AddRegistry<TextRegistry>();
 			});
 
 			Locator = new StructureMapServiceLocator(container, isWeb);

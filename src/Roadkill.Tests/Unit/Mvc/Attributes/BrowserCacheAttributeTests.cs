@@ -5,10 +5,12 @@ using Moq;
 using NUnit.Framework;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
+using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Services;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.Controllers;
+using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 
@@ -189,16 +191,17 @@ namespace Roadkill.Tests.Unit.Mvc.Attributes
 			// Settings
 			var appSettings = new ApplicationSettings() { Installed = true, UseBrowserCache = true };
 			var userContext = new UserContextStub() { IsLoggedIn = false };
-			var markupConverterFactory = _container.MarkupConverterFactory;
+			var builder = _container.TextMiddlewareBuilder;
+		    var parser = new MarkdigParser();
 
 			// PageService
 			var pageViewModelCache = new PageViewModelCache(appSettings, CacheMock.RoadkillCache);
 			var listCache = new ListCache(appSettings, CacheMock.RoadkillCache);
 			var siteCache = new SiteCache(CacheMock.RoadkillCache);
-			var searchService = new SearchServiceMock(appSettings, _settingsRepository, _pageRepository, markupConverterFactory);
+			var searchService = new SearchServiceMock(appSettings, _settingsRepository, _pageRepository, builder);
 
-			var historyService = new PageHistoryService(_settingsRepository, _pageRepository, userContext, pageViewModelCache, markupConverterFactory);
-			var pageService = new PageService(appSettings, _settingsRepository, _pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
+			var historyService = new PageHistoryService(_settingsRepository, _pageRepository, userContext, pageViewModelCache, builder);
+		    var pageService = new PageService(appSettings, _settingsRepository, _pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, builder, parser);
 
 			// WikiController
 			var settingsService = new SettingsService(new RepositoryFactoryMock(), appSettings);

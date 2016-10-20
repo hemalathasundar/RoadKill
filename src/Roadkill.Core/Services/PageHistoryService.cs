@@ -7,6 +7,7 @@ using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Core.Services
 {
@@ -15,22 +16,22 @@ namespace Roadkill.Core.Services
 	/// </summary>
 	public class PageHistoryService
 	{
-		private readonly MarkupConverter _markupConverter;
 		private readonly IUserContext _context;
 		private readonly PageViewModelCache _pageViewModelCache;
+	    private readonly TextMiddlewareBuilder _textMiddlewareBuilder;
 
-		public ApplicationSettings ApplicationSettings { get; set; }
+	    public ApplicationSettings ApplicationSettings { get; set; }
 		public ISettingsRepository SettingsRepository { get; set; }
 		public IPageRepository PageRepository { get; set; }
 
 		public PageHistoryService(ISettingsRepository settingsRepository, IPageRepository pageRepository, IUserContext context, 
-			PageViewModelCache pageViewModelCache, IMarkupConverterFactory markupConverterFactory)
+			PageViewModelCache pageViewModelCache, TextMiddlewareBuilder textMiddlewareBuilder)
 		{
-		    _markupConverter = markupConverterFactory.CreateConverter();
 			_context = context;
 			_pageViewModelCache = pageViewModelCache;
+		    _textMiddlewareBuilder = textMiddlewareBuilder;
 
-			SettingsRepository = settingsRepository;
+		    SettingsRepository = settingsRepository;
 			PageRepository = pageRepository;
 		}
 
@@ -74,7 +75,7 @@ namespace Roadkill.Core.Services
 				List<PageViewModel> versions = new List<PageViewModel>();
 
 				PageContent mainContent = PageRepository.GetPageContentById(mainVersionId);
-				versions.Add(new PageViewModel(mainContent, _markupConverter));
+				versions.Add(new PageViewModel(mainContent, _textMiddlewareBuilder));
 
 				if (mainContent.VersionNumber == 1)
 				{
@@ -93,7 +94,7 @@ namespace Roadkill.Core.Services
 						}
 						else
 						{
-							model = new PageViewModel(previousContent, _markupConverter);
+							model = new PageViewModel(previousContent, _textMiddlewareBuilder);
 							_pageViewModelCache.Add(mainContent.Page.Id, mainContent.VersionNumber - 1, model);
 						}
 					}

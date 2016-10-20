@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ganss.XSS;
-using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
+﻿using Roadkill.Core.Converters;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
 using StructureMap;
+using StructureMap.Graph;
 
 namespace Roadkill.Core.DependencyResolution.StructureMap
 {
@@ -19,6 +13,8 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
     {
         public TextRegistry()
         {
+            Scan(ScanTypes);
+
             For<IPluginFactory>().Use<PluginFactory>();
             For<IMarkupParser>().Use<MarkdigParser>();
             For<IHtmlSanitizerFactory>().Use<HtmlSanitizerFactory>();
@@ -41,7 +37,12 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
                     builder.Use(new TextPluginAfterParseMiddleware(textPluginRunner));
 
                     return builder;
-                });
+                }).Singleton();
+        }
+
+        private void ScanTypes(IAssemblyScanner scanner)
+        {
+            scanner.AddAllTypesOf<CustomTokenParser>();
         }
     }
 }

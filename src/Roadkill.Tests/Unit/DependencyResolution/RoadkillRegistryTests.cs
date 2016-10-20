@@ -10,7 +10,6 @@ using Roadkill.Core;
 using Roadkill.Core.Attachments;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
 using Roadkill.Core.Database.MongoDB;
@@ -43,9 +42,13 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			configReaderWriterStub.ApplicationSettings.ConnectionString = "none empty connection string";
 
 			var roadkillRegistry = new RoadkillRegistry(configReaderWriterStub);
+		    var textRegistry = new TextRegistry();
 			var container = new Container(c =>
 			{
 				c.AddRegistry(roadkillRegistry);
+
+                // injects IMarkupParser and text middleware required by the services
+                c.AddRegistry(textRegistry); 
 			});
 			container.Inject(typeof(IUnitOfWork), new UnitOfWork());
 
@@ -204,8 +207,12 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			settings.AdminRoleName = "admins";
 			settings.EditorRoleName = "editors";
 
-			var registry = new RoadkillRegistry(new ConfigReaderWriterStub() { ApplicationSettings = settings });
-			var container = new Container(registry);
+			var roadkillRegistry = new RoadkillRegistry(new ConfigReaderWriterStub() { ApplicationSettings = settings });
+			var container = new Container(c =>
+			{
+			    c.AddRegistry(roadkillRegistry);
+			    c.AddRegistry<TextRegistry>();
+			});
 
 			// Act +  Assert
 			Assert.That(container.GetInstance<SearchService>(), Is.Not.Null);
@@ -213,22 +220,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			Assert.That(container.GetInstance<PageService>(), Is.Not.Null);
 			Assert.That(container.GetInstance<FormsAuthUserService>(), Is.Not.Null);
 			Assert.That(container.GetInstance<ActiveDirectoryUserService>(), Is.Not.Null);
-		}
-
-		// Text parsers
-		[Test]
-		public void should_register_text_and_tokenparsers()
-		{
-			// Arrange
-			IContainer container = CreateContainer();
-
-			// Act
-			MarkupConverter markupConverter = container.GetInstance<MarkupConverter>();
-			CustomTokenParser tokenParser = container.GetInstance<CustomTokenParser>();
-
-			// Assert
-			Assert.That(markupConverter, Is.TypeOf<MarkupConverter>());
-			Assert.That(tokenParser, Is.TypeOf<CustomTokenParser>());
 		}
 
 		// MVC + controllers

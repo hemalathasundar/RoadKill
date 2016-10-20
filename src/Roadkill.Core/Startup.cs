@@ -14,7 +14,9 @@ namespace Roadkill.Core
 {
 	public class Startup
 	{
-		// See LocatorStartup for lots of pre-startup IoC setup that's performed.
+        //
+		// ** See LocatorStartup for lots of pre-startup IoC setup that's performed. **
+        //
 
 		public void Configuration(IAppBuilder app)
 		{

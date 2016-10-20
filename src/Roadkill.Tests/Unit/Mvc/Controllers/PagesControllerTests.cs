@@ -10,6 +10,7 @@ using Roadkill.Core.Database;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
+using Roadkill.Core.Text;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 
@@ -26,40 +27,33 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		private UserServiceMock _userService;
 		private PageHistoryService _historyService;
 		private SettingsService _settingsService;
-		private PluginFactoryMock _pluginFactory;
-		private MarkupConverter _markupConverter;
 		private SearchServiceMock _searchService;
 
 		private UserContextStub _contextStub;
 		private Mock<IPageService> _pageServiceMock;
 		private IPageService _pageService;
-		private MvcMockContainer _mocksContainer;
 		private PagesController _pagesController;
-		private SettingsRepositoryMock _settingsRepository;
+	    private TextMiddlewareBuilder _textMiddlewareBuilder;
 
-		[SetUp]
+	    [SetUp]
 		public void Setup()
 		{
 			_container = new MocksAndStubsContainer();
 
 			_applicationSettings = _container.ApplicationSettings;
-
-			_settingsRepository = _container.SettingsRepository;
 			_pageRepository = _container.PageRepository;
-			
-			_pluginFactory = _container.PluginFactory;
 			_settingsService = _container.SettingsService;
 			_userService = _container.UserService;
 			_historyService = _container.HistoryService;
-			_markupConverter = _container.MarkupConverter;
 			_searchService = _container.SearchService;
+		    _textMiddlewareBuilder = _container.TextMiddlewareBuilder;
 
-			// Use a stub instead of the MocksAndStubsContainer's default
-			_contextStub = new UserContextStub();
+            // Use a stub instead of the MocksAndStubsContainer's default
+            _contextStub = new UserContextStub();
 
 			// Customise the page service so we can verify what was called
 			_pageServiceMock = new Mock<IPageService>();
-			_pageServiceMock.Setup(x => x.GetMarkupConverter()).Returns(_container.MarkupConverterFactory.CreateConverter());
+			_pageServiceMock.Setup(x => x.GetTextMiddlewareBuilder()).Returns(_container.TextMiddlewareBuilder);
 			_pageServiceMock.Setup(x => x.GetById(It.IsAny<int>(), false)).Returns<int, bool>((int id, bool loadContent) =>
 				{
 					Page page = _pageRepository.GetPageById(id);
@@ -70,7 +64,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 				PageContent content = _pageRepository.GetLatestPageContent(id);
 
 				if (content != null)
-					return new PageViewModel(content, _markupConverter);
+					return new PageViewModel(content, _textMiddlewareBuilder);
 				else
 					return null;
 			});
@@ -78,7 +72,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			_pageService = _pageServiceMock.Object;
 
 			_pagesController = new PagesController(_applicationSettings, _userService, _settingsService, _pageService, _searchService, _historyService, _contextStub);
-			_mocksContainer = _pagesController.SetFakeControllerContext();
+			_pagesController.SetFakeControllerContext();
 		}
 
 		private Page AddDummyPage1()
@@ -350,7 +344,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			ActionResult result = _pagesController.GetPreview(_pageRepository.PageContents[0].Text);
 
 			// Assert
-			_pageServiceMock.Verify(x => x.GetMarkupConverter());
+			_pageServiceMock.Verify(x => x.GetTextMiddlewareBuilder());
 
 			Assert.That(result, Is.TypeOf<JavaScriptResult>(), "JavaScriptResult");
 			JavaScriptResult javascriptResult = result as JavaScriptResult;

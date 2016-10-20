@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Roadkill.Core.Database;
 using Roadkill.Core.Mvc.ViewModels;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Core.Services
 {
@@ -91,11 +92,11 @@ namespace Roadkill.Core.Services
 		/// <returns>The <see cref="PageContent"/> for the page.</returns>
 		PageContent GetCurrentContent(int pageId);
 
-		/// <summary>
-		/// Retrieves the <see cref="MarkupConverter"/> used by this IPageService.
-		/// </summary>
-		/// <returns></returns>
-		Converters.MarkupConverter GetMarkupConverter();
+        /// <summary>
+        /// Retrieves the <see cref="TextMiddlewareBuilder"/> used by this IPageService.
+        /// </summary>
+        /// <returns></returns>
+        TextMiddlewareBuilder GetTextMiddlewareBuilder();
 
 		/// <summary>
 		/// Renames a tag by changing all pages that reference the tag to use the new tag name.

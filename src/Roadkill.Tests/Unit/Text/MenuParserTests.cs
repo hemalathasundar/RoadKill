@@ -6,6 +6,7 @@ using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Text;
 using Roadkill.Tests.Unit.StubsAndMocks;
+using Roadkill.Core.Text.Parsers.Markdig;
 
 namespace Roadkill.Tests.Unit.Text
 {
@@ -20,9 +21,8 @@ namespace Roadkill.Tests.Unit.Text
 		private ApplicationSettings _applicationSettings;
 		private CacheMock _cache;
 		private SiteCache _siteCache;
-		private MarkupConverter _markupConverter;
 		private MenuParser _menuParser;
-	    private MarkupConverterFactory _markupConverterFactory;
+	    private MarkdigParser _markupParser;
 
 	    [SetUp]
 		public void Setup()
@@ -42,10 +42,8 @@ namespace Roadkill.Tests.Unit.Text
 			_cache = new CacheMock();
 			_siteCache = new SiteCache(_cache);
 
-            _markupConverterFactory = new MarkupConverterFactory(_applicationSettings, _pageRepository, _pluginFactory);
-	        _markupConverter = _markupConverterFactory.CreateConverter();
-
-            _menuParser = new MenuParser(_markupConverter.MarkupParser, _settingsRepository, _siteCache, _userContext);
+	        _markupParser = new MarkdigParser();
+            _menuParser = new MenuParser(_markupParser, _settingsRepository, _siteCache, _userContext);
 		}
 
 		[Test]

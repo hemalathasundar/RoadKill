@@ -171,8 +171,8 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			if (!string.IsNullOrEmpty(id))
 			{
-				MarkupConverter converter = _pageService.GetMarkupConverter();
-				pagehtml = converter.ToHtml(id);
+				TextMiddlewareBuilder middlewareBuilder = _pageService.GetTextMiddlewareBuilder();
+				pagehtml = middlewareBuilder.Execute(id);
 			}
 
 			return JavaScript(pagehtml.Html);
@@ -269,20 +269,20 @@ namespace Roadkill.Core.Mvc.Controllers
 		/// output inside the <see cref="PageViewModel.Content"/> property.</returns>
 		public ActionResult Version(Guid id)
 		{
-			MarkupConverter converter = _pageService.GetMarkupConverter();
+			var middlewareBuilder = _pageService.GetTextMiddlewareBuilder();
 			IList<PageViewModel> bothVersions = _historyService.CompareVersions(id).ToList();
 			string diffHtml = "";
 
 			if (bothVersions[1] != null)
 			{
-				string oldVersion = converter.ToHtml(bothVersions[1].Content).Html;
-				string newVersion = converter.ToHtml(bothVersions[0].Content).Html;
+				string oldVersion = middlewareBuilder.Execute(bothVersions[1].Content).Html;
+				string newVersion = middlewareBuilder.Execute(bothVersions[0].Content).Html;
 				HtmlDiff diff = new HtmlDiff(oldVersion, newVersion);
 				diffHtml = diff.Build();
 			}
 			else
 			{
-				diffHtml = converter.ToHtml(bothVersions[0].Content).Html;
+				diffHtml = middlewareBuilder.Execute(bothVersions[0].Content).Html;
 			}
 
 			PageViewModel model = bothVersions[0];

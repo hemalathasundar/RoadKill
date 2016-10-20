@@ -1,23 +1,16 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Roadkill.Tests.Unit.Text
 {
-    public class MarkdigParserTests
+    public class HtmlSanitizerFactoryTests
     {
         [Test]
-        public void should_handle_empty_strings()
-        {
-            // given
-            string markdown = "[i am a link](http://www.google.com){.main}";
-
-            // when
-
-            // then
-            Assert.Fail("fail");
-        }
-
-        [Test]
-        public void should_parse_basic_markdown()
+        public void should_return_null_when_note_enabled()
         {
             // given
 
@@ -28,7 +21,18 @@ namespace Roadkill.Tests.Unit.Text
         }
 
         [Test]
-        public void should()
+        public void should_use_whitelist()
+        {
+            // given
+
+            // when
+
+            // then
+            Assert.Fail("fail");
+        }
+
+        [Test]
+        public void should_configure_htmlsanitizer()
         {
             // given
 

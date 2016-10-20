@@ -9,6 +9,7 @@ using Roadkill.Core.Services;
 using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
+using Roadkill.Core.Text;
 using StructureMap;
 
 namespace Roadkill.Core.Mvc.Controllers
@@ -21,15 +22,15 @@ namespace Roadkill.Core.Mvc.Controllers
 	{
 		public IPageService PageService { get; private set; }
 		private SearchService _searchService;
-		private MarkupConverter _markupConverter;
+	    private readonly TextMiddlewareBuilder _textMiddlewareBuilder;
 
-		public HomeController(ApplicationSettings settings, UserServiceBase userManager, MarkupConverter markupConverter,
-			IPageService pageService, SearchService searchService, IUserContext context, SettingsService settingsService)
+	    public HomeController(ApplicationSettings settings, UserServiceBase userManager,IPageService pageService, 
+            SearchService searchService, IUserContext context, SettingsService settingsService, TextMiddlewareBuilder textMiddlewareBuilder)
 			: base(settings, userManager, context, settingsService) 
 		{
-			_markupConverter = markupConverter;
 			_searchService = searchService;
-			PageService = pageService;
+	        _textMiddlewareBuilder = textMiddlewareBuilder;
+	        PageService = pageService;
 		}
 
 		/// <summary>
@@ -47,7 +48,7 @@ namespace Roadkill.Core.Mvc.Controllers
 				model = new PageViewModel();
 				model.Title = SiteStrings.NoMainPage_Title;
 				model.Content = SiteStrings.NoMainPage_Label;
-				model.ContentAsHtml = _markupConverter.ToHtml(SiteStrings.NoMainPage_Label).Html;
+				model.ContentAsHtml = _textMiddlewareBuilder.Execute(SiteStrings.NoMainPage_Label).Html;
 				model.CreatedBy = "";
 				model.CreatedOn = DateTime.UtcNow;
 				model.RawTags = "homepage";

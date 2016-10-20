@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Services;
-using StructureMap;
+using Roadkill.Core.Text;
 using StructureMap.Attributes;
 
 namespace Roadkill.Core.Mvc.WebViewPages
@@ -23,9 +23,12 @@ namespace Roadkill.Core.Mvc.WebViewPages
 		public IUserContext RoadkillContext { get; set; }
 		
 		[SetterProperty]
-		public MarkupConverter MarkupConverter { get; set; }
+		public TextMiddlewareBuilder TextMiddlewareBuilder { get; set; }
 
-		[SetterProperty]
+        [SetterProperty]
+        public IMarkupParser MarkupParser { get; set; }
+
+        [SetterProperty]
 		public SettingsService SettingsService { get; set; }
 
 		public SiteSettings SiteSettings

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Roadkill.Core.Configuration;
+﻿using NUnit.Framework;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Text.Parsers.Markdig;
-using Roadkill.Tests.Unit.StubsAndMocks;
 
 namespace Roadkill.Tests.Unit.Text
 {
@@ -15,26 +8,6 @@ namespace Roadkill.Tests.Unit.Text
 	[Category("Unit")]
 	public class MarkupLinkUpdaterTests
 	{
-		private MocksAndStubsContainer _container;
-
-		private ApplicationSettings _applicationSettings;
-		private PageRepositoryMock _pageRepository;
-		private PluginFactoryMock _pluginFactory;
-		private MarkupConverter _markupConverter;
-		private SiteSettings _siteSettings;
-
-		[SetUp]
-		public void Setup()
-		{
-			_container = new MocksAndStubsContainer();
-
-			_applicationSettings = _container.ApplicationSettings;
-			_siteSettings = _container.SettingsService.GetSiteSettings();
-
-			_pluginFactory = _container.PluginFactory;
-			_pageRepository = _container.PageRepository;
-		}
-
 		[Test]
 		public void containspagelink_should_return_true_when_title_exists_in_markdown()
 		{

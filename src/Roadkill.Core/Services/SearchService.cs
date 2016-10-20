@@ -18,6 +18,7 @@ using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Core.Services
 {
@@ -26,8 +27,8 @@ namespace Roadkill.Core.Services
 	/// </summary>
 	public class SearchService : ISearchService
 	{
-		private static Regex _removeTagsRegex = new Regex("<(.|\n)*?>");
-		private MarkupConverter _markupConverter;
+	    private readonly TextMiddlewareBuilder _textMiddlewareBuilder;
+	    private static Regex _removeTagsRegex = new Regex("<(.|\n)*?>");
 		protected virtual string IndexPath { get; set; }
 		private static readonly LuceneVersion LUCENEVERSION = LuceneVersion.LUCENE_29;
 
@@ -36,9 +37,10 @@ namespace Roadkill.Core.Services
 		public IPageRepository PageRepository { get; set; }
 
 		public SearchService(ApplicationSettings settings, ISettingsRepository settingsRepository, 
-            IPageRepository pageRepository, IMarkupConverterFactory markupConverterFactory)
+            IPageRepository pageRepository, TextMiddlewareBuilder textMiddlewareBuilder)
 		{
-			if (settings == null)
+		    _textMiddlewareBuilder = textMiddlewareBuilder;
+		    if (settings == null)
 				throw new ArgumentNullException(nameof(settings));
 
 			if (settingsRepository == null)
@@ -47,7 +49,6 @@ namespace Roadkill.Core.Services
 			if (pageRepository == null)
 				throw new ArgumentNullException(nameof(pageRepository));
 
-		    _markupConverter = markupConverterFactory.CreateConverter();
 			IndexPath = settings.SearchIndexPath;
 
 			ApplicationSettings = settings;
@@ -205,7 +206,7 @@ namespace Roadkill.Core.Services
 				{
 					foreach (Page page in PageRepository.AllPages().ToList())
 					{
-						PageViewModel pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+						PageViewModel pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 
 						Document document = new Document();
 						document.Add(new Field("id", pageModel.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
@@ -249,7 +250,7 @@ namespace Roadkill.Core.Services
 		{
 			// Turn the contents into HTML, then strip the tags for the mini summary. This needs some works
 			string modelHtml = model.Content;
-			modelHtml = _markupConverter.ToHtml(modelHtml);
+			modelHtml = _textMiddlewareBuilder.Execute(modelHtml);
 			modelHtml = _removeTagsRegex.Replace(modelHtml, "");
 
 			if (modelHtml.Length > 150)

@@ -216,16 +216,16 @@ namespace Roadkill.Core.Mvc.ViewModels
 			AllTags = new List<TagViewModel>();
 		}
 
-		public PageViewModel(PageContent pageContent, MarkupConverter converter)
+		public PageViewModel(PageContent pageContent, TextMiddlewareBuilder textMiddlewareBuilder)
 		{
 			if (pageContent == null)
-				throw new ArgumentNullException("pageContent");
+				throw new ArgumentNullException(nameof(pageContent));
 
 			if (pageContent.Page == null)
 				throw new ArgumentNullException("pageContent.Page");
 
-			if (converter == null)
-				throw new ArgumentNullException("converter");
+			if (textMiddlewareBuilder == null)
+				throw new ArgumentNullException(nameof(textMiddlewareBuilder));
 
 			Id = pageContent.Page.Id;
 			Title = pageContent.Page.Title;
@@ -239,7 +239,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 			Content = pageContent.Text;
 			VersionNumber = pageContent.VersionNumber;
 
-			PageHtml pageHtml = converter.ToHtml(pageContent.Text);
+			PageHtml pageHtml = textMiddlewareBuilder.Execute(pageContent.Text);
 			ContentAsHtml = pageHtml.Html;
 			IsCacheable = pageHtml.IsCacheable;
 			PluginHeadHtml = pageHtml.HeadHtml;

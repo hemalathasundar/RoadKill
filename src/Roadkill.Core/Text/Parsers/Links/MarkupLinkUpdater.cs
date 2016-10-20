@@ -66,9 +66,7 @@ namespace Roadkill.Core.Converters
 		/// </summary>
 		private string GetRegexForTitle(string pageName)
 		{
-		    var parserHelper = new MarkupParserHelp();
-			string regex = parserHelper.LinkStartToken;
-			regex += parserHelper.LinkEndToken;
+			string regex = "[%LINKTEXT%](%URL%)";
 			regex = EscapeRegex(regex);
 			regex = regex.Replace("%LINKTEXT%", "(?<name>.+?)");
 			regex = regex.Replace("%URL%", "(?<url>" + pageName + "+?)");

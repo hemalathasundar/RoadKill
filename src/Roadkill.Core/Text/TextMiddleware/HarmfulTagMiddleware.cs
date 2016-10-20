@@ -14,7 +14,11 @@ namespace Roadkill.Core.Text.TextMiddleware
 
         public override PageHtml Invoke(PageHtml pageHtml)
         {
-            pageHtml.Html = _sanitizer.Sanitize(pageHtml.Html);
+            if (_sanitizer != null)
+            {
+                pageHtml.Html = _sanitizer.Sanitize(pageHtml.Html);
+            }
+
             return pageHtml;
         }
     }

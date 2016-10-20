@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.Services;
-using StructureMap;
-using StructureMap.Attributes;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Core.Mvc.WebViewPages
 {
@@ -17,7 +11,7 @@ namespace Roadkill.Core.Mvc.WebViewPages
 	{
 		public ApplicationSettings ApplicationSettings { get; set; }
 		public IUserContext RoadkillContext { get; set; }
-		public MarkupConverter MarkupConverter { get; set; }
+		public TextMiddlewareBuilder TextMiddlewareBuilder { get; set; }
 		public SiteSettings SiteSettings { get; set; }
 
 		public RoadkillLayoutPage()
@@ -27,7 +21,7 @@ namespace Roadkill.Core.Mvc.WebViewPages
 
 			if (ApplicationSettings.Installed)
 			{
-				MarkupConverter = LocatorStartup.Locator.GetInstance<MarkupConverter>();
+                TextMiddlewareBuilder = LocatorStartup.Locator.GetInstance<TextMiddlewareBuilder>();
 				SiteSettings = LocatorStartup.Locator.GetInstance<SettingsService>().GetSiteSettings();
 			}
 		}

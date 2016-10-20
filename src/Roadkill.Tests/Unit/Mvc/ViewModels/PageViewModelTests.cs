@@ -7,6 +7,7 @@ using Roadkill.Core.Configuration;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Mvc.ViewModels;
+using Roadkill.Core.Text;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
 namespace Roadkill.Tests.Unit.Mvc.ViewModels
@@ -19,7 +20,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 
 		private ApplicationSettings _appSettings;
 		private SettingsRepositoryMock _settingsRepository;
-		private MarkupConverter _markupConverter;
+		private TextMiddlewareBuilder _textMiddlewareBuilder;
 		private PluginFactoryMock _pluginFactory;
 
 		[SetUp]
@@ -31,7 +32,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			_appSettings = _container.ApplicationSettings;
 			_appSettings.Installed = true;
 			_settingsRepository = _container.SettingsRepository;
-			_markupConverter = _container.MarkupConverter;
+			_textMiddlewareBuilder = _container.TextMiddlewareBuilder;
 		}
 
 		[Test]
@@ -51,7 +52,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 		public void PageContent_Constructor_Should_Throw_Exception_When_PageContent_IsNull()
 		{
 			// Arrange + Act + Assert
-			PageViewModel model = new PageViewModel(null, _markupConverter);
+			PageViewModel model = new PageViewModel(null, _textMiddlewareBuilder);
 		}
 
 		[Test]
@@ -63,7 +64,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			content.Page = null;
 
 			// Act + Assert
-			PageViewModel model = new PageViewModel(content, _markupConverter);
+			PageViewModel model = new PageViewModel(content, _textMiddlewareBuilder);
 		}
 
 		[Test]
@@ -140,7 +141,7 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			_pluginFactory.RegisterTextPlugin(plugin);
 
 			// Act
-			PageViewModel model = new PageViewModel(content, _markupConverter);
+			PageViewModel model = new PageViewModel(content, _textMiddlewareBuilder);
 
 			// Assert
 			Assert.That(model.Id, Is.EqualTo(content.Page.Id));

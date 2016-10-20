@@ -15,6 +15,8 @@ using Roadkill.Core.Services;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
+using Roadkill.Core.Text;
+using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 
@@ -452,16 +454,17 @@ namespace Roadkill.Tests.Unit.Cache
 			// Settings
 			var appSettings = new ApplicationSettings() { Installed = true, UseObjectCache = true };
 			var userContext = new UserContextStub() { IsLoggedIn = false };
-			var markupConverterFactory = new MarkupConverterFactory(appSettings, pageRepository, _pluginFactory);
+		    var builder = new TextMiddlewareBuilder();
+		    var parser = new MarkdigParser();
 
 			// PageService
 			var pageViewModelCache = new PageViewModelCache(appSettings, pageObjectCache);
 			var listCache = new ListCache(appSettings, listObjectCache);
 			var siteCache = new SiteCache(CacheMock.RoadkillCache);
-			var searchService = new SearchServiceMock(appSettings, settingsRepository, pageRepository, markupConverterFactory);
+			var searchService = new SearchServiceMock(appSettings, settingsRepository, pageRepository, builder);
 
-            var historyService = new PageHistoryService(settingsRepository, pageRepository, userContext, pageViewModelCache, markupConverterFactory);
-			var pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, markupConverterFactory);
+            var historyService = new PageHistoryService(settingsRepository, pageRepository, userContext, pageViewModelCache, builder);
+		    var pageService = new PageService(appSettings, settingsRepository, pageRepository, searchService, historyService, userContext, listCache, pageViewModelCache, siteCache, builder, parser);
 
 			return pageService;
 		}

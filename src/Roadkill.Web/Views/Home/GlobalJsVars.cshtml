@@ -13,19 +13,18 @@ var ROADKILL_PREVIEWURL = "@Url.Action("GetPreview", "Pages")/";
 var ROADKILL_WIKIMARKUPHELP = "@Url.Action("MarkdownReference", "Help")";
 
 @{
-IMarkupParser parser = MarkupConverter.MarkupParser;
+IMarkupParser parser = MarkupParser;
 }
-// Tokens for the edit toolbar
-var ROADKILL_EDIT_BOLD_TOKEN        = "@Html.Raw(parser.MarkupParserHelp.BoldToken)";
-var ROADKILL_EDIT_ITALIC_TOKEN      = "@Html.Raw(parser.MarkupParserHelp.ItalicToken)";
-var ROADKILL_EDIT_UNDERLINE_TOKEN   = "@Html.Raw(parser.MarkupParserHelp.UnderlineToken)";
-var ROADKILL_EDIT_LINK_STARTTOKEN   = "@Html.Raw(parser.MarkupParserHelp.LinkStartToken)";
-var ROADKILL_EDIT_LINK_ENDTOKEN     = "@Html.Raw(parser.MarkupParserHelp.LinkEndToken)";
-var ROADKILL_EDIT_IMAGE_STARTTOKEN  = "@Html.Raw(parser.MarkupParserHelp.ImageStartToken)";
-var ROADKILL_EDIT_IMAGE_ENDTOKEN    = "@Html.Raw(parser.MarkupParserHelp.ImageEndToken)";
-var ROADKILL_EDIT_NUMBERLIST_TOKEN  = "@Html.Raw(parser.MarkupParserHelp.NumberedListToken)";
-var ROADKILL_EDIT_BULLETLIST_TOKEN  = "@Html.Raw(parser.MarkupParserHelp.BulletListToken)";
-var ROADKILL_EDIT_HEADING_TOKEN     = "@Html.Raw(parser.MarkupParserHelp.HeadingToken)";
+var ROADKILL_EDIT_BOLD_TOKEN        = "**";
+var ROADKILL_EDIT_ITALIC_TOKEN      = "*";
+var ROADKILL_EDIT_UNDERLINE_TOKEN   = "";
+var ROADKILL_EDIT_LINK_STARTTOKEN   = "[%LINKTEXT%";
+var ROADKILL_EDIT_LINK_ENDTOKEN     = "](%URL%)";
+var ROADKILL_EDIT_IMAGE_STARTTOKEN  = "![%ALT%";
+var ROADKILL_EDIT_IMAGE_ENDTOKEN    = "](%FILENAME%)";
+var ROADKILL_EDIT_NUMBERLIST_TOKEN  = "1.";
+var ROADKILL_EDIT_BULLETLIST_TOKEN  = "*";
+var ROADKILL_EDIT_HEADING_TOKEN     = "#";
 var ROADKILL_EDIT_LINK_URLPLACEHOLDER  = "@Html.Raw(SiteStrings.EditPage_LinkUrl_PlaceHolder)";
 var ROADKILL_EDIT_LINK_TEXTPLACEHOLDER  = "@Html.Raw(SiteStrings.EditPage_LinkText_PlaceHolder)";
 var ROADKILL_EDIT_IMAGE_TITLE       = "@Html.Raw(SiteStrings.EditPage_Image_Title)";

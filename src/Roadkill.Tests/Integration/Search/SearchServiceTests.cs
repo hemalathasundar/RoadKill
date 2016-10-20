@@ -10,6 +10,7 @@ using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
+using Roadkill.Core.Text;
 using Roadkill.Tests.Unit;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
@@ -23,7 +24,7 @@ namespace Roadkill.Tests.Integration.Search
 		private ApplicationSettings _applicationSettings;
 		private PluginFactoryMock _pluginFactory;
 		private IPageRepository _pageRepository;
-	    private MarkupConverterFactory _markupConverterFactory;
+	    private TextMiddlewareBuilder _textMiddlewareBuilder;
 
 	    [SetUp]
 		public void Initialize()
@@ -38,12 +39,12 @@ namespace Roadkill.Tests.Integration.Search
 			_applicationSettings = new ApplicationSettings();
 			_applicationSettings.Installed = true;
 			_pluginFactory = new PluginFactoryMock();
-		    _markupConverterFactory = new MarkupConverterFactory(_applicationSettings, _pageRepository, _pluginFactory);
+	        _textMiddlewareBuilder = new TextMiddlewareBuilder();
 		}
 
 		private SearchService CreateSearchService()
 		{
-			return new SearchService(_applicationSettings, _settingsRepository, _pageRepository, _markupConverterFactory);
+			return new SearchService(_applicationSettings, _settingsRepository, _pageRepository, _textMiddlewareBuilder);
 		}
 
 		[Test]

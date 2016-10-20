@@ -437,6 +437,8 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
+    <Compile Include="Unit\Text\HtmlSanitizerFactoryTests.cs" />
+    <Compile Include="Unit\Text\MarkdigAstWalkerTests.cs" />
     <Compile Include="Unit\Text\MarkdigParserTests.cs" />
     <Compile Include="Unit\Text\MarkupLinkUpdaterTests.cs" />
     <Compile Include="Unit\Text\MenuParserTests.cs" />

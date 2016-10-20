@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Text;
 
 namespace Roadkill.Plugins.Text.BuiltIn
 {
@@ -11,7 +12,7 @@ namespace Roadkill.Plugins.Text.BuiltIn
 		internal static readonly string HTMLTEMPLATE = @"<div id=""roadkill-jumbotron"" class=""jumbotron""><div id=""inner"">${inner}</div></div>";
 
 		private string _preContainerHtml = "";
-		private MarkupConverter _converter;
+		private TextMiddlewareBuilder _textMiddlewareBuilder;
 
 		public override string Id
 		{
@@ -46,9 +47,9 @@ namespace Roadkill.Plugins.Text.BuiltIn
 			}
 		}
 
-		public Jumbotron(MarkupConverter converter) : base()
+		public Jumbotron(TextMiddlewareBuilder textMiddlewareBuilder) : base()
 		{
-			_converter = converter;
+			_textMiddlewareBuilder = textMiddlewareBuilder;
 			_preContainerHtml = "";
 		}
 
@@ -67,7 +68,7 @@ namespace Roadkill.Plugins.Text.BuiltIn
 					// Grab the markdown after the [[[jumbotron=..]]] and parse it,
 					// and put it back in.
 					string innerMarkDown = match.Groups["inner"].Value;
-					string html = _converter.ToHtml(innerMarkDown);
+					string html = _textMiddlewareBuilder.Execute(innerMarkDown);
 
 					// _preContainerHtml is returned later and it contains the HTML that lives 
 					// outside the container, that this plugin provides.

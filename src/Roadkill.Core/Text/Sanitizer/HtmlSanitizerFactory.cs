@@ -19,7 +19,7 @@ namespace Roadkill.Core.Text.Sanitizer
 
         public HtmlSanitizer CreateHtmlSanitizer()
         {
-            if (_applicationSettings.UseHtmlWhiteList)
+            if (!_applicationSettings.UseHtmlWhiteList)
                 return null;
 
             HtmlWhiteList htmlWhiteList = HtmlWhiteList.Deserialize(_applicationSettings);

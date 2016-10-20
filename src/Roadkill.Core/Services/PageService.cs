@@ -23,13 +23,13 @@ namespace Roadkill.Core.Services
 	public class PageService : IPageService
 	{
 		private readonly SearchService _searchService;
-		private readonly MarkupConverter _markupConverter;
 		private readonly PageHistoryService _historyService;
 		private readonly IUserContext _context;
 		private readonly ListCache _listCache;
 		private readonly PageViewModelCache _pageViewModelCache;
 		private readonly SiteCache _siteCache;
-	    private readonly IMarkupConverterFactory _markupConverterFactory;
+	    private readonly TextMiddlewareBuilder _textMiddlewareBuilder;
+	    private readonly IMarkupParser _markupParser;
 	    private readonly IPluginFactory _pluginFactory;
 		private readonly MarkupLinkUpdater _markupLinkUpdater;
 
@@ -39,18 +39,18 @@ namespace Roadkill.Core.Services
 
 		public PageService(ApplicationSettings settings, ISettingsRepository settingsRepository, 
 							IPageRepository pageRepository, SearchService searchService, PageHistoryService historyService, IUserContext context, 
-							ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, 
-							IMarkupConverterFactory markupConverterFactory)
+							ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache,
+                            TextMiddlewareBuilder textMiddlewareBuilder, IMarkupParser markupParser)
 		{
 			_searchService = searchService;
-		    _markupConverter = markupConverterFactory.CreateConverter();
 			_historyService = historyService;
 			_context = context;
 			_listCache = listCache;
 			_pageViewModelCache = pageViewModelCache;
 			_siteCache = sitecache;
-		    _markupConverterFactory = markupConverterFactory;
-		    _markupLinkUpdater = new MarkupLinkUpdater(_markupConverter.MarkupParser);
+		    _textMiddlewareBuilder = textMiddlewareBuilder;
+		    _markupParser = markupParser;
+		    _markupLinkUpdater = new MarkupLinkUpdater(markupParser);
 
 			ApplicationSettings = settings;
 			SettingsRepository = settingsRepository;
@@ -88,7 +88,7 @@ namespace Roadkill.Core.Services
 				_pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
 
 				// Update the lucene index
-				PageViewModel savedModel = new PageViewModel(pageContent, _markupConverter);
+				PageViewModel savedModel = new PageViewModel(pageContent, _textMiddlewareBuilder);
 				try
 				{
 					_searchService.Add(savedModel);
@@ -127,7 +127,7 @@ namespace Roadkill.Core.Services
 					{
 						IEnumerable<Page> pages = PageRepository.AllPages().OrderBy(p => p.Title);
 						pageModels = from page in pages
-									select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+									select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 
 						_listCache.Add<PageViewModel>(cacheKey, pageModels);
 					}
@@ -172,7 +172,7 @@ namespace Roadkill.Core.Services
 				{
 					IEnumerable<Page> pages = PageRepository.FindPagesCreatedBy(userName);
 					models = from page in pages
-								select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+								select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 
 					_listCache.Add<PageViewModel>(cacheKey, models);
 				}
@@ -249,7 +249,7 @@ namespace Roadkill.Core.Services
 				// Update the lucene index before we actually delete the page.
 				try
 				{
-					PageViewModel model = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+					PageViewModel model = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 					_searchService.Delete(model);
 				}
 				catch (SearchException ex)
@@ -322,7 +322,7 @@ namespace Roadkill.Core.Services
 					
 					if (page != null)
 					{
-						pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+						pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 						_pageViewModelCache.UpdateHomePage(pageModel);
 					}
 				}
@@ -353,7 +353,7 @@ namespace Roadkill.Core.Services
 
 					IEnumerable<Page> pages = PageRepository.FindPagesContainingTag(tag).OrderBy(p => p.Title);
 					models = from page in pages
-								select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+								select new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 
 					_listCache.Add<PageViewModel>(cacheKey, models);
 				}
@@ -384,7 +384,7 @@ namespace Roadkill.Core.Services
 				if (page == null)
 					return null;
 				else
-					return new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+					return new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 			}
 			catch (DatabaseException ex)
 			{
@@ -421,13 +421,13 @@ namespace Roadkill.Core.Services
 						// used on the second call anyway, so performance isn't an issue.
 						if (ApplicationSettings.UseObjectCache)
 						{
-							pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+							pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 						}
 						else
 						{
 							if (loadContent)
 							{
-								pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+								pageModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 							}
 							else
 							{
@@ -491,7 +491,7 @@ namespace Roadkill.Core.Services
 				}
 
 				// Update the lucene index
-				PageViewModel updatedModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _markupConverter);
+				PageViewModel updatedModel = new PageViewModel(PageRepository.GetLatestPageContent(page.Id), _textMiddlewareBuilder);
 				_searchService.Update(updatedModel);
 			}
 			catch (DatabaseException ex)
@@ -612,7 +612,7 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		public string GetMenu(IUserContext userContext)
 		{
-			MenuParser parser = new MenuParser(_markupConverter.MarkupParser, SettingsRepository, _siteCache, userContext);
+			MenuParser parser = new MenuParser(_markupParser, SettingsRepository, _siteCache, userContext);
 
 			// TODO: turn this into a theme-based bit of template HTML
 			StringBuilder builder = new StringBuilder();
@@ -629,7 +629,7 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		public string GetBootStrapNavMenu(IUserContext userContext)
 		{
-			MenuParser parser = new MenuParser(_markupConverter.MarkupParser, SettingsRepository, _siteCache, userContext);
+			MenuParser parser = new MenuParser(_markupParser, SettingsRepository, _siteCache, userContext);
 
 			// TODO: turn this into a theme-based bit of template HTML
 			StringBuilder builder = new StringBuilder();
@@ -668,13 +668,13 @@ namespace Roadkill.Core.Services
 			return html;
 		}
 
-		/// <summary>
-		/// Retrieves the <see cref="MarkupConverter"/> used by this IPageService.
-		/// </summary>
-		/// <returns></returns>
-		public MarkupConverter GetMarkupConverter()
+        /// <summary>
+        /// Retrieves the <see cref="TextMiddlewareBuilder"/> used by this IPageService.
+        /// </summary>
+        /// <returns></returns>
+        public TextMiddlewareBuilder GetTextMiddlewareBuilder()
 		{
-		    return _markupConverterFactory.CreateConverter();
+		    return _textMiddlewareBuilder;
 		}
 
 		/// <summary>

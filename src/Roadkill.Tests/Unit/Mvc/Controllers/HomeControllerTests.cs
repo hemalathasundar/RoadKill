@@ -14,6 +14,7 @@ using Roadkill.Core.Localization;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
+using Roadkill.Core.Text;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 
@@ -30,15 +31,9 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		private PageRepositoryMock _pageRepository;
 		private UserServiceMock _userService;
 		private PageService _pageService;
-		private PageHistoryService _historyService;
-		private SettingsService _settingsService;
-		private PluginFactoryMock _pluginFactory;
-		private SearchServiceMock _searchService;
-		private ListCache _listCache;
-		private SiteCache _siteCache;
-		private PageViewModelCache _pageViewModelCache;
-		private MemoryCache _memoryCache;
-		private MarkupConverter _markupConverter;
+	    private SettingsService _settingsService;
+	    private SearchServiceMock _searchService;
+	    private TextMiddlewareBuilder _textMiddlewareBuilder;
 
 		private HomeController _homeController;
 
@@ -50,20 +45,13 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			_applicationSettings = _container.ApplicationSettings;
 			_context = _container.UserContext;
 			_pageRepository = _container.PageRepository;
-			_pluginFactory = _container.PluginFactory;
-			_settingsService = _container.SettingsService;
+		    _settingsService = _container.SettingsService;
 			_userService = _container.UserService;
-			_historyService = _container.HistoryService;
-			_pageService = _container.PageService;
+		    _pageService = _container.PageService;
 			_searchService = _container.SearchService;
-			_markupConverter = _container.MarkupConverter;
+			_textMiddlewareBuilder = _container.TextMiddlewareBuilder;
 
-			_listCache = _container.ListCache;
-			_siteCache = _container.SiteCache;
-			_pageViewModelCache = _container.PageViewModelCache;
-			_memoryCache = _container.MemoryCache;
-
-			_homeController = new HomeController(_applicationSettings, _userService, _markupConverter, _pageService, _searchService, _context, _settingsService);
+		    _homeController = new HomeController(_applicationSettings, _userService, _pageService, _searchService, _context, _settingsService, _textMiddlewareBuilder);
 			_homeController.SetFakeControllerContext();
 		}
 
