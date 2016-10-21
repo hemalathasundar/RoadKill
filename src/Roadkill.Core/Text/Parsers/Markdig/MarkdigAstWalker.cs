@@ -8,12 +8,12 @@ using Roadkill.Core.Converters;
 
 namespace Roadkill.Core.Text.Parsers.Markdig
 {
-    public class MarkdigAstWalker
+    public class MarkdigImagesAndLinkWalker
     {
         private readonly Action<HtmlImageTag> _imageDelegate;
         private readonly Action<HtmlLinkTag> _linkDelegate;
 
-        public MarkdigAstWalker(Action<HtmlImageTag> imageDelegate, Action<HtmlLinkTag> linkDelegate)
+        public MarkdigImagesAndLinkWalker(Action<HtmlImageTag> imageDelegate, Action<HtmlLinkTag> linkDelegate)
         {
             _imageDelegate = imageDelegate;
             _linkDelegate = linkDelegate;
@@ -37,11 +37,14 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                         if (descendentForAltTag != null)
                             altText = descendentForAltTag.ToString();
 
-                        HtmlImageTag args = InvokeImageParsedEvent(link.Url, altText);
+                        if (_imageDelegate != null)
+                        {
+                            HtmlImageTag args = InvokeImageParsedEvent(link.Url, altText);
 
-                        // Update the HTML from the data the event gives back
-                        link.Url = args.Src;
-                        link.Title = altText;
+                            // Update the HTML from the data the event gives back
+                            link.Url = args.Src;
+                            link.Title = altText;
+                        }
 
                         // Replace to alt= attribute, it's a literal
                         var literalInline = new LiteralInline(altText);
@@ -55,17 +58,28 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                     }
                     else
                     {
-                        HtmlLinkTag args = InvokeLinkParsedEvent(link.Url, link.Title, link.Label);
-
-                        // Update the HTML from the data the event gives back
-                        link.Url = args.Href;
-
-                        if (!string.IsNullOrEmpty(args.Target))
+                        if (_linkDelegate != null)
                         {
-                            AddAttribute(link, "target", args.Target);
+                            HtmlLinkTag args = InvokeLinkParsedEvent(link.Url, link.Title, link.Label);
+
+                            // Update the HTML from the data the event gives back
+                            link.Url = args.Href;
+
+                            if (!string.IsNullOrEmpty(args.Target))
+                            {
+                                AddAttribute(link, "target", args.Target);
+                            }
+
+
+                            if (!string.IsNullOrEmpty(args.CssClass))
+                                AddClass(link, args.CssClass);
+
+                            // Replace the link's text
+                            var literalInline = new LiteralInline(args.Text);
+                            link.FirstChild.ReplaceBy(literalInline);
                         }
 
-                        // TODO: make these configurable (external-links: [])
+                        // Markdig TODO: make these configurable (external-links: [])
                         if (!string.IsNullOrEmpty(link.Url) && 
                             (link.Url.ToLower().StartsWith("http://") || 
                             link.Url.ToLower().StartsWith("https://") ||
@@ -74,9 +88,6 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                         {
                             AddAttribute(link, "rel", "nofollow");
                         }
-
-                        if (!string.IsNullOrEmpty(args.CssClass))
-                            AddClass(link, args.CssClass);
                     }
                 }
 
