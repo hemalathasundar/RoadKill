@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading;
 using NUnit.Framework;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit;
 using Roadkill.Tests.Unit.StubsAndMocks;
 

@@ -4,7 +4,8 @@ using System.Linq;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
-using Roadkill.Core.Converters;
+using Roadkill.Core.Text.Parsers.Images;
+using Roadkill.Core.Text.Parsers.Links;
 
 namespace Roadkill.Core.Text.Parsers.Markdig
 {

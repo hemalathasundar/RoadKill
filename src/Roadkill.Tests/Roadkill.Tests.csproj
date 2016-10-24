@@ -441,23 +441,23 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
-    <Compile Include="Unit\Text\HtmlSanitizerFactoryTests.cs" />
-    <Compile Include="Unit\Text\MarkdigImageAndLinkWalkerTests.cs" />
-    <Compile Include="Unit\Text\MarkdigParserTests.cs" />
-    <Compile Include="Unit\Text\MarkupLinkUpdaterTests.cs" />
-    <Compile Include="Unit\Text\MenuParserTests.cs" />
+    <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Markdig\MarkdigImageAndLinkWalkerTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Markdig\MarkdigParserTests.cs" />
+    <Compile Include="Unit\Text\Parsers\MarkupLinkUpdaterTests.cs" />
+    <Compile Include="Unit\Text\Menu\MenuParserTests.cs" />
     <Compile Include="Unit\Plugins\TocParserTests.cs" />
-    <Compile Include="Unit\Text\MarkdownTests.cs" />
+    <Compile Include="Unit\Text\Archive\MarkdownTests.cs" />
     <Compile Include="Integration\Configuration\FullTrustConfigReaderWriterTests.cs" />
     <Compile Include="TestConstants.cs" />
     <Compile Include="Unit\Services\PageServiceTests.cs" />
     <Compile Include="Unit\Services\ActiveDirectoryUserManagerTests.cs" />
     <Compile Include="Unit\Mvc\ViewModels\UserViewModelEmailValidationTests.cs" />
-    <Compile Include="Unit\Text\MarkupConverterTests.cs" />
-    <Compile Include="Unit\Text\CustomTokenParserTests.cs" />
+    <Compile Include="Unit\Text\Archive\MarkupConverterTests.cs" />
+    <Compile Include="Unit\Text\CustomTokens\CustomTokenParserTests.cs" />
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
     <Compile Include="Unit\StubsAndMocks\MiddleWareMock.cs" />
-    <Compile Include="Unit\Text\NotMarkupConverterTests.cs" />
+    <Compile Include="Unit\Text\Archive\NotMarkupConverterTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\CustomTokenMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\HarmfulTagMiddlewareTests.cs" />
     <Compile Include="Unit\Text\TextMiddleware\MarkupParserMiddlewareTests.cs" />
@@ -529,7 +529,9 @@
       <Name>Roadkill.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Unit\Text\Plugins\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.Menu;
+using Roadkill.Core.Text.Plugins;
 using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
-namespace Roadkill.Tests.Unit.Text
+namespace Roadkill.Tests.Unit.Text.TextMiddleware
 {
     [TestFixture]
     [Category("Unit")]

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Logging;
 
-namespace Roadkill.Core
+namespace Roadkill.Core.Text.CustomTokens
 {
 	/// <summary>
 	/// Deserializes and caches the custom tokens XML file, which contains a set of text replacements for the markup.

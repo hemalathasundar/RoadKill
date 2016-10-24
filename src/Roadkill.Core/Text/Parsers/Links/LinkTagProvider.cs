@@ -2,13 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Ganss.XSS;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
-using Roadkill.Core.Database.Repositories;
-using Roadkill.Core.Text;
 
-namespace Roadkill.Core.Converters
+namespace Roadkill.Core.Text.Parsers.Links
 {
     public class LinkTagProvider
     {
@@ -131,7 +128,7 @@ namespace Roadkill.Core.Converters
             if (_anchorRegex.IsMatch(href))
             {
                 // Grab the hash contents
-                Match match = _anchorRegex.Match(href);
+                System.Text.RegularExpressions.Match match = _anchorRegex.Match(href);
                 anchorHash = match.Groups["hash"].Value;
 
                 // Grab the url

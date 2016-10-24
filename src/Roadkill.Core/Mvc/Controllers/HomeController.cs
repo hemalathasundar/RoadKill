@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Localization;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Services;
@@ -10,6 +9,7 @@ using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 using StructureMap;
 
 namespace Roadkill.Core.Mvc.Controllers

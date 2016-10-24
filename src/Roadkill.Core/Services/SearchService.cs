@@ -8,7 +8,6 @@ using Lucene.Net.Index;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Search;
 using Lucene.Net.QueryParsers;
-using Roadkill.Core.Converters;
 using System.Text.RegularExpressions;
 using Directory = System.IO.Directory;
 using LuceneVersion = Lucene.Net.Util.Version;
@@ -19,6 +18,7 @@ using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Services
 {

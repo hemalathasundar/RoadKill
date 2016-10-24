@@ -1,10 +1,11 @@
 ﻿using NUnit.Framework;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.Menu;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
 
-namespace Roadkill.Tests.Unit.Text
+namespace Roadkill.Tests.Unit.Text.TextMiddleware
 {
     [TestFixture]
     [Category("Unit")]

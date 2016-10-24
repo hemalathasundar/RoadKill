@@ -1,4 +1,6 @@
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.Menu;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Tests.Unit.Text
 {

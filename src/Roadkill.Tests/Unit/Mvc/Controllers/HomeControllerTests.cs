@@ -8,13 +8,13 @@ using NUnit.Framework;
 using Roadkill.Core;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Localization;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 

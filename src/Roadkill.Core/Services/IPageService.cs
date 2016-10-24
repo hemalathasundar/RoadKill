@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Roadkill.Core.Database;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Services
 {

@@ -9,7 +9,6 @@ using Moq;
 using NUnit.Framework;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Services;
 using Roadkill.Core.Mvc.Attributes;
@@ -17,6 +16,7 @@ using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.Parsers.Markdig;
+using Roadkill.Core.Text.TextMiddleware;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 

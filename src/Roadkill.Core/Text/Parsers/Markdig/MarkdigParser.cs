@@ -3,7 +3,8 @@ using System.IO;
 using System.Text;
 using Markdig;
 using Markdig.Renderers;
-using Roadkill.Core.Converters;
+using Roadkill.Core.Text.Parsers.Images;
+using Roadkill.Core.Text.Parsers.Links;
 
 namespace Roadkill.Core.Text.Parsers.Markdig
 {

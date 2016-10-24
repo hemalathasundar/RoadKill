@@ -2,15 +2,14 @@
 using System.Web.Mvc;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
-using AngleSharp.Extensions;
 using AngleSharp.Parser.Html;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Localization;
+using Roadkill.Core.Text.Parsers;
 
-namespace Roadkill.Core.Text
+namespace Roadkill.Core.Text.Menu
 {
 	public class MenuParser
 	{

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Roadkill.Core.Text.Parsers.Markdig;
 
-namespace Roadkill.Tests.Unit.Text
+namespace Roadkill.Tests.Unit.Text.Parsers.Markdig
 {
     public class MarkdigParserTests
     {

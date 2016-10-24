@@ -1,4 +1,7 @@
-﻿namespace Roadkill.Core.Text.TextMiddleware
+﻿using Roadkill.Core.Text.Menu;
+using Roadkill.Core.Text.Plugins;
+
+namespace Roadkill.Core.Text.TextMiddleware
 {
     public class TextPluginBeforeParseMiddleware : Middleware
     {

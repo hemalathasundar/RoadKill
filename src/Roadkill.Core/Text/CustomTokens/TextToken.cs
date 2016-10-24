@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text.RegularExpressions;
 using System.Xml.Serialization;
-using System.Xml;
-using System.Text.RegularExpressions;
 
-namespace Roadkill.Core
+namespace Roadkill.Core.Text.CustomTokens
 {
 	/// <summary>
 	/// Represents a single token for text replacement inside the wiki markup, an array of

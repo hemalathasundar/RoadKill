@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Services;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Tests.Unit.StubsAndMocks
 {

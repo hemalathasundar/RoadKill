@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Services;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.Parsers;
+using Roadkill.Core.Text.TextMiddleware;
 using StructureMap.Attributes;
 
 namespace Roadkill.Core.Mvc.WebViewPages

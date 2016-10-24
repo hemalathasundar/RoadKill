@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Mvc.ViewModels;
@@ -14,6 +13,10 @@ using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Text;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Text.Menu;
+using Roadkill.Core.Text.Parsers;
+using Roadkill.Core.Text.Parsers.Links;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Services
 {

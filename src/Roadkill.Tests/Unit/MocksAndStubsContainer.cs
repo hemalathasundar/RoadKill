@@ -1,7 +1,6 @@
 ﻿using Roadkill.Core;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Security;
 using Roadkill.Core.Services;
 using Roadkill.Tests.Unit.StubsAndMocks;
@@ -14,6 +13,7 @@ using Roadkill.Core.DependencyResolution.StructureMap;
 using StructureMap;
 using Roadkill.Core.Text;
 using Roadkill.Core.Text.Parsers.Markdig;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Tests.Unit
 {

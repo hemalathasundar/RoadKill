@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Roadkill.Core.Converters
+﻿namespace Roadkill.Core.Text.Parsers.Links
 {
 	/// <summary>
 	/// Holds information when a hyperlink is processed, giving the caller the ability to translate the outputted HTML.

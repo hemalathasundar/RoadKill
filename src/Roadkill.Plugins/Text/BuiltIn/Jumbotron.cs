@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Plugins.Text.BuiltIn
 {
@@ -63,7 +63,7 @@ namespace Roadkill.Plugins.Text.BuiltIn
 				// All instances of the token
 				if (matches.Count > 0)
 				{
-					Match match = matches[0];
+                    System.Text.RegularExpressions.Match match = matches[0];
 
 					// Grab the markdown after the [[[jumbotron=..]]] and parse it,
 					// and put it back in.

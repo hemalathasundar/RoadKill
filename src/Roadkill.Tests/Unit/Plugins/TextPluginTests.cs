@@ -8,7 +8,6 @@ using NUnit.Framework;
 using Roadkill.Core;
 using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Plugins;

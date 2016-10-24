@@ -7,6 +7,7 @@ using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Localization;
 using System.Linq;
+using Roadkill.Core.Text.CustomTokens;
 
 namespace Roadkill.Core.Mvc.Controllers
 {

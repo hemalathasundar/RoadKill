@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Roadkill.Core.Text
+﻿namespace Roadkill.Core.Text.Menu
 {
 	/// <summary>
 	/// Encapsulates the HTML returned by the markup converter, to display on the page.

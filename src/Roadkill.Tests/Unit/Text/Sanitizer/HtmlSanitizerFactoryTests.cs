@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Roadkill.Tests.Unit.Text
+namespace Roadkill.Tests.Unit.Text.Sanitizer
 {
     public class HtmlSanitizerFactoryTests
     {

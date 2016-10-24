@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Text.Menu;
 
-namespace Roadkill.Core.Text
+namespace Roadkill.Core.Text.Plugins
 {
 	/// <summary>
 	/// Runs the BeforeParse and AfterParse methods on all TextPlugins, and determines if 

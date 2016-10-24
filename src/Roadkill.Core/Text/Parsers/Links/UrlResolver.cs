@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Roadkill.Core.Mvc.ViewModels;
 
-namespace Roadkill.Core.Text
+namespace Roadkill.Core.Text.Parsers.Links
 {
 	public class UrlResolver
 	{

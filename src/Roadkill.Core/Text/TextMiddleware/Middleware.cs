@@ -1,4 +1,6 @@
-﻿namespace Roadkill.Core.Text
+﻿using Roadkill.Core.Text.Menu;
+
+namespace Roadkill.Core.Text.TextMiddleware
 {
     public abstract class Middleware
     {

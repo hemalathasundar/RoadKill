@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Roadkill.Core.Converters
+namespace Roadkill.Core.Text.Parsers.Links
 {
 	public class MarkupLinkUpdater
 	{
@@ -44,13 +44,13 @@ namespace Roadkill.Core.Converters
 			string customRegex = GetRegexForTitle(oldPageName);
 			Regex regex = new Regex(customRegex, RegexOptions.IgnoreCase);
 
-			return regex.Replace(text, (Match match) => 
+			return regex.Replace(text, (System.Text.RegularExpressions.Match match) => 
 			{
 				return OnLinkMatched(match, newPageName);
 			});
 		}
 
-		private string OnLinkMatched(Match match, string newPageName)
+		private string OnLinkMatched(System.Text.RegularExpressions.Match match, string newPageName)
 		{
 			if (match.Success && match.Groups.Count == 3)
 			{

@@ -3,6 +3,7 @@ using Roadkill.Core.Configuration;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.Services;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Mvc.WebViewPages
 {

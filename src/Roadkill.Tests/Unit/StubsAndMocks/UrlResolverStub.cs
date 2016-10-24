@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Roadkill.Core.Text;
+using Roadkill.Core.Text.Parsers.Links;
 
 namespace Roadkill.Tests.Unit.StubsAndMocks
 {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Roadkill.Core.Text.CustomTokens;
+using Roadkill.Core.Text.Menu;
 
 namespace Roadkill.Core.Text.TextMiddleware
 {

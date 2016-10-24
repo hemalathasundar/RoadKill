@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using Roadkill.Core.Configuration;
-using Roadkill.Core.Text;
+using Roadkill.Core.Text.Parsers.Links;
 
-namespace Roadkill.Core.Converters
+namespace Roadkill.Core.Text.Parsers.Images
 {
     public class ImageTagProvider
     {

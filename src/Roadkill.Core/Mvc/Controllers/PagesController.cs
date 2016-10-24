@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Roadkill.Core.Diff;
-using Roadkill.Core.Converters;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Services;
 using Roadkill.Core.Security;
@@ -12,6 +10,8 @@ using Roadkill.Core.Mvc.ViewModels;
 using System.Web;
 using Roadkill.Core.Text;
 using Roadkill.Core.Extensions;
+using Roadkill.Core.Text.Menu;
+using Roadkill.Core.Text.TextMiddleware;
 
 namespace Roadkill.Core.Mvc.Controllers
 {
