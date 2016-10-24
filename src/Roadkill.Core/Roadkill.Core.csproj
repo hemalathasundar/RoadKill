@@ -535,7 +535,7 @@
     <Compile Include="Text\Parsers\Links\LinkTagProvider.cs" />
     <Compile Include="Text\Parsers\Links\MarkupLinkUpdater.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigParser.cs" />
-    <Compile Include="Text\Parsers\Markdig\MarkdigAstWalker.cs" />
+    <Compile Include="Text\Parsers\Markdig\MarkdigImageAndLinkWalker.cs" />
     <Compile Include="Text\Plugins\TextPluginRunner.cs" />
     <Compile Include="Text\Parsers\Links\UrlResolver.cs" />
     <Compile Include="Text\Menu\MenuParser.cs" />

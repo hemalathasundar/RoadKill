@@ -8,12 +8,12 @@ using Roadkill.Core.Converters;
 
 namespace Roadkill.Core.Text.Parsers.Markdig
 {
-    public class MarkdigImagesAndLinkWalker
+    public class MarkdigImageAndLinkWalker
     {
         private readonly Action<HtmlImageTag> _imageDelegate;
         private readonly Action<HtmlLinkTag> _linkDelegate;
 
-        public MarkdigImagesAndLinkWalker(Action<HtmlImageTag> imageDelegate, Action<HtmlLinkTag> linkDelegate)
+        public MarkdigImageAndLinkWalker(Action<HtmlImageTag> imageDelegate, Action<HtmlLinkTag> linkDelegate)
         {
             _imageDelegate = imageDelegate;
             _linkDelegate = linkDelegate;
@@ -24,12 +24,12 @@ namespace Roadkill.Core.Text.Parsers.Markdig
             foreach (MarkdownObject child in markdownObject.Descendants())
             {
                 // LinkInline can be both an <img.. or a <a href="...">
-                LinkInline link = child as LinkInline;
-                if (link != null)
+                LinkInline linkInline = child as LinkInline;
+                if (linkInline != null)
                 {
-                    EnsureAttributesInLink(link);
+                    EnsureAttributesInLink(linkInline);
 
-                    if (link.IsImage)
+                    if (linkInline.IsImage)
                     {
                         string altText = "";
 
@@ -37,56 +37,66 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                         if (descendentForAltTag != null)
                             altText = descendentForAltTag.ToString();
 
+                        string title = altText;
+
                         if (_imageDelegate != null)
                         {
-                            HtmlImageTag args = InvokeImageParsedEvent(link.Url, altText);
+                            HtmlImageTag args = InvokeImageParsedEvent(linkInline.Url, altText);
+
+                            if (!string.IsNullOrEmpty(args.Alt))
+                                altText = args.Alt;
+
+                            if (!string.IsNullOrEmpty(args.Title))
+                                title = args.Title;
 
                             // Update the HTML from the data the event gives back
-                            link.Url = args.Src;
-                            link.Title = altText;
+                            linkInline.Url = args.Src;
                         }
 
                         // Replace to alt= attribute, it's a literal
                         var literalInline = new LiteralInline(altText);
-                        link.FirstChild.ReplaceBy(literalInline);
+                        linkInline.FirstChild.ReplaceBy(literalInline);
+
+                        // HTML5 the tag
+                        linkInline.Title = title;
 
                         // Necessary for links and Bootstrap 3
-                        AddAttribute(link, "border", "0");
+                        AddAttribute(linkInline, "border", "0");
 
                         // Make all images expand via this Bootstrap class 
-                        AddClass(link, "img-responsive"); 
+                        AddClass(linkInline, "img-responsive"); 
                     }
                     else
                     {
                         if (_linkDelegate != null)
                         {
-                            HtmlLinkTag args = InvokeLinkParsedEvent(link.Url, link.Title, link.Label);
+                            HtmlLinkTag args = InvokeLinkParsedEvent(linkInline.Url, linkInline.Title, linkInline.Label);
 
                             // Update the HTML from the data the event gives back
-                            link.Url = args.Href;
+                            linkInline.Url = args.Href;
 
                             if (!string.IsNullOrEmpty(args.Target))
                             {
-                                AddAttribute(link, "target", args.Target);
+                                AddAttribute(linkInline, "target", args.Target);
                             }
 
 
                             if (!string.IsNullOrEmpty(args.CssClass))
-                                AddClass(link, args.CssClass);
+                                AddClass(linkInline, args.CssClass);
 
                             // Replace the link's text
                             var literalInline = new LiteralInline(args.Text);
-                            link.FirstChild.ReplaceBy(literalInline);
+                            linkInline.FirstChild.ReplaceBy(literalInline);
                         }
 
                         // Markdig TODO: make these configurable (external-links: [])
-                        if (!string.IsNullOrEmpty(link.Url) && 
-                            (link.Url.ToLower().StartsWith("http://") || 
-                            link.Url.ToLower().StartsWith("https://") ||
-                            link.Url.ToLower().StartsWith("mailto:"))
+                        if (!string.IsNullOrEmpty(linkInline.Url) && 
+                            (linkInline.Url.ToLower().StartsWith("http://") || 
+                            linkInline.Url.ToLower().StartsWith("https://") ||
+                            linkInline.Url.ToLower().StartsWith("mailto:"))
                             )
                         {
-                            AddAttribute(link, "rel", "nofollow");
+                            AddAttribute(linkInline, "rel", "nofollow");
                         }
                     }
                 }
