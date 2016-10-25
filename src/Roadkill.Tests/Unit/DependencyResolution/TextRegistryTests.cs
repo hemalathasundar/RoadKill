@@ -1,13 +1,16 @@
-﻿using NUnit.Framework;
-using Roadkill.Core;
+﻿using System;
+using Mindscape.LightSpeed;
+using NUnit.Framework;
+using Roadkill.Core.Configuration;
+using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.DependencyResolution.StructureMap;
 using Roadkill.Core.Plugins;
-using Roadkill.Core.Text;
 using Roadkill.Core.Text.CustomTokens;
 using Roadkill.Core.Text.Parsers;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
+using Roadkill.Tests.Unit.StubsAndMocks;
 using StructureMap;
 
 namespace Roadkill.Tests.Unit.DependencyResolution
@@ -18,13 +21,26 @@ namespace Roadkill.Tests.Unit.DependencyResolution
     {
 		private IContainer CreateContainer()
 		{
-			var registry = new TextRegistry();
+            var configReaderWriterStub = new ConfigReaderWriterStub();
+            configReaderWriterStub.ApplicationSettings.DatabaseName = "SqlServer2008";
+            configReaderWriterStub.ApplicationSettings.ConnectionString = "none empty connection string";
+            configReaderWriterStub.ApplicationSettings.UseHtmlWhiteList = true;
+
+            var roadkillRegistry = new RoadkillRegistry(configReaderWriterStub);
+            var textRegistry = new TextRegistry();
+            roadkillRegistry.IncludeRegistry(textRegistry);
 			var container = new Container(c =>
 			{
-				c.AddRegistry(registry);
+			    c.AddRegistry(roadkillRegistry);
 			});
 
-			return container;
+            // Set the default app settings to clean HTML by default.
+			container.Inject(typeof(IUnitOfWork), new UnitOfWork());
+
+            // Some places that require bastard injection reference the LocatorStartup.Locator
+            LocatorStartup.Locator = new StructureMapServiceLocator(container, false);
+
+            return container;
 		}
 
 		private void AssertDefaultType<TParent, TConcrete>(IContainer container = null)
@@ -57,6 +73,61 @@ namespace Roadkill.Tests.Unit.DependencyResolution
         }
 
         [Test]
+        [TestCase("http://i223.photobucket.com/albums/dd45/wally2603/91e7840f.jpg")]
+        [TestCase("https://i223.photobucket.com/albums/dd45/wally2603/91e7840f.jpg")]
+        public void x1_should_Not_Rewrite_Images_As_Internal_That_Start_With_Known_Prefixes(string imageUrl)
+        {
+            // Arrange
+            IContainer container = CreateContainer();
+
+            // Act
+            var builder = container.GetInstance<TextMiddlewareBuilder>();
+
+            // Assert
+            Assert.That(builder, Is.Not.Null);
+
+            string html = builder.Execute("![Image title](" + imageUrl + ")");
+            // assert image was called/html
+            Assert.That(html, Is.EqualTo("<p><strong>markdown</strong></p>\n"));
+        }
+
+        [Test]
+        public void x1_should_remove_script_link_iframe_frameset_frame_applet_tags_from_text()
+        {
+            // Arrange
+            string markdown = " some text <script type=\"text/html\">while(true)alert('lolz');</script>" +
+                "<iframe src=\"google.com\"></iframe><frame>blah</frame> <applet code=\"MyApplet.class\" width=100 height=140></applet>" +
+                "<frameset src='new.html'></frameset>";
+            string expectedHtml = "<p>some text blah </p>\n";
+
+            IContainer container = CreateContainer();
+            var builder = container.GetInstance<TextMiddlewareBuilder>();
+
+            // Act
+            string actualHtml = builder.Execute(markdown);
+
+            // Assert
+            Assert.That(actualHtml, Is.EqualTo(expectedHtml));
+        }
+
+        [Test]
+        public void x1_links_starting_with_hash_or_https_or_hash_are_not_rewritten_as_internal()
+        {
+            // Arrange
+            string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
+            string markdown = "[hello world](#myanchortag) [google](https://www.google.com)";
+
+            IContainer container = CreateContainer();
+            var builder = container.GetInstance<TextMiddlewareBuilder>();
+            
+            // Act
+            string actualHtml = builder.Execute(markdown);
+
+            // Assert
+            Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
+        }
+
+        [Test]
 		public void should_register_types_with_instances()
 		{
 			// Arrange + Act + Assert
@@ -77,11 +148,11 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 
             // Assert
             Assert.That(builder, Is.Not.Null);
-            Assert.That(builder.MiddleItems[0], Is.TypeOf<TextPluginBeforeParseMiddleware>());
-            Assert.That(builder.MiddleItems[1], Is.TypeOf<MarkupParserMiddleware>());
-            Assert.That(builder.MiddleItems[2], Is.TypeOf<HarmfulTagMiddleware>());
-            Assert.That(builder.MiddleItems[3], Is.TypeOf<CustomTokenMiddleware>());
-            Assert.That(builder.MiddleItems[4], Is.TypeOf<TextPluginAfterParseMiddleware>());
+            Assert.That(builder.MiddlewareItems[0], Is.TypeOf<TextPluginBeforeParseMiddleware>());
+            Assert.That(builder.MiddlewareItems[1], Is.TypeOf<MarkupParserMiddleware>());
+            Assert.That(builder.MiddlewareItems[2], Is.TypeOf<HarmfulTagMiddleware>());
+            Assert.That(builder.MiddlewareItems[3], Is.TypeOf<CustomTokenMiddleware>());
+            Assert.That(builder.MiddlewareItems[4], Is.TypeOf<TextPluginAfterParseMiddleware>());
         }
     }
 }

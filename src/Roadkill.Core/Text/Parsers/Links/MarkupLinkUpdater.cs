@@ -2,6 +2,10 @@
 
 namespace Roadkill.Core.Text.Parsers.Links
 {
+    /// <summary>
+    /// Responsible for converting internal links (page names) to their real MVC path,
+    /// and renaming all links in markdown when a page title changes.
+    /// </summary>
 	public class MarkupLinkUpdater
 	{
 		private IMarkupParser _parser;

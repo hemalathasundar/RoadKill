@@ -34,7 +34,7 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
 
             TextPluginStub plugin = new TextPluginStub();
             plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
-            plugin.Repository = new SettingsRepositoryMock();
+            plugin.SettingsRepository = new SettingsRepositoryMock();
             plugin.Settings.IsEnabled = true;
             _pluginFactory.RegisterTextPlugin(plugin);
 
@@ -55,7 +55,7 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
             // Arrange
             TextPluginStub plugin = new TextPluginStub();
             plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
-            plugin.Repository = new SettingsRepositoryMock();
+            plugin.SettingsRepository = new SettingsRepositoryMock();
             plugin.Settings.IsEnabled = true;
             plugin.PreContainerHtml = "pre container html";
             plugin.PostContainerHtml = "post container html";
@@ -77,7 +77,7 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
         {
             // Arrange
             TextPluginStub plugin = new TextPluginStub();
-            plugin.Repository = new SettingsRepositoryMock();
+            plugin.SettingsRepository = new SettingsRepositoryMock();
             plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
             plugin.IsCacheable = true;
             plugin.Settings.IsEnabled = true;

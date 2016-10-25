@@ -233,8 +233,14 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 			Policies.SetAllProperties(x => x.TypeMatches(t => t == typeof (RoadkillLayoutPage)));
 
 			// Setter inject the *internal* properties for the text plugins
-			For<TextPlugin>().OnCreationForAll("set plugin cache", (ctx, plugin) => plugin.PluginCache = ctx.GetInstance<IPluginCache>());
-			For<TextPlugin>().OnCreationForAll("set plugin repository", (ctx, plugin) => plugin.Repository = ctx.GetInstance<ISettingsRepository>());
+			For<TextPlugin>().OnCreationForAll("set plugin cache", (ctx, plugin) =>
+			{
+			    plugin.PluginCache = ctx.GetInstance<IPluginCache>();
+			});
+			For<TextPlugin>().OnCreationForAll("set plugin settings repository", (ctx, plugin) =>
+			{
+			    plugin.SettingsRepository = ctx.GetInstance<ISettingsRepository>();
+			});
 		}
 
 		private void ConfigureFileService()

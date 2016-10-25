@@ -25,65 +25,6 @@
 		//}
 
 		//[Test]
-		//[TestCase("http://i223.photobucket.com/albums/dd45/wally2603/91e7840f.jpg")]
-		//[TestCase("https://i223.photobucket.com/albums/dd45/wally2603/91e7840f.jpg")]
-		//[TestCase("www.photobucket.com/albums/dd45/wally2603/91e7840f.jpg")]
-		//public void ImageParsed_Should_Not_Rewrite_Images_As_Internal_That_Start_With_Known_Prefixes(string imageUrl)
-		//{
-		//	// Arrange
-		//	UrlResolverMock resolver = new UrlResolverMock();
-		//	resolver.AbsolutePathSuffix = "123";
-
-		//	_markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
-		//	_markupConverter.UrlResolver = resolver;
-
-		//	bool wasCalled = false;
-		//	_markupConverter.MarkupParser.ImageParsed += (object sender, HtmlImageTag e) =>
-		//	{
-		//		wasCalled = (e.Src == imageUrl);
-		//	};
-
-		//	// Act
-		//	_markupConverter.ToHtml("![Image title](" + imageUrl + ")");
-
-		//	// Assert
-		//	Assert.True(wasCalled);
-		//}
-
-		//[Test]
-		//public void should_remove_script_link_iframe_frameset_frame_applet_tags_from_text()
-		//{
-		//	// Arrange
-		//	_markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
-		//	string markdown = " some text <script type=\"text/html\">while(true)alert('lolz');</script>" +
-		//		"<iframe src=\"google.com\"></iframe><frame>blah</frame> <applet code=\"MyApplet.class\" width=100 height=140></applet>" +
-		//		"<frameset src='new.html'></frameset>";
-
-		//	string expectedHtml = "<p>some text blah </p>\n";
-
-		//	// Act
-		//	string actualHtml = _markupConverter.ToHtml(markdown);
-
-		//	// Assert
-		//	Assert.That(actualHtml, Is.EqualTo(expectedHtml));
-		//}
-
-		//[Test]
-		//public void links_starting_with_hash_or_https_or_hash_are_not_rewritten_as_internal()
-		//{
-		//	// Arrange
-		//	_markupConverter = new MarkupConverter(_applicationSettings, _pageRepository, _pluginFactory);
-
-		//	string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
-
-		//	// Act
-		//	string actualHtml = _markupConverter.ToHtml("[hello world](#myanchortag) [google](https://www.google.com)");
-
-		//	// Assert
-		//	Assert.That(actualHtml, Is.EqualTo(expectedHtml));
-		//}
-
-		//[Test]
 		//public void links_with_dashes_or_23_are_rewritten_and_not_parsed_as_encoded_hashes()
 		//{
 		//	// Arrange

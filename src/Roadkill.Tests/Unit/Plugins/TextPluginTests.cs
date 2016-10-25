@@ -100,7 +100,7 @@ namespace Roadkill.Tests.Unit.Plugins
 		{
 			// Arrange + act
 			TextPlugin plugin = new TextPluginStub();
-			plugin.Repository = new SettingsRepositoryMock();
+			plugin.SettingsRepository = new SettingsRepositoryMock();
 			plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
 
 			// Assert
@@ -112,7 +112,7 @@ namespace Roadkill.Tests.Unit.Plugins
 		{
 			// Arrange
 			TextPluginStub plugin = new TextPluginStub();
-			plugin.Repository = new SettingsRepositoryMock();
+			plugin.SettingsRepository = new SettingsRepositoryMock();
 			plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
 
 			plugin.Settings.SetValue("setting1", "value1");
@@ -234,7 +234,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub();
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = mockRepository.Object;
+			plugin.SettingsRepository = mockRepository.Object;
 
 			// Act
 			PluginSettings settings = plugin.Settings;
@@ -282,7 +282,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub();
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = settingsRepositoryMock;
+			plugin.SettingsRepository = settingsRepositoryMock;
 
 			// Act
 			PluginSettings actualPluginSettings = plugin.Settings;
@@ -301,7 +301,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub();
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = settingsRepositoryMock;
+			plugin.SettingsRepository = settingsRepositoryMock;
 
 			// Act
 			PluginSettings actualPluginSettings = plugin.Settings;
@@ -321,7 +321,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub("","","","");
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = settingsRepositoryMock;
+			plugin.SettingsRepository = settingsRepositoryMock;
 
 			// Act + Assert
 			PluginSettings actualPluginSettings = plugin.Settings;
@@ -336,7 +336,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub("id", "name", "desc", "");
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = settingsRepositoryMock;
+			plugin.SettingsRepository = settingsRepositoryMock;
 
 			// Act
 			PluginSettings actualPluginSettings = plugin.Settings;
@@ -355,7 +355,7 @@ namespace Roadkill.Tests.Unit.Plugins
 			Mock<TextPluginStub> pluginMock = new Mock<TextPluginStub>();
 			pluginMock.Setup(x => x.Id).Returns("SomeId");
 			pluginMock.Object.PluginCache = pluginCacheMock.Object;
-			pluginMock.Object.Repository = settingsRepositoryMock;
+			pluginMock.Object.SettingsRepository = settingsRepositoryMock;
 
 			// Act
 			PluginSettings actualPluginSettings = pluginMock.Object.Settings;
@@ -375,7 +375,7 @@ namespace Roadkill.Tests.Unit.Plugins
 
 			TextPluginStub plugin = new TextPluginStub();
 			plugin.PluginCache = pluginCacheMock.Object;
-			plugin.Repository = settingsRepositoryMock;
+			plugin.SettingsRepository = settingsRepositoryMock;
 
 			// Act
 			PluginSettings actualPluginSettings = plugin.Settings;

@@ -71,7 +71,12 @@ namespace Roadkill.Core.Text.Parsers.Markdig
                     {
                         if (_linkDelegate != null)
                         {
-                            HtmlLinkTag args = InvokeLinkParsedEvent(linkInline.Url, linkInline.Title, linkInline.Label);
+                            string text = linkInline.Title;
+                            var descendentForAltTag = child.Descendants().FirstOrDefault();
+                            if (descendentForAltTag != null)
+                                text = descendentForAltTag.ToString();
+
+                            HtmlLinkTag args = InvokeLinkParsedEvent(linkInline.Url, text, linkInline.Label);
 
                             // Update the HTML from the data the event gives back
                             linkInline.Url = args.Href;

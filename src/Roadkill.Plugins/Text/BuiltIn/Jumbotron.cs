@@ -12,7 +12,6 @@ namespace Roadkill.Plugins.Text.BuiltIn
 		internal static readonly string HTMLTEMPLATE = @"<div id=""roadkill-jumbotron"" class=""jumbotron""><div id=""inner"">${inner}</div></div>";
 
 		private string _preContainerHtml = "";
-		private TextMiddlewareBuilder _textMiddlewareBuilder;
 
 		public override string Id
 		{
@@ -47,9 +46,8 @@ namespace Roadkill.Plugins.Text.BuiltIn
 			}
 		}
 
-		public Jumbotron(TextMiddlewareBuilder textMiddlewareBuilder) : base()
+		public Jumbotron()
 		{
-			_textMiddlewareBuilder = textMiddlewareBuilder;
 			_preContainerHtml = "";
 		}
 
@@ -68,11 +66,10 @@ namespace Roadkill.Plugins.Text.BuiltIn
 					// Grab the markdown after the [[[jumbotron=..]]] and parse it,
 					// and put it back in.
 					string innerMarkDown = match.Groups["inner"].Value;
-					string html = _textMiddlewareBuilder.Execute(innerMarkDown);
 
 					// _preContainerHtml is returned later and it contains the HTML that lives 
 					// outside the container, that this plugin provides.
-					_preContainerHtml = HTMLTEMPLATE.Replace("${inner}", html);
+					_preContainerHtml = HTMLTEMPLATE.Replace("${inner}", innerMarkDown);
 				}
 				
 				// Remove the token from the markdown/creole

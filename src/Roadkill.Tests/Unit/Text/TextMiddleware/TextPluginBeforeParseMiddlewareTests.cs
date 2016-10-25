@@ -33,7 +33,7 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
             string expectedHtml = "This is my <span>usertoken</span>";
 
             TextPluginStub plugin = new TextPluginStub();
-            plugin.Repository = new SettingsRepositoryMock();
+            plugin.SettingsRepository = new SettingsRepositoryMock();
             plugin.PluginCache = new SiteCache(CacheMock.RoadkillCache);
             plugin.Settings.IsEnabled = true;
             _pluginFactory.RegisterTextPlugin(plugin);

@@ -1,7 +1,13 @@
-﻿using Roadkill.Core.Plugins;
-using Roadkill.Core.Text;
+﻿using System;
+using Roadkill.Core.Cache;
+using Roadkill.Core.Configuration;
+using Roadkill.Core.Database;
+using Roadkill.Core.Database.Repositories;
+using Roadkill.Core.Plugins;
 using Roadkill.Core.Text.CustomTokens;
 using Roadkill.Core.Text.Parsers;
+using Roadkill.Core.Text.Parsers.Images;
+using Roadkill.Core.Text.Parsers.Links;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.Plugins;
 using Roadkill.Core.Text.Sanitizer;
@@ -18,7 +24,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
             Scan(ScanTypes);
 
             For<IPluginFactory>().Use<PluginFactory>();
-            For<IMarkupParser>().Use<MarkdigParser>();
+            WireupMarkdigParser();
             For<IHtmlSanitizerFactory>().Use<HtmlSanitizerFactory>();
 
             For<TextMiddlewareBuilder>()
@@ -40,6 +46,41 @@ namespace Roadkill.Core.DependencyResolution.StructureMap
 
                     return builder;
                 }).Singleton();
+        }
+
+        private void WireupMarkdigParser()
+        {
+            For<IMarkupParser>().Use("MarkdigParser", ctx =>
+            {
+                // Use ImageTagProvider for image parsing callback
+                Func<HtmlImageTag, HtmlImageTag> imageTagParsed = (htmlImageTag) =>
+                {
+                    var appSettings = ctx.GetInstance<ApplicationSettings>();
+                    var provider = new ImageTagProvider(appSettings);
+                    provider.UrlResolver = new UrlResolver();
+                    htmlImageTag = provider.ImageParsed(htmlImageTag);
+
+                    return htmlImageTag;
+                };
+
+                // Use LinkTagProvider for link parsing callback
+                Func<HtmlLinkTag, HtmlLinkTag> linkParsed = (htmlImageTag) =>
+                {
+                    var pageRepository = ctx.GetInstance<IPageRepository>();
+
+                    var provider = new LinkTagProvider(pageRepository);
+                    provider.UrlResolver = new UrlResolver();
+                    htmlImageTag = provider.LinkParsed(htmlImageTag);
+
+                    return htmlImageTag;
+                };
+
+                var parser = new MarkdigParser();
+                parser.ImageParsed = imageTagParsed;
+                parser.LinkParsed = linkParsed;
+
+                return parser;
+            });
         }
 
         private void ScanTypes(IAssemblyScanner scanner)

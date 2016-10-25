@@ -68,7 +68,7 @@ namespace Roadkill.Core.Plugins
 
 		// These are setter injected at creation time by the DI manager
 		internal IPluginCache PluginCache { get; set; }
-		internal ISettingsRepository Repository { get; set; }
+		internal ISettingsRepository SettingsRepository { get; set; }
 
 		/// <summary>
 		/// Gets or sets whether the plugin's HTML output can be cached by the inbuilt Roadkill caching.
@@ -96,8 +96,8 @@ namespace Roadkill.Core.Plugins
 		{
 			get
 			{
-				if (Repository != null)
-					return Repository.GetSiteSettings();
+				if (SettingsRepository != null)
+					return SettingsRepository.GetSiteSettings();
 				else
 					return null;
 			}
@@ -174,9 +174,9 @@ namespace Roadkill.Core.Plugins
 			IsCacheable = true;
 		}
 
-		internal TextPlugin(ISettingsRepository repository, SiteCache siteCache) : this()
+		internal TextPlugin(ISettingsRepository settingsRepository, SiteCache siteCache) : this()
 		{
-			Repository = repository;
+			SettingsRepository = settingsRepository;
 			PluginCache = siteCache;
 		}
 
@@ -195,14 +195,14 @@ namespace Roadkill.Core.Plugins
 				if (_settings == null)
 				{
 					// Guard for null Repository
-					if (Repository == null)
+					if (SettingsRepository == null)
 					{
-						throw new PluginException(null, "The Repository property is null for {0} and it wasn't found in the cache - it should be injected by the DI container. " +
+						throw new PluginException(null, "The SettingsRepository property is null for {0} and it wasn't found in the cache - it should be injected by the DI container. " +
 											  "If you're unit testing, set the PluginCache and Repository properties with stubs before calling the Settings properties.", GetType().FullName);
 					}
 
 					// Load from the database
-					_settings = Repository.GetTextPluginSettings(this.DatabaseId);
+					_settings = SettingsRepository.GetTextPluginSettings(this.DatabaseId);
 
 					// If this is the first time the plugin has been used, new up the settings
 					if (_settings == null)
@@ -215,7 +215,7 @@ namespace Roadkill.Core.Plugins
 						OnInitializeSettings(_settings);
 
 						// Update the repository
-						Repository.SaveTextPluginSettings(this);
+						SettingsRepository.SaveTextPluginSettings(this);
 					}
 
 					// Cache the settings

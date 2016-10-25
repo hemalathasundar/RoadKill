@@ -1,12 +1,38 @@
 ﻿using System;
 using NUnit.Framework;
-using Roadkill.Core.Text;
+using Roadkill.Core.DependencyResolution.StructureMap;
+using Roadkill.Core.Text.Menu;
 using Roadkill.Core.Text.TextMiddleware;
+using StructureMap;
 
 namespace Roadkill.Tests.Unit.Text.TextMiddleware
 {
     public class TextMiddlewareBuilderTests
     {
+        private TextMiddlewareBuilder CreateFullBuilder()
+        {
+            var registry = new TextRegistry();
+            var container = new Container(c =>
+            {
+                c.AddRegistry(registry);
+            });
+
+            return container.GetInstance<TextMiddlewareBuilder>();
+        }
+
+        [Test]
+        public void should()
+        {
+            // given
+            var builder = CreateFullBuilder();
+
+            // when
+            PageHtml pageHtml = builder.Execute("![Image title](/DSC001.jpg)");
+
+            // then
+            Console.WriteLine(pageHtml);
+        }
+
         [Test]
         public void use_should_throw_when_middleware_is_null()
         {

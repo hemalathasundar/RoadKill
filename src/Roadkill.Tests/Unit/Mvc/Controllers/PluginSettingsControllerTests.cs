@@ -69,11 +69,11 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		{
 			// Arrange
 			TextPluginStub pluginB = new TextPluginStub("b id", "b name", "b desc");
-			pluginB.Repository = _settingsRepository;
+			pluginB.SettingsRepository = _settingsRepository;
 			pluginB.PluginCache = new SiteCache(CacheMock.RoadkillCache);
 
 			TextPluginStub pluginA = new TextPluginStub("a id", "a name", "a desc");
-			pluginA.Repository = _settingsRepository;
+			pluginA.SettingsRepository = _settingsRepository;
 			pluginA.PluginCache = _siteCache;
 
 			_pluginFactory.RegisterTextPlugin(pluginB); // reverse the order to test the ordering
@@ -99,7 +99,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		{
 			// Arrange		
 			TextPluginStub plugin = new TextPluginStub();
-			plugin.Repository = _settingsRepository;
+			plugin.SettingsRepository = _settingsRepository;
 			plugin.PluginCache = _siteCache;
 
 			_settingsRepository.SaveTextPluginSettings(plugin);
@@ -123,7 +123,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		{
 			// Arrange
 			TextPluginStub plugin = new TextPluginStub();
-			plugin.Repository = _settingsRepository;
+			plugin.SettingsRepository = _settingsRepository;
 			plugin.PluginCache = _siteCache;
 			plugin.Settings.SetValue("name1", "default-value1");
 			plugin.Settings.SetValue("name2", "default-value2");
@@ -148,7 +148,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 		{
 			// Arrange
 			TextPluginStub plugin = new TextPluginStub();
-			plugin.Repository = _settingsRepository;
+			plugin.SettingsRepository = _settingsRepository;
 			plugin.PluginCache = _siteCache;
 			plugin.Settings.SetValue("name1", "default-value1");
 			plugin.Settings.SetValue("name2", "default-value2");
@@ -196,7 +196,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			_listCache.Add("a key", new List<string>() { "1", "2" });
 
 			TextPluginStub plugin = new TextPluginStub();
-			plugin.Repository = _settingsRepository;
+			plugin.SettingsRepository = _settingsRepository;
 			plugin.PluginCache = _siteCache;
 			plugin.Settings.SetValue("name1", "default-value1");
 			plugin.Settings.SetValue("name2", "default-value2");

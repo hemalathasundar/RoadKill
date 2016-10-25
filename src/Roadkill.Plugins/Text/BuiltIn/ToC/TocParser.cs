@@ -50,7 +50,7 @@ namespace Roadkill.Plugins.Text.BuiltIn.ToC
 			var parser = new HtmlParser();
 			IHtmlDocument document = parser.Parse(html);
 
-            // Markdig TODO - this can be removed?
+            // Markdig TODO - Markdig now adds IDs automatically?
 			ParseHTagsAndAddAnchors(document, document.QuerySelector("body"));
 
 			string outputHtml = GenerateHtml();

@@ -21,20 +21,12 @@ namespace Roadkill.Tests.Unit.Plugins
 	[Category("Unit")]
 	public class JumbotronTests
 	{
-		private MocksAndStubsContainer _container;
-
-		[SetUp]
-		public void Setup()
-		{
-			_container = new MocksAndStubsContainer();
-		}
-
 		[Test]
 		public void should_remove_jumbotron_tag_from_markup()
 		{
 			// Arrange
 			string markup = "Here is some ===Heading 1=== markup \n[[[jumbotron=\n==Welcome==\n==This the subheading==]]]";
-			Jumbotron jumbotron = new Jumbotron(_container.TextMiddlewareBuilder);
+			Jumbotron jumbotron = new Jumbotron();
 
 			// Act
 			string actualMarkup = jumbotron.BeforeParse(markup);
@@ -50,7 +42,7 @@ namespace Roadkill.Tests.Unit.Plugins
 			string markup = "Here is some # Heading 1\n markup \n[[[jumbotron=# Welcome\n## This is a subheading]]]";
 			string expectedHtml = Jumbotron.HTMLTEMPLATE.Replace("${inner}", "<h1 id=\"welcome\">Welcome</h1>\n<h2 id=\"this-is-a-subheading\">This is a subheading</h2>\n");
 
-			Jumbotron jumbotron = new Jumbotron(_container.TextMiddlewareBuilder);
+			Jumbotron jumbotron = new Jumbotron();
 
 			// Act
 			jumbotron.BeforeParse(markup);

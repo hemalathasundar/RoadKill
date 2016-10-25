@@ -441,6 +441,7 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
+    <Compile Include="Unit\Text\Plugins\TextPluginRunnerTests.cs" />
     <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigImageAndLinkWalkerTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigParserTests.cs" />
@@ -529,9 +530,7 @@
       <Name>Roadkill.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Unit\Text\Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

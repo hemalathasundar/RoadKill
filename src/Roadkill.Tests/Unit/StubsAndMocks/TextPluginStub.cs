@@ -42,7 +42,7 @@ namespace Roadkill.Tests.Unit.StubsAndMocks
 			_description = "Amazing stubbed plugin";
 		}
 
-		internal TextPluginStub(ISettingsRepository repository, SiteCache siteCache) : base(repository, siteCache)
+		internal TextPluginStub(ISettingsRepository settingsRepository, SiteCache siteCache) : base(settingsRepository, siteCache)
 		{
 			_id = "Amazing plugin";
 			_name = "An amazing plugin";

@@ -6,11 +6,11 @@ namespace Roadkill.Core.Text.TextMiddleware
 {
     public class TextMiddlewareBuilder
     {
-        public List<Middleware> MiddleItems { get; set; }
+        public List<Middleware> MiddlewareItems { get; set; }
 
         public TextMiddlewareBuilder()
         {
-            MiddleItems = new List<Middleware>();
+            MiddlewareItems = new List<Middleware>();
         }
 
         public void Use(Middleware middleware)
@@ -18,22 +18,23 @@ namespace Roadkill.Core.Text.TextMiddleware
             if (middleware == null)
                 throw new ArgumentNullException(nameof(middleware));
 
-            MiddleItems.Add(middleware);
+            MiddlewareItems.Add(middleware);
         }
 
         public PageHtml Execute(string markdown)
         {
             var pageHtml = new PageHtml() {Html = markdown};
 
-            foreach (Middleware item in MiddleItems)
+            foreach (Middleware item in MiddlewareItems)
             {
                 try
                 {
                     pageHtml = item.Invoke(pageHtml);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // TODO: logging
+                    Console.WriteLine("TextMiddlewareBuilder exception: {0}", ex);
                 }
             }
 

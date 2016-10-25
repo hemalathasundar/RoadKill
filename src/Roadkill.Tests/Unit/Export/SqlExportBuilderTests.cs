@@ -197,14 +197,14 @@ namespace Roadkill.Tests.Unit.Export
 
 			TextPluginStub plugin1 = new TextPluginStub("fake-plugin1", "fake plugin1", "description 1", "1.1");
 			plugin1.PluginCache = siteCache;
-			plugin1.Repository = settingsRepository;
+			plugin1.SettingsRepository = settingsRepository;
 			plugin1.Settings.IsEnabled = true;
 			plugin1.Settings.SetValue("key1", "value1");
 			plugin1.Settings.SetValue("key2", "value2");
 
 			TextPluginStub plugin2 = new TextPluginStub("fake-plugin2", "fake plugin2", "description 2", "2.1");
 			plugin2.PluginCache = siteCache;
-			plugin2.Repository = settingsRepository;
+			plugin2.SettingsRepository = settingsRepository;
 
 			PluginFactoryMock pluginFactory = new PluginFactoryMock();
 			pluginFactory.TextPlugins.Add(plugin1);
