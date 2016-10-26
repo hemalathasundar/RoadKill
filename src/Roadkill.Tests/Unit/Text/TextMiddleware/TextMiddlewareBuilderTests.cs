@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Roadkill.Core.DependencyResolution.StructureMap;
+using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Text.Menu;
 using Roadkill.Core.Text.TextMiddleware;
 using StructureMap;

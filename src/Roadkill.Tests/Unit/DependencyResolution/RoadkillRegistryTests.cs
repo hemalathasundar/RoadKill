@@ -16,6 +16,7 @@ using Roadkill.Core.Database.MongoDB;
 using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.DependencyResolution.StructureMap;
+using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Domain.Export;
 using Roadkill.Core.Email;
 using Roadkill.Core.Import;

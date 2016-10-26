@@ -8,6 +8,7 @@ using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.DependencyResolution.StructureMap;
+using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Tests.Unit.StubsAndMocks;
 using StructureMap;

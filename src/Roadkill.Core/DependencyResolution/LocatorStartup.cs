@@ -10,6 +10,7 @@ using Roadkill.Core.Database;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.DependencyResolution.MVC;
 using Roadkill.Core.DependencyResolution.StructureMap;
+using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Mvc.ViewModels;
 using StructureMap;

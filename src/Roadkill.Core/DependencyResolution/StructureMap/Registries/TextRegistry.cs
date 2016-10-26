@@ -1,8 +1,6 @@
 ﻿using System;
-using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
-using Roadkill.Core.Database.Repositories;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text.CustomTokens;
 using Roadkill.Core.Text.Parsers;
@@ -15,7 +13,7 @@ using Roadkill.Core.Text.TextMiddleware;
 using StructureMap;
 using StructureMap.Graph;
 
-namespace Roadkill.Core.DependencyResolution.StructureMap
+namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 {
     public class TextRegistry : Registry
     {
