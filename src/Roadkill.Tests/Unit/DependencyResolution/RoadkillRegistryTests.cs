@@ -230,7 +230,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			IEnumerable<IRoadkillController> controllers = container.GetAllInstances<IRoadkillController>();
 
 			// Assert
-			Assert.That(controllers.Count(), Is.EqualTo(15));
+			Assert.That(controllers.Count(), Is.EqualTo(14));
 		}
 
 		[Test]
@@ -243,7 +243,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			IEnumerable<ApiController> controllers = container.GetAllInstances<ApiController>();
 
 			// Assert
-		    Console.WriteLine(container.WhatDidIScan());
 			Assert.That(controllers.Count(), Is.EqualTo(3));
 		}
 

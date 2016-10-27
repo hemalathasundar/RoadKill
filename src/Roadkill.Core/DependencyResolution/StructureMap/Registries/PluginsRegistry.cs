@@ -41,7 +41,8 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 				scanner.AssembliesFromPath(subDirectory);
 			}
 
-			scanner.With(new AbstractClassConvention<TextPlugin>());
+            scanner.AssembliesFromApplicationBaseDirectory(assembly => assembly.FullName.Contains("Roadkill.Plugins"));
+            scanner.With(new AbstractClassConvention<TextPlugin>());
 		    scanner.With(new AbstractClassConvention<SpecialPagePlugin>());
 		}
 

@@ -16,8 +16,12 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
 		private void ScanTypes(IAssemblyScanner scanner)
 		{
-			// Emails
-			scanner.AddAllTypesOf<SignupEmail>();
+            scanner.TheCallingAssembly();
+            scanner.SingleImplementationsOfInterface();
+            scanner.WithDefaultConventions();
+
+            // Emails
+            scanner.AddAllTypesOf<SignupEmail>();
 			scanner.AddAllTypesOf<ResetPasswordEmail>();
 
 			// Export

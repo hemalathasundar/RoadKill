@@ -20,7 +20,20 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
         public TextRegistry()
         {
             Scan(ScanTypes);
+            ConfigureInstances();
+        }
 
+        private void ScanTypes(IAssemblyScanner scanner)
+        {
+            scanner.TheCallingAssembly();
+            scanner.SingleImplementationsOfInterface();
+            scanner.WithDefaultConventions();
+
+            scanner.AddAllTypesOf<CustomTokenParser>();
+        }
+
+        private void ConfigureInstances()
+        {
             For<IPluginFactory>().Use<PluginFactory>();
             WireupMarkdigParser();
             For<IHtmlSanitizerFactory>().Use<HtmlSanitizerFactory>();
@@ -79,11 +92,6 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
                 return parser;
             });
-        }
-
-        private void ScanTypes(IAssemblyScanner scanner)
-        {
-            scanner.AddAllTypesOf<CustomTokenParser>();
         }
     }
 }

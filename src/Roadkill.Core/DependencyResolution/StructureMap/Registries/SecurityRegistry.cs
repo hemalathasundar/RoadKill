@@ -19,6 +19,10 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
 		private void ScanTypes(IAssemblyScanner scanner)
 		{
+            scanner.TheCallingAssembly();
+            scanner.SingleImplementationsOfInterface();
+            scanner.WithDefaultConventions();
+
             scanner.With(new AbstractClassConvention<UserServiceBase>());
 			scanner.AddAllTypesOf<IActiveDirectoryProvider>();
             scanner.AddAllTypesOf<IUserContext>();

@@ -21,6 +21,10 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
         private void ScanTypes(IAssemblyScanner scanner)
         {
+            scanner.TheCallingAssembly();
+            scanner.SingleImplementationsOfInterface();
+            scanner.WithDefaultConventions();
+
             scanner.AddAllTypesOf<UserViewModel>();
             scanner.AddAllTypesOf<SettingsViewModel>();
             scanner.AddAllTypesOf<AttachmentRouteHandler>();

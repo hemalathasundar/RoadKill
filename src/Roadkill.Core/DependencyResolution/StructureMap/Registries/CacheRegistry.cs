@@ -15,7 +15,11 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
 		private void ScanTypes(IAssemblyScanner scanner)
 		{
-			scanner.AddAllTypesOf<ListCache>();
+            scanner.TheCallingAssembly();
+            scanner.SingleImplementationsOfInterface();
+            scanner.WithDefaultConventions();
+
+            scanner.AddAllTypesOf<ListCache>();
 			scanner.AddAllTypesOf<PageViewModelCache>();
 		}
 
