@@ -11,9 +11,9 @@ using Roadkill.Core.Database.Schema;
 
 namespace Roadkill.Tests.Unit.Database
 {
-	public class RepositoryFactoryTests
-	{
-		private void SetUnitOfWork(RepositoryFactory factory)
+	public class LightspeedRepositoryFactoryTests
+    {
+		private void SetUnitOfWork(LightspeedRepositoryFactory factory)
 		{
 			factory.UnitOfWorkFunc = context => new UnitOfWork();
 		}
@@ -22,7 +22,7 @@ namespace Roadkill.Tests.Unit.Database
 		public void listall_should_return_all_databases()
 		{
 			// Arrange
-			var factory = new RepositoryFactory("database name", "not empty");
+			var factory = new LightspeedRepositoryFactory("database name", "not empty");
 			SetUnitOfWork(factory);
 
 			// Act
@@ -42,7 +42,7 @@ namespace Roadkill.Tests.Unit.Database
 		public void GetSettingsRepository_should_return_correct_lightspeedrepository(string provider, string connectionString, DataProvider expectedProvider)
 		{
 			// Arrange
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -59,7 +59,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "anything";
 			string connectionString = "connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -76,7 +76,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "MONGODB";
 			string connectionString = "mongodb-connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -96,7 +96,7 @@ namespace Roadkill.Tests.Unit.Database
 		public void GetUserRepository_should_return_correct_lightspeedrepository(string provider, string connectionString, DataProvider expectedProvider)
 		{
 			// Arrange
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -113,7 +113,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "anything";
 			string connectionString = "connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -130,7 +130,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "MONGODB";
 			string connectionString = "mongodb-connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -150,7 +150,7 @@ namespace Roadkill.Tests.Unit.Database
 		public void GetPageRepository_should_return_correct_lightspeedrepository(string provider, string connectionString, DataProvider expectedProvider)
 		{
 			// Arrange
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -167,7 +167,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "anything";
 			string connectionString = "connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act
@@ -184,7 +184,7 @@ namespace Roadkill.Tests.Unit.Database
 			// Arrange
 			string provider = "MONGODB";
 			string connectionString = "mongodb-connection-string";
-			var factory = new RepositoryFactory(provider, connectionString);
+			var factory = new LightspeedRepositoryFactory(provider, connectionString);
 			SetUnitOfWork(factory);
 
 			// Act

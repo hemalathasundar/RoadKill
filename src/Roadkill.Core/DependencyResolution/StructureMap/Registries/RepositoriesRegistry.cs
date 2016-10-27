@@ -31,10 +31,10 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			// TODO: All services should take an IRepositoryFactory, no injection should be needed for IXYZRepository
 			For<IRepositoryFactory>()
 				.Singleton()
-				.Use<RepositoryFactory>("IRepositoryFactory", x =>
+				.Use<DapperRepositoryFactory>("IRepositoryFactory", x =>
 				{
 					ApplicationSettings appSettings = x.GetInstance<ApplicationSettings>();
-					return new RepositoryFactory(appSettings.DatabaseName, appSettings.ConnectionString);
+					return new DapperRepositoryFactory(appSettings.DatabaseName, appSettings.ConnectionString);
 				});
 
 			For<ISettingsRepository>()

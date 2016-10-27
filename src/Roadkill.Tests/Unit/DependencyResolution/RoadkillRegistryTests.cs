@@ -14,6 +14,7 @@ using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
 using Roadkill.Core.Database.MongoDB;
 using Roadkill.Core.Database.Repositories;
+using Roadkill.Core.Database.Repositories.Dapper;
 using Roadkill.Core.DependencyResolution;
 using Roadkill.Core.DependencyResolution.StructureMap;
 using Roadkill.Core.DependencyResolution.StructureMap.Registries;
@@ -94,19 +95,19 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 
 		// Repositories
 		[Test]
-		public void should_use_lightspeedrepositories_by_default()
+		public void should_use_dapperrepositories_by_default()
 		{
 			// Arrange + Act + Assert
-			AssertDefaultType<ISettingsRepository, LightSpeedSettingsRepository>();
-			AssertDefaultType<IUserRepository, LightSpeedUserRepository>();
-			AssertDefaultType<IPageRepository, LightSpeedPageRepository>();
+			AssertDefaultType<ISettingsRepository, DapperSettingsRepository>();
+			AssertDefaultType<IUserRepository, DapperUserRepository>();
+			AssertDefaultType<IPageRepository, DapperPageRepository>();
 		}
 
 		[Test]
 		public void should_load_repositoryfactory_by_default()
 		{
 			// Arrange + Act + Assert
-			AssertDefaultType<IRepositoryFactory, RepositoryFactory>();
+			AssertDefaultType<IRepositoryFactory, DapperRepositoryFactory>();
 		}
 
 		[Test]

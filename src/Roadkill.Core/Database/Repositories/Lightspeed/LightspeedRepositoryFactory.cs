@@ -10,7 +10,7 @@ using Roadkill.Core.DependencyResolution;
 
 namespace Roadkill.Core.Database
 {
-	public class RepositoryFactory : IRepositoryFactory
+	public class LightspeedRepositoryFactory : IRepositoryFactory
 	{
 		// Hack to make sure the factory doesn't return invalid Repositories, while installing.
 		private readonly bool _pendingInstallation;
@@ -18,11 +18,11 @@ namespace Roadkill.Core.Database
 		public LightSpeedContext Context { get; set; }
 		internal Func<LightSpeedContext, IUnitOfWork> UnitOfWorkFunc { get; set; }
 
-		public RepositoryFactory()
+		public LightspeedRepositoryFactory()
 		{
 		}
 
-		public RepositoryFactory(string databaseProviderName, string connectionString)
+		public LightspeedRepositoryFactory(string databaseProviderName, string connectionString)
 		{
 			if (string.IsNullOrEmpty(connectionString))
 			{
