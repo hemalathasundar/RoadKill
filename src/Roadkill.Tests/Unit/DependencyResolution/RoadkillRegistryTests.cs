@@ -43,13 +43,9 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			configReaderWriterStub.ApplicationSettings.ConnectionString = "none empty connection string";
 
 			var roadkillRegistry = new RoadkillRegistry(configReaderWriterStub);
-		    var textRegistry = new TextRegistry();
 			var container = new Container(c =>
 			{
 				c.AddRegistry(roadkillRegistry);
-
-                // injects IMarkupParser and text middleware required by the services
-                c.AddRegistry(textRegistry); 
 			});
 			container.Inject(typeof(IUnitOfWork), new UnitOfWork());
 
@@ -238,7 +234,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 		}
 
 		[Test]
-		public void should_register_ApiControllerBase_instances()
+		public void should_register_ApiController_instances()
 		{
 			// Arrange
 			IContainer container = CreateContainer();
@@ -247,6 +243,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			IEnumerable<ApiController> controllers = container.GetAllInstances<ApiController>();
 
 			// Assert
+		    Console.WriteLine(container.WhatDidIScan());
 			Assert.That(controllers.Count(), Is.EqualTo(3));
 		}
 

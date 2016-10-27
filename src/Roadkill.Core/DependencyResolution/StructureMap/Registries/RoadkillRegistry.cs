@@ -11,10 +11,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
 		public RoadkillRegistry(ConfigReaderWriter configReader)
 		{
-			ApplicationSettings = configReader.GetApplicationSettings();
-
-			Scan(ScanTypes);
-			ConfigureInstances(configReader);
+            ApplicationSettings = configReader.GetApplicationSettings();
 
 		    IncludeRegistry<RepositoryRegistry>();
 		    IncludeRegistry<MvcRegistry>();
@@ -24,6 +21,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
             IncludeRegistry<ServicesRegistry>();
             IncludeRegistry<TextRegistry>();
 		    IncludeRegistry<ToolsRegistry>();
+
+			Scan(ScanTypes);
+			ConfigureInstances(configReader);
 		}
 
 		private void ScanTypes(IAssemblyScanner scanner)
