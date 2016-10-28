@@ -1,9 +1,4 @@
-﻿using System;
-using Mindscape.LightSpeed;
-using NUnit.Framework;
-using Roadkill.Core.Configuration;
-using Roadkill.Core.DependencyResolution;
-using Roadkill.Core.DependencyResolution.StructureMap;
+﻿using NUnit.Framework;
 using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text.CustomTokens;
@@ -11,57 +6,25 @@ using Roadkill.Core.Text.Parsers;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
-using Roadkill.Tests.Unit.StubsAndMocks;
 using StructureMap;
 
 namespace Roadkill.Tests.Unit.DependencyResolution
 {
 	[TestFixture]
 	[Category("Unit")]
-	public class TextRegistryTests
+	public class TextRegistryTests : RegistryTestsBase
     {
-		private IContainer CreateContainer()
+		[SetUp]
+		public void Setup()
 		{
-            var configReaderWriterStub = new ConfigReaderWriterStub();
-            configReaderWriterStub.ApplicationSettings.DatabaseName = "SqlServer2008";
-            configReaderWriterStub.ApplicationSettings.ConnectionString = "none empty connection string";
-            configReaderWriterStub.ApplicationSettings.UseHtmlWhiteList = true;
-
-            var roadkillRegistry = new RoadkillRegistry(configReaderWriterStub);
-            var textRegistry = new TextRegistry();
-            roadkillRegistry.IncludeRegistry(textRegistry);
-			var container = new Container(c =>
-			{
-			    c.AddRegistry(roadkillRegistry);
-			});
-
-            // Set the default app settings to clean HTML by default.
-			container.Inject(typeof(IUnitOfWork), new UnitOfWork());
-
-            // Some places that require bastard injection reference the LocatorStartup.Locator
-            LocatorStartup.Locator = new StructureMapServiceLocator(container, false);
-
-            return container;
-		}
-
-		private void AssertDefaultType<TParent, TConcrete>(IContainer container = null)
-		{
-			// Arrange
-			if (container == null)
-				container = CreateContainer();
-
-			// Act
-			TParent instance = container.GetInstance<TParent>();
-
-			// Assert
-			Assert.That(instance, Is.TypeOf<TConcrete>());
+			Container = CreateContainer(new TextRegistry());
 		}
 
 		[Test]
 		public void should_construct_builder_and_parse_basic_markup()
 		{
 			// Arrange
-			IContainer container = CreateContainer();
+			IContainer container = Container;
 
 			// Act
 		    var builder = container.GetInstance<TextMiddlewareBuilder>();
@@ -79,7 +42,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
         public void x1_should_Not_Rewrite_Images_As_Internal_That_Start_With_Known_Prefixes(string imageUrl)
         {
             // Arrange
-            IContainer container = CreateContainer();
+            IContainer container = Container;
 
             // Act
             var builder = container.GetInstance<TextMiddlewareBuilder>();
@@ -101,7 +64,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
                 "<frameset src='new.html'></frameset>";
             string expectedHtml = "<p>some text blah </p>\n";
 
-            IContainer container = CreateContainer();
+            IContainer container = Container;
             var builder = container.GetInstance<TextMiddlewareBuilder>();
 
             // Act
@@ -118,7 +81,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
             string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
             string markdown = "[hello world](#myanchortag) [google](https://www.google.com)";
 
-            IContainer container = CreateContainer();
+            IContainer container = Container;
             var builder = container.GetInstance<TextMiddlewareBuilder>();
             
             // Act
@@ -142,7 +105,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
         public void should_register_middleware_in_the_correct_order()
         {
             // Arrange
-            IContainer container = CreateContainer();
+            IContainer container = Container;
 
             // Act
             var builder = container.GetInstance<TextMiddlewareBuilder>();
