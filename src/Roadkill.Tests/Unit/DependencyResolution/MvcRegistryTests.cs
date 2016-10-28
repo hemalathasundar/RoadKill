@@ -17,12 +17,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class MvcRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new MvcRegistry());
-		}
-
 		[Test]
 		public void should_register_IRoadkillController_instances()
 		{

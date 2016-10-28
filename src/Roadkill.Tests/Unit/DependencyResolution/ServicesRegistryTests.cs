@@ -13,12 +13,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class ServicesRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new ServicesRegistry());
-		}
-
 		[Test]
 		public void should_register_services()
 		{

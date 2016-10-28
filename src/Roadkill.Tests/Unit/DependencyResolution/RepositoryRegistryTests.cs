@@ -13,12 +13,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class RepositoryRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new RepositoryRegistry());
-		}
-
 		[Test]
 		public void should_use_dapperrepositories_by_default()
 		{

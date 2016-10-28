@@ -11,12 +11,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class ToolsRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new ToolsRegistry());
-		}
-
 		[Test]
 		public void should_register_email_types()
 		{

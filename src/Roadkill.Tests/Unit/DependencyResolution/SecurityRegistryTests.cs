@@ -14,12 +14,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class SecurityRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new SecurityRegistry());
-		}
-
 		[Test]
 		public void should_use_usercontext_by_default()
 		{

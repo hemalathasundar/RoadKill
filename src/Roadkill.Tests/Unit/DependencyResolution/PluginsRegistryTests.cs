@@ -8,12 +8,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class PluginsRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new PluginsRegistry(ConfigReaderWriterStub));
-		}
-
 		[Test]
 		public void should_register_default_pluginfactory()
 		{

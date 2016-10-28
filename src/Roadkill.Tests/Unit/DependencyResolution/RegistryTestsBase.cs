@@ -13,16 +13,19 @@ namespace Roadkill.Tests.Unit.DependencyResolution
         protected IContainer Container;
 	    protected ConfigReaderWriterStub ConfigReaderWriterStub;
 
-	    public RegistryTestsBase()
+		[SetUp]
+	    public void Setup()
 	    {
 			// Create a basic ConfigReaderWriter with some settings
 			ConfigReaderWriterStub = new ConfigReaderWriterStub();
 			ConfigReaderWriterStub.ApplicationSettings.DatabaseName = "SqlServer2008";
 			ConfigReaderWriterStub.ApplicationSettings.ConnectionString = "none empty connection string";
 			ConfigReaderWriterStub.ApplicationSettings.UseHtmlWhiteList = true;
+
+			Container = CreateContainerWithRoadkillRegistry();
 		}
 
-		protected virtual IContainer CreateContainer(Registry registry)
+		private IContainer CreateContainerWithRoadkillRegistry()
         {
 			var container = new Container(c =>
             {

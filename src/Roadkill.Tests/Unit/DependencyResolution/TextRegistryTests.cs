@@ -14,12 +14,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class TextRegistryTests : RegistryTestsBase
     {
-		[SetUp]
-		public void Setup()
-		{
-			Container = CreateContainer(new TextRegistry());
-		}
-
 		[Test]
 		public void should_construct_builder_and_parse_basic_markup()
 		{

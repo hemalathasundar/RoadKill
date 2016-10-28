@@ -9,12 +9,6 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class CacheRegistryTests : RegistryTestsBase
     {
-        [SetUp]
-        public void Setup()
-        {
-            Container = CreateContainer(new CacheRegistry());
-        }
-
         [Test]
 		public void should_register_cache_types()
 		{
