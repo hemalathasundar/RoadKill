@@ -44,7 +44,7 @@ namespace Roadkill.Core.Text.Parsers.Links
         /// <summary>
         /// Handles internal links, and the 'attachment:' prefix for attachment links.
         /// </summary>
-        public HtmlLinkTag LinkParsed(HtmlLinkTag htmlLinkTag)
+        public HtmlLinkTag Parse(HtmlLinkTag htmlLinkTag)
         {
             if (!_externalLinkPrefixes.Any(x => htmlLinkTag.OriginalHref.StartsWith(x)))
             {

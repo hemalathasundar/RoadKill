@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Domain.Export;
 using Roadkill.Core.Email;
 using Roadkill.Core.Import;

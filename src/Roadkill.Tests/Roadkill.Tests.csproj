@@ -450,6 +450,8 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
+    <Compile Include="Unit\Text\Images\ImageTagProviderTests.cs" />
+    <Compile Include="Unit\Text\Links\LinkTagProviderTests.cs" />
     <Compile Include="Unit\Text\Plugins\TextPluginRunnerTests.cs" />
     <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigImageAndLinkWalkerTests.cs" />
@@ -463,7 +465,6 @@
     <Compile Include="Unit\Services\PageServiceTests.cs" />
     <Compile Include="Unit\Services\ActiveDirectoryUserManagerTests.cs" />
     <Compile Include="Unit\Mvc\ViewModels\UserViewModelEmailValidationTests.cs" />
-    <Compile Include="Unit\Text\Archive\MarkupConverterTests.cs" />
     <Compile Include="Unit\Text\CustomTokens\CustomTokenParserTests.cs" />
     <Compile Include="Unit\Mvc\WebApi\UserControllerTests.cs" />
     <Compile Include="Unit\StubsAndMocks\MiddleWareMock.cs" />

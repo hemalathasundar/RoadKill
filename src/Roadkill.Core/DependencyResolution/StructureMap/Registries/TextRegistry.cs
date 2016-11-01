@@ -61,37 +61,46 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
         private void WireupMarkdigParser()
         {
-            For<IMarkupParser>().Use("MarkdigParser", ctx =>
-            {
-                // Use ImageTagProvider for image parsing callback
-                Func<HtmlImageTag, HtmlImageTag> imageTagParsed = (htmlImageTag) =>
-                {
-                    var appSettings = ctx.GetInstance<ApplicationSettings>();
-                    var provider = new ImageTagProvider(appSettings);
-                    provider.UrlResolver = new UrlResolver();
-                    htmlImageTag = provider.ImageParsed(htmlImageTag);
+			For<IMarkupParser>().Use("MarkdigParser", ctx =>
+			{
+				Func<HtmlImageTag, HtmlImageTag> imageTagParsed = CreateImageParsedFunc(ctx);
+				Func<HtmlLinkTag, HtmlLinkTag> linkParsed = CreateLinkParsedFunc(ctx);
 
-                    return htmlImageTag;
-                };
+				var parser = new MarkdigParser();
+				parser.ImageParsed = imageTagParsed;
+				parser.LinkParsed = linkParsed;
 
-                // Use LinkTagProvider for link parsing callback
-                Func<HtmlLinkTag, HtmlLinkTag> linkParsed = (htmlImageTag) =>
-                {
-                    var pageRepository = ctx.GetInstance<IPageRepository>();
-
-                    var provider = new LinkTagProvider(pageRepository);
-                    provider.UrlResolver = new UrlResolver();
-                    htmlImageTag = provider.LinkParsed(htmlImageTag);
-
-                    return htmlImageTag;
-                };
-
-                var parser = new MarkdigParser();
-                parser.ImageParsed = imageTagParsed;
-                parser.LinkParsed = linkParsed;
-
-                return parser;
-            });
+				return parser;
+			});
         }
-    }
+
+		public static Func<HtmlLinkTag, HtmlLinkTag> CreateLinkParsedFunc(IContext ctx)
+		{
+			// Use LinkTagProvider for link parsing callback
+			return (htmlImageTag) =>
+			{
+				var pageRepository = ctx.GetInstance<IPageRepository>();
+
+				var provider = new LinkTagProvider(pageRepository);
+				provider.UrlResolver = new UrlResolver();
+				htmlImageTag = provider.Parse(htmlImageTag);
+
+				return htmlImageTag;
+			};
+		}
+
+		public static Func<HtmlImageTag, HtmlImageTag> CreateImageParsedFunc(IContext ctx)
+		{
+			// Use ImageTagProvider for image parsing callback
+			return (htmlImageTag) =>
+			{
+				var appSettings = ctx.GetInstance<ApplicationSettings>();
+				var provider = new ImageTagProvider(appSettings);
+				provider.UrlResolver = new UrlResolver();
+				htmlImageTag = provider.Parse(htmlImageTag);
+
+				return htmlImageTag;
+			};
+		}
+	}
 }

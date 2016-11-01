@@ -27,7 +27,7 @@ namespace Roadkill.Core.Text.Parsers.Images
         /// <summary>
         /// Adds the attachments folder as a prefix to all image URLs before the HTML &lt;img&gt; tag is written.
         /// </summary>
-        public HtmlImageTag ImageParsed(HtmlImageTag htmlImageTag)
+        public HtmlImageTag Parse(HtmlImageTag htmlImageTag)
         {
             if (!htmlImageTag.OriginalSrc.StartsWith("http://") && !htmlImageTag.OriginalSrc.StartsWith("https://") && !htmlImageTag.OriginalSrc.StartsWith("www."))
             {

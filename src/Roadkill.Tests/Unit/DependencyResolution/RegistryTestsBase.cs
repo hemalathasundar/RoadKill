@@ -27,6 +27,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 
 		private IContainer CreateContainerWithRoadkillRegistry()
         {
+			// Need a RoadkillRegistry for all the dependencies other registries require
 			var container = new Container(c =>
             {
                 c.AddRegistry(new RoadkillRegistry(ConfigReaderWriterStub));
