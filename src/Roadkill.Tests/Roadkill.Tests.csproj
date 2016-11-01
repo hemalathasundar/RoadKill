@@ -450,13 +450,14 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
-    <Compile Include="Unit\Text\Images\ImageTagProviderTests.cs" />
-    <Compile Include="Unit\Text\Links\LinkTagProviderTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Images\ImageTagProviderTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Links\LinkTagProviderTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Links\UrlResolverTests.cs" />
     <Compile Include="Unit\Text\Plugins\TextPluginRunnerTests.cs" />
     <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigImageAndLinkWalkerTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigParserTests.cs" />
-    <Compile Include="Unit\Text\Parsers\MarkupLinkUpdaterTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Links\MarkupLinkUpdaterTests.cs" />
     <Compile Include="Unit\Text\Menu\MenuParserTests.cs" />
     <Compile Include="Unit\Plugins\TocParserTests.cs" />
     <Compile Include="Unit\Text\Archive\MarkdownTests.cs" />

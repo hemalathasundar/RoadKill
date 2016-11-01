@@ -2,7 +2,7 @@
 using Roadkill.Core.Text.Parsers.Links;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
-namespace Roadkill.Tests.Unit.Text.Links
+namespace Roadkill.Tests.Unit.Text.Parsers.Links
 {
 	public class LinkTagProviderTests
 	{
@@ -22,7 +22,6 @@ namespace Roadkill.Tests.Unit.Text.Links
 			var provider = new LinkTagProvider(_pageRepository);
 
 			// Act
-
 
 			// Assert
 		}

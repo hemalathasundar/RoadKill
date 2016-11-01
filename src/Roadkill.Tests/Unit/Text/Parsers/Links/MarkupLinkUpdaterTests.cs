@@ -2,7 +2,7 @@
 using Roadkill.Core.Text.Parsers.Links;
 using Roadkill.Core.Text.Parsers.Markdig;
 
-namespace Roadkill.Tests.Unit.Text.Parsers
+namespace Roadkill.Tests.Unit.Text.Parsers.Links
 {
 	[TestFixture]
 	[Category("Unit")]

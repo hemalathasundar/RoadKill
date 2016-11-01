@@ -7,8 +7,8 @@ namespace Roadkill.Core.Text.Parsers.Images
 {
     public class ImageTagProvider
     {
-        private ApplicationSettings _applicationSettings;
-        private static Regex _imgFileRegex = new Regex("^File:", RegexOptions.IgnoreCase);
+        private readonly ApplicationSettings _applicationSettings;
+        private static readonly Regex _imgFileRegex = new Regex("^File:", RegexOptions.IgnoreCase);
 
         public UrlResolver UrlResolver { get; set; }
 

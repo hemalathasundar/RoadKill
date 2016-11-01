@@ -79,7 +79,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 		}
 
 		[Test]
-		public void should()
+		public void should1()
 		{
 			// Arrange
 
@@ -89,7 +89,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 		}
 
 		[Test]
-		public void should()
+		public void should2()
 		{
 			// Arrange
 
