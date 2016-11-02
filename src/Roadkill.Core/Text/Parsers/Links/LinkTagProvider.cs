@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,19 +10,24 @@ namespace Roadkill.Core.Text.Parsers.Links
 {
     public class LinkTagProvider
     {
-        private ApplicationSettings _applicationSettings;
-        private static Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
         private readonly IPageRepository _pageRepository;
-        private List<string> _externalLinkPrefixes;
+        private readonly ApplicationSettings _applicationSettings;
+        private readonly List<string> _externalLinkPrefixes;
 
-        /// <summary>
-        /// Used to resolve the full path of urls for pages in the markup.
-        /// </summary>
+        private static readonly Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
+
         public UrlResolver UrlResolver { get; set; }
 
-        public LinkTagProvider(IPageRepository pageRepository)
+        public LinkTagProvider(IPageRepository pageRepository, ApplicationSettings applicationSettings)
         {
-            _pageRepository = pageRepository;
+	        if (pageRepository == null)
+		        throw new ArgumentNullException(nameof(pageRepository));
+
+			if (applicationSettings == null)
+				throw new ArgumentNullException(nameof(applicationSettings));
+
+			_pageRepository = pageRepository;
+	        _applicationSettings = applicationSettings;
 
             _externalLinkPrefixes = new List<string>()
             {

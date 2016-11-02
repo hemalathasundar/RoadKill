@@ -17,7 +17,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Images
 		}
 
 		[Test]
-		public void should_convert_to_absolute_path()
+		public void absolute_paths_should_be_prefixed_with_attachmentpath()
 		{
 			// Arrange
 			var resolver = new UrlResolverMock();
@@ -39,7 +39,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Images
 		[Test]
 		[TestCase("http://www.example.com/img.jpg")]
 		[TestCase("https://www.foo.com/img.jpg")]
-		public void should_ignore_images_starting_with_http_and_https(string imageUrl)
+		public void should_ignore_urls_starting_with_http_and_https(string imageUrl)
 		{
 			// Arrange
 			var resolver = new UrlResolverMock();

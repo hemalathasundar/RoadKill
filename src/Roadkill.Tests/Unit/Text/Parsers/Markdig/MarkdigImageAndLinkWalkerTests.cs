@@ -94,7 +94,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Markdig
         }
 
         [Test]
-        public void should_add_no_follow_to_protocols()
+        public void should_add_no_follow_to_external_protocols()
         {
             // given
             string markdown = "[my email](mailto:email@example.com)\n";
@@ -112,7 +112,6 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Markdig
             Assert.That(html, Is.StringContaining("<a href=\"mailto:email@example.com\" rel=\"nofollow\">my email</a>"));
             Assert.That(html, Is.StringContaining("<a href=\"http://www.googlez.com\" rel=\"nofollow\">my http site</a>"));
             Assert.That(html, Is.StringContaining("<a href=\"https://www.littlebamboo.com\" rel=\"nofollow\">my https site</a>"));
-
         }
 
         [Test]

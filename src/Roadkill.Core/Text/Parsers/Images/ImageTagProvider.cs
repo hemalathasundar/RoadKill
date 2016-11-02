@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using System.Web;
 using Roadkill.Core.Configuration;
@@ -14,7 +15,10 @@ namespace Roadkill.Core.Text.Parsers.Images
 
         public ImageTagProvider(ApplicationSettings applicationSettings)
         {
-            _applicationSettings = applicationSettings;
+			if (applicationSettings == null)
+				throw new ArgumentNullException(nameof(applicationSettings));
+
+			_applicationSettings = applicationSettings;
 
             // Create the UrlResolver to resolve all wiki urls
             HttpContextBase httpContext = null;

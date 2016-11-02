@@ -80,8 +80,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			return (htmlImageTag) =>
 			{
 				var pageRepository = ctx.GetInstance<IPageRepository>();
+				var applicationSettings = ctx.GetInstance<ApplicationSettings>();
 
-				var provider = new LinkTagProvider(pageRepository);
+				var provider = new LinkTagProvider(pageRepository, applicationSettings);
 				provider.UrlResolver = new UrlResolver();
 				htmlImageTag = provider.Parse(htmlImageTag);
 
