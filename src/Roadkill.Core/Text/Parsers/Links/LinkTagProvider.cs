@@ -14,7 +14,8 @@ namespace Roadkill.Core.Text.Parsers.Links
         private readonly ApplicationSettings _applicationSettings;
         private readonly List<string> _externalLinkPrefixes;
 
-        private static readonly Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
+		private static readonly Regex _querystringRegex = new Regex("(?<querystring>(\\?).+)", RegexOptions.IgnoreCase);
+		private static readonly Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
 
         public UrlResolver UrlResolver { get; set; }
 
@@ -76,7 +77,8 @@ namespace Roadkill.Core.Text.Parsers.Links
             else
             {
                 // Add the external-link class to all outward bound links, 
-                // except for anchors pointing to <a name=""> tags on the current page.
+                // although not for anchors pointing to <a name=""> tags on the current page.
+				// (however # links shouldn't be treated as internal links)
                 if (!htmlLinkTag.OriginalHref.StartsWith("#"))
                     htmlLinkTag.CssClass = "external-link";
             }
@@ -128,17 +130,26 @@ namespace Roadkill.Core.Text.Parsers.Links
 
             // Parse internal links
             string title = href;
-            string anchorHash = "";
+            string optionalUrlSuffix = ""; // querystrings, #anchors
 
-            // Parse anchors for other pages
-            if (_anchorRegex.IsMatch(href))
+			// Parse querystrings
+			if (_querystringRegex.IsMatch(href))
+			{
+				// Grab the querystring contents
+				System.Text.RegularExpressions.Match match = _querystringRegex.Match(href);
+				optionalUrlSuffix = match.Groups["querystring"].Value;
+
+				// Grab the url
+				title = href.Replace(optionalUrlSuffix, "");
+			}
+			else if (_anchorRegex.IsMatch(href))
             {
                 // Grab the hash contents
                 System.Text.RegularExpressions.Match match = _anchorRegex.Match(href);
-                anchorHash = match.Groups["hash"].Value;
+                optionalUrlSuffix = match.Groups["hash"].Value;
 
                 // Grab the url
-                title = href.Replace(anchorHash, "");
+                title = href.Replace(optionalUrlSuffix, "");
             }
 
             // For markdown, only urls with "-" in them are valid, spaces are ignored.
@@ -150,7 +161,7 @@ namespace Roadkill.Core.Text.Parsers.Links
             if (page != null)
             {
                 href = UrlResolver.GetInternalUrlForTitle(page.Id, page.Title);
-                href += anchorHash;
+                href += optionalUrlSuffix;
             }
             else
             {
