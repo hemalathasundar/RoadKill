@@ -97,11 +97,10 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 			HtmlLinkTag actualTag = _provider.Parse(linkTag);
 
 			// Assert
-			Assert.That(actualTag.Href, Is.EqualTo("/wiki/1/my-page-on-engineering"));
+			Assert.That(actualTag.Href, Is.EqualTo("~/wiki/Special:blah--suffix"));
 		}
 
-		// 
-		// should_convert_tildes_in_attachment_urls (TestCase)
+		// TODO:
 		// should_convert_attachment_paths
 
 		[Test]
@@ -212,10 +211,13 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 		}
 
 		[Test]
-		public void lhref_inks_starting_with_attachmentcolon_should_resolve_as_attachment_paths()
+		[TestCase("attachment:/")]
+		[TestCase("~/")]
+		public void lhref_inks_starting_with_attachments_should_resolve_as_attachment_paths(string prefix)
 		{
 			// Arrange
-			HtmlLinkTag linkTag = new HtmlLinkTag("attachment:/my/folder/image1.jpg", "attachment:/my/folder/image1.jpg", "text", "");
+			string actualPath = $"{prefix}my/folder/image1.jpg";
+			HtmlLinkTag linkTag = new HtmlLinkTag(actualPath, actualPath, "text", "");
 
 			// Act
 			HtmlLinkTag actualTag = _provider.Parse(linkTag);
@@ -225,7 +227,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 		}
 
 		[Test]
-		public void links_starting_with_specialcolon_should_resolve_as_full_specialpage()
+		public void links_starting_with_special_should_resolve_as_full_specialpage()
 		{
 			// Arrange
 			HtmlLinkTag linkTag = new HtmlLinkTag("Special:Foo", "Special:Foo", "text", "");
@@ -234,7 +236,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 			HtmlLinkTag actualTag = _provider.Parse(linkTag);
 
 			// Assert
-			Assert.That(actualTag.Href, Is.EqualTo("/wiki/Special:Foo"));
+			Assert.That(actualTag.Href, Is.EqualTo("~/wiki/Special:Foo")); // note: "~" is replaced by ASP.NET HttpContext
 		}
 
 		[Test]

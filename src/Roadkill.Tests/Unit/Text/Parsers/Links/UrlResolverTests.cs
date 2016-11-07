@@ -19,7 +19,6 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 
 			// Act
 
-
 			// Assert
 			Assert.Fail("todo");
 		}
