@@ -1,0 +1,7 @@
+﻿Markdown tests:
+
+should_allow_style_tags
+should_not_render_toc_with_multiple_curlies - Give me a {{TOC}} and a {{{TOC}}} - the should not render a TOC"
+internal_links_with_spaces_should_resolve
+code_blocks_should_allow_quotes
+images_should_support_dimensions
