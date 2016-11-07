@@ -130,26 +130,26 @@ namespace Roadkill.Core.Text.Parsers.Links
 
             // Parse internal links
             string title = href;
-            string optionalUrlSuffix = ""; // querystrings, #anchors
+            string querystringAndAnchor = ""; // querystrings, #anchors
 
 			// Parse querystrings
 			if (_querystringRegex.IsMatch(href))
 			{
 				// Grab the querystring contents
 				System.Text.RegularExpressions.Match match = _querystringRegex.Match(href);
-				optionalUrlSuffix = match.Groups["querystring"].Value;
+				querystringAndAnchor = match.Groups["querystring"].Value;
 
 				// Grab the url
-				title = href.Replace(optionalUrlSuffix, "");
+				title = href.Replace(querystringAndAnchor, "");
 			}
 			else if (_anchorRegex.IsMatch(href))
             {
                 // Grab the hash contents
                 System.Text.RegularExpressions.Match match = _anchorRegex.Match(href);
-                optionalUrlSuffix = match.Groups["hash"].Value;
+                querystringAndAnchor = match.Groups["hash"].Value;
 
                 // Grab the url
-                title = href.Replace(optionalUrlSuffix, "");
+                title = href.Replace(querystringAndAnchor, "");
             }
 
             // For markdown, only urls with "-" in them are valid, spaces are ignored.
@@ -161,7 +161,7 @@ namespace Roadkill.Core.Text.Parsers.Links
             if (page != null)
             {
                 href = UrlResolver.GetInternalUrlForTitle(page.Id, page.Title);
-                href += optionalUrlSuffix;
+                href += querystringAndAnchor;
             }
             else
             {

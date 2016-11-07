@@ -100,9 +100,6 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 			Assert.That(actualTag.Href, Is.EqualTo("~/wiki/Special:blah--suffix"));
 		}
 
-		// TODO:
-		// should_convert_attachment_paths
-
 		[Test]
 		public void href_with_dashes_and_23_are_not_encoded()
 		{
@@ -170,7 +167,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 		}
 
 		[Test]
-		public void href_internal_links_with_querystring_and_anchor_tag_should_retain_querystring()
+		public void href_internal_links_with_querystring_and_anchor_tag_should_find_page_and_retain_querystring_and_anchor()
 		{
 			// Arrange
 			_pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo page" }, "text", "admin", DateTime.Today);
@@ -184,7 +181,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 		}
 
 		[Test]
-		public void href_internal_existing_wiki_page_link_should_use_wiki_prefix()
+		public void href_internal_existing_wiki_page_link_should_return_href_with_wiki_prefix()
 		{
 			// Arrange
 			_pageRepository.AddNewPage(new Page() { Id = 1, Title = "foo page" }, "foo", "admin", DateTime.Today);
