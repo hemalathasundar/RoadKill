@@ -1,12 +1,17 @@
+using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Roadkill.Core.Attachments;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Mvc.WebApi;
 using Roadkill.Core.Mvc.WebViewPages;
+using Roadkill.Core.Text.Parsers.Links;
 using StructureMap;
 using StructureMap.Graph;
+using ControllerBase = Roadkill.Core.Mvc.Controllers.ControllerBase;
 using UserController = Roadkill.Core.Mvc.Controllers.UserController;
 
 namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
@@ -42,6 +47,23 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 
         private void ConfigureInstances()
         {
+			// HttpContext
+			if (HttpContext.Current != null)
+				For<HttpContextBase>().Use(new HttpContextWrapper(HttpContext.Current));
+
+			// RouteTable is static
+	        For<RouteCollection>().Use("RouteCollection", ctx => RouteTable.Routes);
+
+			// UrlResolver needs a UrlHelper, which comes from HttpContext
+	        For<UrlResolver>().Use("UrlResolver", ctx =>
+	        {
+		        var httpContext = ctx.GetInstance<HttpContextBase>();
+		        var routeTable = ctx.GetInstance<RouteCollection>();
+		        var urlHelper = new UrlHelper(httpContext.Request.RequestContext, routeTable);
+
+		        return new UrlResolver(urlHelper);
+	        });
+
             // AlwaysUnique is a work around for controllers that use RenderAction() needing to be unique
             // See https://github.com/webadvanced/Structuremap.MVC5/issues/3
             For<HomeController>().AlwaysUnique();

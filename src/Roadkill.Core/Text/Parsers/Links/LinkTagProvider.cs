@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Routing;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 
@@ -19,7 +20,7 @@ namespace Roadkill.Core.Text.Parsers.Links
 
         public UrlResolver UrlResolver { get; set; }
 
-        public LinkTagProvider(IPageRepository pageRepository, ApplicationSettings applicationSettings)
+        public LinkTagProvider(IPageRepository pageRepository, ApplicationSettings applicationSettings, UrlResolver urlResolver)
         {
 	        if (pageRepository == null)
 		        throw new ArgumentNullException(nameof(pageRepository));
@@ -29,8 +30,9 @@ namespace Roadkill.Core.Text.Parsers.Links
 
 			_pageRepository = pageRepository;
 	        _applicationSettings = applicationSettings;
+			UrlResolver = urlResolver;
 
-            _externalLinkPrefixes = new List<string>()
+			_externalLinkPrefixes = new List<string>()
             {
                 "http://",
                 "https://",
@@ -39,19 +41,12 @@ namespace Roadkill.Core.Text.Parsers.Links
                 "#",
                 "tag:"
             };
-
-            // Create the UrlResolver to resolve all wiki urls
-            HttpContextBase httpContext = null;
-            if (HttpContext.Current != null)
-                httpContext = new HttpContextWrapper(HttpContext.Current);
-
-            UrlResolver = new UrlResolver(httpContext);
         }
 
-        /// <summary>
-        /// Handles internal links, and the 'attachment:' prefix for attachment links.
-        /// </summary>
-        public HtmlLinkTag Parse(HtmlLinkTag htmlLinkTag)
+		/// <summary>
+		/// Handles internal links, and the 'attachment:' prefix for attachment links.
+		/// </summary>
+		public HtmlLinkTag Parse(HtmlLinkTag htmlLinkTag)
         {
             if (!_externalLinkPrefixes.Any(x => htmlLinkTag.OriginalHref.StartsWith(x)))
             {

@@ -1,4 +1,5 @@
-﻿using Roadkill.Core.Text.Parsers.Links;
+﻿using System.Web.Mvc;
+using Roadkill.Core.Text.Parsers.Links;
 
 namespace Roadkill.Tests.Unit.StubsAndMocks
 {
@@ -7,6 +8,14 @@ namespace Roadkill.Tests.Unit.StubsAndMocks
 		public string AbsolutePathSuffix { get; set; }
 		public string InternalUrl { get; set; }
 		public string NewPageUrl { get; set; }
+
+		public UrlResolverMock() : base(new UrlHelper())
+		{
+		}
+
+		public UrlResolverMock(UrlHelper urlHelper) : base(urlHelper)
+		{
+		}
 
 		public override string ConvertToAbsolutePath(string relativeUrl)
 		{

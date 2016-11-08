@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
+using System.Web.Routing;
 using NUnit.Framework;
 using Roadkill.Core.Attachments;
 using Roadkill.Core.DependencyResolution;
-using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.Controllers;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Mvc.WebApi;
+using Roadkill.Core.Text.Parsers.Links;
+using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 using StructureMap;
 
 namespace Roadkill.Tests.Unit.DependencyResolution
@@ -114,6 +117,40 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 
 			// Assert
 			Assert.That(setterInjected.ApplicationSettings, Is.Not.Null);
+		}
+
+		[Test]
+		public void should_use_route_table_for_routecollection()
+		{
+			// Arrange
+			var route = new Route("test", new PageRouteHandler("~/index.html"));
+			RouteTable.Routes.Add(route);
+			IContainer container = Container;
+
+			// Act
+			var routeCollection = container.GetInstance<RouteCollection>();
+
+			// Assert
+			Assert.That(routeCollection, Is.Not.Null);
+			Assert.That(routeCollection.Contains(route), Is.True);
+		}
+
+		[Test]
+		public void urlresolver()
+		{
+			// Arrange
+			var route = new Route("test", new PageRouteHandler("~/index.html"));
+			RouteTable.Routes.Add(route);
+			IContainer container = Container;
+
+			var httpContext = MvcMockHelpers.FakeHttpContext("~/url");
+			container.Configure(x => x.For<HttpContextBase>().Use(httpContext));
+
+			// Act
+			var urlResolver = container.GetInstance<UrlResolver>();
+
+			// Assert
+			Assert.That(urlResolver, Is.Not.Null);
 		}
 	}
 }

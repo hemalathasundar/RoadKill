@@ -6,11 +6,11 @@ namespace Roadkill.Core.Text.Parsers.Links
 {
 	public class UrlResolver
 	{
-		private HttpContextBase _httpContext;
+		private readonly UrlHelper _urlHelper;
 
-		public UrlResolver(HttpContextBase httpContext = null)
+		public UrlResolver(UrlHelper urlHelper)
 		{
-			_httpContext = httpContext;
+			_urlHelper = urlHelper;
 		}
 
 		/// <summary>
@@ -19,54 +19,24 @@ namespace Roadkill.Core.Text.Parsers.Links
 		/// <returns>An absolute path for the resource.</returns>
 		public virtual string ConvertToAbsolutePath(string relativeUrl)
 		{
-			if (_httpContext != null)
-			{
-				UrlHelper helper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-				return helper.Content(relativeUrl);
-			}
-			else
-			{
-				return relativeUrl;
-			}
+			return _urlHelper.Content(relativeUrl);
 		}
 
 		/// <summary>
 		/// Gets the internal url of a page based on the page title.
 		/// </summary>
-		/// <param name="id">The page id</param>
-		/// <param name="title">The title of the page</param>
-		/// <returns>An absolute path to the page.</returns>
 		public virtual string GetInternalUrlForTitle(int id, string title)
 		{
-			if (_httpContext != null)
-			{
-				UrlHelper helper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-				return helper.Action("Index", "Wiki", new { id = id, title = PageViewModel.EncodePageTitle(title) });
-			}
-			else
-			{
-				// This is really here as a fallback, for tests
-				return string.Format("/wiki/{0}/{1}", id, PageViewModel.EncodePageTitle(title));
-			}
+			return _urlHelper.Action("Index", "Wiki", new { id = id, title = PageViewModel.EncodePageTitle(title) });
 		}
 
 		/// <summary>
 		/// Gets a url to the new page resource, appending the title to the querystring.
 		/// For example /pages/new?title=xyz
 		/// </summary>
-		/// <param name="title"></param>
-		/// <returns></returns>
 		public virtual string GetNewPageUrlForTitle(string title)
 		{
-			if (_httpContext != null)
-			{
-				UrlHelper helper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-				return helper.Action("New", "Pages", new { title = title });
-			}
-			else
-			{
-				return string.Format("/pages/new/?title={0}", title);
-			}
+			return _urlHelper.Action("New", "Pages", new { title = title });
 		}
 	}
 }

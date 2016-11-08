@@ -56,6 +56,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
                     builder.Use(new TextPluginAfterParseMiddleware(textPluginRunner));
 
                     return builder;
+
                 }).Singleton();
         }
 
@@ -81,9 +82,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			{
 				var pageRepository = ctx.GetInstance<IPageRepository>();
 				var applicationSettings = ctx.GetInstance<ApplicationSettings>();
+				var urlResolver = ctx.GetInstance<UrlResolver>();
 
-				var provider = new LinkTagProvider(pageRepository, applicationSettings);
-				provider.UrlResolver = new UrlResolver();
+				var provider = new LinkTagProvider(pageRepository, applicationSettings, urlResolver);
 				htmlImageTag = provider.Parse(htmlImageTag);
 
 				return htmlImageTag;
@@ -96,8 +97,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			return (htmlImageTag) =>
 			{
 				var appSettings = ctx.GetInstance<ApplicationSettings>();
-				var provider = new ImageTagProvider(appSettings);
-				provider.UrlResolver = new UrlResolver();
+				var urlResolver = ctx.GetInstance<UrlResolver>();
+
+				var provider = new ImageTagProvider(appSettings, urlResolver);
 				htmlImageTag = provider.Parse(htmlImageTag);
 
 				return htmlImageTag;

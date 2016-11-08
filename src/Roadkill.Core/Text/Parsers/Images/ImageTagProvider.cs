@@ -1,6 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Routing;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text.Parsers.Links;
 
@@ -13,19 +14,13 @@ namespace Roadkill.Core.Text.Parsers.Images
 
         public UrlResolver UrlResolver { get; set; }
 
-        public ImageTagProvider(ApplicationSettings applicationSettings)
+        public ImageTagProvider(ApplicationSettings applicationSettings, UrlResolver urlResolver)
         {
 			if (applicationSettings == null)
 				throw new ArgumentNullException(nameof(applicationSettings));
 
 			_applicationSettings = applicationSettings;
-
-            // Create the UrlResolver to resolve all wiki urls
-            HttpContextBase httpContext = null;
-            if (HttpContext.Current != null)
-                httpContext = new HttpContextWrapper(HttpContext.Current);
-
-            UrlResolver = new UrlResolver(httpContext);
+	        UrlResolver = urlResolver;
         }
 
         /// <summary>

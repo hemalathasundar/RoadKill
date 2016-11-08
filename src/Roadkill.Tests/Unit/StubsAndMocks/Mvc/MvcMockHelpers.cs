@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Moq;
-using Roadkill.Core.Mvc;
 using Roadkill.Core.Mvc.Setup;
 
 namespace Roadkill.Tests.Unit.StubsAndMocks.Mvc
@@ -27,6 +26,7 @@ namespace Roadkill.Tests.Unit.StubsAndMocks.Mvc
 			request.Setup(r => r.Headers).Returns(new NameValueCollection());
 			request.Setup(r => r.Form).Returns(new NameValueCollection());
 			request.Setup(r => r.QueryString).Returns(new NameValueCollection());
+			request.Setup(r => r.RequestContext).Returns(new RequestContext(context.Object, new RouteData()));
 
 			response.Setup(r => r.Cache).Returns(new HttpCachePolicyMock());
 			response.SetupProperty(r => r.StatusCode);

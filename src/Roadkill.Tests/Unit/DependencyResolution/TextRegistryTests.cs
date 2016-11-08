@@ -1,11 +1,14 @@
-﻿using NUnit.Framework;
-using Roadkill.Core.DependencyResolution.StructureMap.Registries;
+﻿using System.Web;
+using NUnit.Framework;
+using Roadkill.Core.Database;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Text.CustomTokens;
 using Roadkill.Core.Text.Parsers;
 using Roadkill.Core.Text.Parsers.Markdig;
 using Roadkill.Core.Text.Sanitizer;
 using Roadkill.Core.Text.TextMiddleware;
+using Roadkill.Tests.Unit.StubsAndMocks;
+using Roadkill.Tests.Unit.StubsAndMocks.Mvc;
 using StructureMap;
 
 namespace Roadkill.Tests.Unit.DependencyResolution
@@ -14,6 +17,23 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 	[Category("Unit")]
 	public class TextRegistryTests : RegistryTestsBase
     {
+		[SetUp]
+		public void Setup()
+		{
+			// Inject a fake HttpContext for UrlHelper, used by UrlResolver
+			var httpContext = MvcMockHelpers.FakeHttpContext("~/url");
+			Container.Configure(x => x.For<HttpContextBase>().Use(httpContext));
+
+			// Inject a fake SettingsRepository for TextPlugins
+			Container.Configure(x =>
+			{
+				var repositoryFactory = new RepositoryFactoryMock();
+				repositoryFactory.SettingsRepository = new SettingsRepositoryMock();
+
+				x.For<IRepositoryFactory>().Use(repositoryFactory);
+			});
+		}
+
 		[Test]
 		public void should_construct_builder_and_parse_basic_markup()
 		{
@@ -66,6 +86,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			// Act
 
 			// Assert
+			Assert.Fail("TODO");
 		}
 
 		[Test]
@@ -76,6 +97,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			// Act
 
 			// Assert
+			Assert.Fail("TODO");
 		}
 
 		[Test]
@@ -86,6 +108,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			// Act
 
 			// Assert
+			Assert.Fail("TODO");
 		}
 
 		[Test]
@@ -96,6 +119,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			// Act
 
 			// Assert
+			Assert.Fail("TODO");
 		}
 
 		[Test]

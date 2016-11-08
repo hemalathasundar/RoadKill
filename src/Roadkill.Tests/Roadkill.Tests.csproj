@@ -452,6 +452,7 @@
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
     <Compile Include="Unit\Text\Parsers\Images\ImageTagProviderTests.cs" />
     <Compile Include="Unit\Text\Parsers\Links\LinkTagProviderTests.cs" />
+    <Compile Include="Unit\StubsAndMocks\UrlHelperMock.cs" />
     <Compile Include="Unit\Text\Parsers\Links\UrlResolverTests.cs" />
     <Compile Include="Unit\Text\Plugins\TextPluginRunnerTests.cs" />
     <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />

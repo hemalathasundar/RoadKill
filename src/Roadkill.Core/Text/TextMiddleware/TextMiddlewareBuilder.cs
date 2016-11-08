@@ -34,6 +34,7 @@ namespace Roadkill.Core.Text.TextMiddleware
                 catch (Exception ex)
                 {
                     // TODO: logging
+	                Console.WriteLine("------------------------------------------------");
                     Console.WriteLine("TextMiddlewareBuilder exception: {0}", ex);
                 }
             }

@@ -14,6 +14,7 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 		private PageRepositoryMock _pageRepository;
 		private ApplicationSettings _applicationSettings;
 		private LinkTagProvider _provider;
+		private UrlResolverMock _resolver;
 
 		[SetUp]
 		public void Setup()
@@ -21,8 +22,10 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Links
 			var container = new MocksAndStubsContainer();
 			_pageRepository = container.PageRepository;
 			_applicationSettings = container.ApplicationSettings;
+			_resolver = new UrlResolverMock();
+			_resolver.AbsolutePathSuffix = "BlahBlah";
 
-			_provider = new LinkTagProvider(_pageRepository, _applicationSettings);
+			_provider = new LinkTagProvider(_pageRepository, _applicationSettings, _resolver);
 		}
 
 		[Test]
