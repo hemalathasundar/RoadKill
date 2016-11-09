@@ -9,12 +9,12 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 {
 	public class DapperSettingsRepository : ISettingsRepository
 	{
-		private readonly IDbConnectionFactory _dbConnectionFactory;
+		public IDbConnectionFactory DbConnectionFactory { get; set; }
 		internal static readonly string TableName = "roadkill_siteconfiguration";
 
 		public DapperSettingsRepository(IDbConnectionFactory dbConnectionFactory)
 		{
-			_dbConnectionFactory = dbConnectionFactory;
+			DbConnectionFactory = dbConnectionFactory;
 		}
 
 		public void Dispose()
@@ -23,7 +23,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void SaveSiteSettings(SiteSettings siteSettings)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -60,7 +60,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public SiteSettings GetSiteSettings()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -84,7 +84,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void SaveTextPluginSettings(TextPlugin plugin)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -119,7 +119,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public Settings GetTextPluginSettings(Guid databaseId)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 

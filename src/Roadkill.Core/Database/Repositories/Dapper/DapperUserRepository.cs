@@ -10,17 +10,17 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 {
 	public class DapperUserRepository : IUserRepository
 	{
-		private readonly IDbConnectionFactory _dbConnectionFactory;
+		public IDbConnectionFactory DbConnectionFactory { get; set; }
 		internal static readonly string TableName = "roadkill_users";
 
 		public DapperUserRepository(IDbConnectionFactory dbConnectionFactory)
 		{
-			_dbConnectionFactory = dbConnectionFactory;
+			DbConnectionFactory = dbConnectionFactory;
 		}
 
 		public void DeleteAllUsers()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -31,7 +31,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void DeleteUser(User user)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -42,7 +42,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<User> FindAllEditors()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -53,7 +53,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<User> FindAllAdmins()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -64,7 +64,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetAdminById(Guid id)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -75,7 +75,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserByActivationKey(string key)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -86,7 +86,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetEditorById(Guid id)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -97,7 +97,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserByEmail(string email, bool? isActivated = null)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -112,7 +112,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserById(Guid id, bool? isActivated = null)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -127,7 +127,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserByPasswordResetKey(string key)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -138,7 +138,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserByUsername(string username)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -149,7 +149,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public User GetUserByUsernameOrEmail(string username, string email)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -162,7 +162,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 		{
 			bool userExists = GetUserById(user.Id) != null;
 
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 				string sql;

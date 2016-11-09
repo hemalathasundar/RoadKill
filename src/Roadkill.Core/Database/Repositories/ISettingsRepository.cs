@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Plugins;
 using PluginSettings = Roadkill.Core.Plugins.Settings;

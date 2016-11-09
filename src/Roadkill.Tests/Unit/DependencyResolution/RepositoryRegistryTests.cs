@@ -26,7 +26,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 		public void should_load_repositoryfactory_by_default()
 		{
 			// Arrange + Act + Assert
-			AssertDefaultType<IRepositoryFactory, DapperRepositoryFactory>();
+			AssertDefaultType<IRepositoryFactory, RepositoryFactory>();
 		}
 
 		[Test]

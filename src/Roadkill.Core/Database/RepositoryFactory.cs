@@ -5,21 +5,15 @@ using Roadkill.Core.Database.Repositories.Dapper;
 
 namespace Roadkill.Core.Database
 {
-	public class DapperRepositoryFactory : IRepositoryFactory
+	public class RepositoryFactory : IRepositoryFactory
 	{
-		// Hack to make sure the factory doesn't return invalid Repositories, while installing.
-		private readonly bool _pendingInstallation;
-
-		public DapperRepositoryFactory()
+		private bool IsPendingInstallation(string connectionString)
 		{
-		}
-
-		public DapperRepositoryFactory(string databaseProviderName, string connectionString)
-		{
+			// Make sure the factory doesn't return invalid Repositories, while installing.
 			if (string.IsNullOrEmpty(connectionString))
-			{
-				_pendingInstallation = true;
-			}
+				return true;
+
+			return false;
 		}
 
         private static IDbConnectionFactory CreateDbConnectionFactory(string databaseProviderName, string connectionString)
@@ -35,50 +29,44 @@ namespace Roadkill.Core.Database
 
 		public ISettingsRepository GetSettingsRepository(string databaseProviderName, string connectionString)
 		{
-			if (_pendingInstallation)
+			if (IsPendingInstallation(connectionString))
 				return null;
 
 			if (databaseProviderName == SupportedDatabases.MongoDB)
 			{
 				return new MongoDBSettingsRepository(connectionString);
 			}
-			else
-            {
-                IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
-                return new DapperSettingsRepository(dbConnectionFactory);
-            }
-        }
+
+			IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
+			return new DapperSettingsRepository(dbConnectionFactory);
+		}
 
         public IUserRepository GetUserRepository(string databaseProviderName, string connectionString)
 		{
-			if (_pendingInstallation)
+			if (IsPendingInstallation(connectionString))
 				return null;
 
 			if (databaseProviderName == SupportedDatabases.MongoDB)
 			{
 				return new MongoDBUserRepository(connectionString);
 			}
-			else
-			{
-                IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
-                return new DapperUserRepository(dbConnectionFactory);
-            }
+
+	        IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
+	        return new DapperUserRepository(dbConnectionFactory);
 		}
 
 		public IPageRepository GetPageRepository(string databaseProviderName, string connectionString)
 		{
-			if (_pendingInstallation)
+			if (IsPendingInstallation(connectionString))
 				return null;
 
 			if (databaseProviderName == SupportedDatabases.MongoDB)
 			{
 				return new MongoDBPageRepository(connectionString);
 			}
-			else
-			{
-                IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
-                return new DapperPageRepository(dbConnectionFactory);
-            }
+
+			IDbConnectionFactory dbConnectionFactory = CreateDbConnectionFactory(databaseProviderName, connectionString);
+			return new DapperPageRepository(dbConnectionFactory);
 		}
 
 		public IEnumerable<RepositoryInfo> ListAll()

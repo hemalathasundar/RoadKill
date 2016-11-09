@@ -387,7 +387,7 @@
     <Compile Include="Database\Repositories\MongoDB\MongoDBUserRepository.cs" />
     <Compile Include="Database\Repositories\MongoDB\MongoDBSettingsRepository.cs" />
     <Compile Include="Database\Repositories\LightSpeed\LightspeedRepositoryFactory.cs" />
-    <Compile Include="Database\DapperRepositoryFactory.cs" />
+    <Compile Include="Database\RepositoryFactory.cs" />
     <Compile Include="Database\RepositoryInfo.cs" />
     <Compile Include="Database\SupportedDatabases.cs" />
     <Compile Include="DependencyResolution\ISetterInjected.cs" />

@@ -338,7 +338,7 @@
     <Compile Include="Unit\Cache\SiteCacheTests.cs" />
     <Compile Include="Unit\Cache\PageServiceCacheTests.cs" />
     <Compile Include="Unit\Cache\ListCacheTests.cs" />
-    <Compile Include="Unit\Database\Dapper\DapperRepositoryFactoryTests.cs" />
+    <Compile Include="Unit\Database\Dapper\RepositoryFactoryTests.cs" />
     <Compile Include="Unit\Database\LightSpeed\EntityTests.cs" />
     <Compile Include="Unit\Database\LightSpeed\LightspeedRepositoryFactoryTests.cs" />
     <Compile Include="Unit\Database\RepositoryInfoTests.cs" />
