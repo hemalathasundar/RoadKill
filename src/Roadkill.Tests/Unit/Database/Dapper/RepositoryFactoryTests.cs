@@ -29,7 +29,7 @@ namespace Roadkill.Tests.Unit.Database.Dapper
 		[Test]
 		[TestCase("SqlServer2008", typeof(SqlConnectionFactory))]
 		[TestCase("Postgres", typeof(PostgresConnectionFactory))]
-		public void should_return_dapper_settingsrepository_for_databaseprovider_and_connectionfactory(string databaseProvider, Type expectedType)
+		public void should_return_dapper_settingsrepository_and_connectionfactory_for_databaseprovider(string databaseProvider, Type expectedType)
 		{
 			// Arrange
 			var factory = new RepositoryFactory();
@@ -55,11 +55,10 @@ namespace Roadkill.Tests.Unit.Database.Dapper
 			Assert.That(settingsRepo, Is.Not.Null);
 		}
 
-		//
 		[Test]
 		[TestCase("SqlServer2008", typeof(SqlConnectionFactory))]
 		[TestCase("Postgres", typeof(PostgresConnectionFactory))]
-		public void should_return_dapper_usersrepository_for_databaseprovider_and_connectionfactory(string databaseProvider, Type expectedType)
+		public void should_return_dapper_userrepository_and_connectionfactory_for_databaseprovider(string databaseProvider, Type expectedType)
 		{
 			// Arrange
 			var factory = new RepositoryFactory();
@@ -79,12 +78,39 @@ namespace Roadkill.Tests.Unit.Database.Dapper
 			var factory = new RepositoryFactory();
 
 			// Act
-			MongoDBUserRepository userRepository = factory.GetSettingsRepository(SupportedDatabases.MongoDB.Id, "server=xyz") as MongoDBUserRepository;
+			MongoDBUserRepository userRepository = factory.GetUserRepository(SupportedDatabases.MongoDB.Id, "server=xyz") as MongoDBUserRepository;
 
 			// Assert
 			Assert.That(userRepository, Is.Not.Null);
 		}
 
-		//
+		[Test]
+		[TestCase("SqlServer2008", typeof(SqlConnectionFactory))]
+		[TestCase("Postgres", typeof(PostgresConnectionFactory))]
+		public void should_return_dapper_pagerepository_and_connectionfactory_for_databaseprovider(string databaseProvider, Type expectedType)
+		{
+			// Arrange
+			var factory = new RepositoryFactory();
+
+			// Act
+			DapperPageRepository pageRepository = factory.GetPageRepository(databaseProvider, "server=xyz") as DapperPageRepository;
+
+			// Assert
+			Assert.That(pageRepository, Is.Not.Null);
+			Assert.That(pageRepository.DbConnectionFactory, Is.TypeOf(expectedType));
+		}
+
+		[Test]
+		public void should_return_mongodb_pagerepository()
+		{
+			// Arrange
+			var factory = new RepositoryFactory();
+
+			// Act
+			MongoDBPageRepository pageRepository = factory.GetPageRepository(SupportedDatabases.MongoDB.Id, "server=xyz") as MongoDBPageRepository;
+
+			// Assert
+			Assert.That(pageRepository, Is.Not.Null);
+		}
 	}
 }

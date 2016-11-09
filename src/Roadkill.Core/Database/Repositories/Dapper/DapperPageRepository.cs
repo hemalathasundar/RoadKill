@@ -8,13 +8,13 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 {
 	public class DapperPageRepository : IPageRepository
 	{
-		private readonly IDbConnectionFactory _dbConnectionFactory;
+		public IDbConnectionFactory DbConnectionFactory { get; set; }
 		internal static readonly string PagesTableName = "roadkill_pages";
 		internal static readonly string PageContentsTableName = "roadkill_pagecontent";
 
 		public DapperPageRepository(IDbConnectionFactory dbConnectionFactory)
 		{
-			_dbConnectionFactory = dbConnectionFactory;
+			DbConnectionFactory = dbConnectionFactory;
 		}
 
 		public void Dispose()
@@ -27,7 +27,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 			if (newPage.Id > 0)
 			{
-				using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+				using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 				{
 					connection.Open();
 
@@ -65,7 +65,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 			if (version < 1)
 				version = 1;
 
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -104,7 +104,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<Page> AllPages()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -115,7 +115,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<PageContent> AllPageContents()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -126,7 +126,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<string> AllTags()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -137,7 +137,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void DeletePage(Page page)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -151,7 +151,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void DeletePageContent(PageContent pageContent)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -162,7 +162,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void DeleteAllPages()
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -176,7 +176,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<Page> FindPagesCreatedBy(string username)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -187,7 +187,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<Page> FindPagesModifiedBy(string username)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -200,7 +200,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<Page> FindPagesContainingTag(string tag)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -213,7 +213,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<PageContent> FindPageContentsByPageId(int pageId)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -235,7 +235,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public IEnumerable<PageContent> FindPageContentsEditedBy(string username)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -257,7 +257,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public PageContent GetLatestPageContent(int pageId)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -280,7 +280,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public Page GetPageById(int id)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -291,7 +291,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public Page GetPageByTitle(string title)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -302,7 +302,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public PageContent GetPageContentById(Guid id)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -324,7 +324,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public PageContent GetPageContentByPageIdAndVersionNumber(int id, int versionNumber)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
@@ -348,7 +348,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 		{
 			bool pageExists = GetPageById(page.Id) != null;
 
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 				string sql;
@@ -367,7 +367,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 					sql = $"insert into {PagesTableName} ";
 					sql += "(title, tags, createdby, createdon, islocked, modifiedby, modifiedon) ";
 					sql += "values (@Title, @Tags, @CreatedBy, @CreatedOn, @IsLocked, @ModifiedBy, @ModifiedOn)";
-					sql += " " +_dbConnectionFactory.GetAutoIdentitySqlSuffix();
+					sql += " " +DbConnectionFactory.GetAutoIdentitySqlSuffix();
 
 					int pageId = connection.ExecuteScalar<int>(sql, page);
 					page.Id = pageId;
@@ -379,7 +379,7 @@ namespace Roadkill.Core.Database.Repositories.Dapper
 
 		public void UpdatePageContent(PageContent content)
 		{
-			using (IDbConnection connection = _dbConnectionFactory.CreateConnection())
+			using (IDbConnection connection = DbConnectionFactory.CreateConnection())
 			{
 				connection.Open();
 
