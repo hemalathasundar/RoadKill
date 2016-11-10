@@ -159,7 +159,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
             //string linkID = altText.ToLowerInvariant();
 
             HtmlImageTag args = new HtmlImageTag(url, url, altText, "");
-            _imageDelegate(args);
+			_imageDelegate(args);
 
             return args;
         }
@@ -167,7 +167,7 @@ namespace Roadkill.Core.Text.Parsers.Markdig
         private HtmlLinkTag InvokeLinkParsedEvent(string url, string text, string target)
         {
             HtmlLinkTag args = new HtmlLinkTag(url, url, text, target);
-            _linkDelegate(args);
+			_linkDelegate(args);
 
             return args;
         }

@@ -12,7 +12,7 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
     public class HarmfulTagMiddlewareTests
     {
         [Test]
-        public void should_handle_none_nulls()
+        public void should_handle_null_sanitizer()
         {
             // given
 
@@ -22,8 +22,27 @@ namespace Roadkill.Tests.Unit.Text.TextMiddleware
             Assert.Fail("fail");
         }
 
-        [Test]
-        public void should_clean_html_using_sanitizer()
+		[Test]
+		public void should_clean_html_using_sanitizer()
+		{
+			// Arrange
+			string markdown = "<div onclick=\"javascript:alert('ouch');\">test</div>";
+			string expectedHtml = "<div>test</div>";
+
+			var pagehtml = new PageHtml() { Html = markdown };
+
+			var factory = new HtmlSanitizerFactory(new ApplicationSettings() { UseHtmlWhiteList = true });
+			var middleware = new HarmfulTagMiddleware(factory);
+
+			// Act
+			PageHtml actualPageHtml = middleware.Invoke(pagehtml);
+
+			// Assert
+			Assert.That(actualPageHtml.Html, Is.EqualTo(expectedHtml));
+		}
+
+		[Test]
+        public void todo()
         {
             // Arrange
             string markdown = "<div onclick=\"javascript:alert('ouch');\">test</div>";

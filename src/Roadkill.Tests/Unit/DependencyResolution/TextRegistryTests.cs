@@ -159,22 +159,5 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			// Assert
 			Assert.That(actualHtml, Is.EqualTo(expectedHtml));
 		}
-
-		[Test]
-		public void x1_links_starting_with_hash_or_https_or_hash_are_not_rewritten_as_internal()
-		{
-			// Arrange
-			string expectedHtml = "<p><a href=\"#myanchortag\">hello world</a> <a href=\"https://www.google.com/\" class=\"external-link\" rel=\"nofollow\">google</a></p>\n";
-			string markdown = "[hello world](#myanchortag) [google](https://www.google.com)";
-
-			IContainer container = Container;
-			var builder = container.GetInstance<TextMiddlewareBuilder>();
-
-			// Act
-			string actualHtml = builder.Execute(markdown);
-
-			// Assert
-			Assert.That(actualHtml, Is.EqualTo(expectedHtml), actualHtml);
-		}
 	}
 }
