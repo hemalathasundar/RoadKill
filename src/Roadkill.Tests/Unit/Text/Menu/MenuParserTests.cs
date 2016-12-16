@@ -180,7 +180,7 @@ namespace Roadkill.Tests.Unit.Text.Menu
 		{
 			// Arrange
 			string menuMarkup = "* [First link](http://www.google.com)\r\n";
-			string expectedHtml = "<ul><li><a href=\"http://www.google.com\" class=\"external-link\" rel=\"nofollow\">First link</a></li></ul>";
+			string expectedHtml = "<ul><li><a href=\"http://www.google.com\" rel=\"nofollow\">First link</a></li></ul>";
 			_settingsRepository.SiteSettings.MenuMarkup = menuMarkup;
 
 			// Act
@@ -195,7 +195,7 @@ namespace Roadkill.Tests.Unit.Text.Menu
 		{
 			// Arrange
 			string menuMarkup = "* [First link](my-page)";
-			string expectedHtml = "<ul><li><a href=\"/wiki/1/my-page\">First link</a></li></ul>";
+			string expectedHtml = "<ul><li><a href=\"my-page\">First link</a></li></ul>";
 			_settingsRepository.SiteSettings.MenuMarkup = menuMarkup;
 
             _pageRepository.AddNewPage(new Page() { Title = "my page", Id = 1 }, "text", "user", DateTime.Now);

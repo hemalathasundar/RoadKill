@@ -4,6 +4,6 @@ namespace Roadkill.Core.Text.Sanitizer
 {
     public interface IHtmlSanitizerFactory
     {
-        HtmlSanitizer CreateHtmlSanitizer();
+		IHtmlSanitizer CreateHtmlSanitizer();
     }
 }

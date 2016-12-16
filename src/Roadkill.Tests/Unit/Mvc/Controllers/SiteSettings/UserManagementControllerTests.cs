@@ -11,7 +11,7 @@ using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Services;
 using Roadkill.Tests.Unit.StubsAndMocks;
 
-namespace Roadkill.Tests.Unit.Mvc.Controllers.Admin
+namespace Roadkill.Tests.Unit.Mvc.Controllers.SiteSettings
 {
 	[TestFixture]
 	[Category("Unit")]

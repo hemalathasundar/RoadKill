@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mindscape.LightSpeed;
 using NUnit.Framework;
@@ -7,9 +6,8 @@ using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
 using Roadkill.Core.Database.MongoDB;
 using Roadkill.Core.Database.Repositories;
-using Roadkill.Core.Database.Schema;
 
-namespace Roadkill.Tests.Unit.Database
+namespace Roadkill.Tests.Unit.Database.LightSpeed
 {
 	public class LightspeedRepositoryFactoryTests
     {

@@ -113,6 +113,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.7.21214, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -437,7 +438,6 @@
     <Compile Include="Unit\StubsAndMocks\ResetPasswordEmailStub.cs" />
     <Compile Include="Unit\StubsAndMocks\EmailTemplateStub.cs" />
     <Compile Include="Unit\StubsAndMocks\SpecialPageMock.cs" />
-    <Compile Include="Unit\StubsAndMocks\UrlResolverStub.cs" />
     <Compile Include="Unit\StubsAndMocks\UserServiceMock.cs" />
     <Compile Include="Unit\StubsAndMocks\SignupEmailStub.cs" />
     <Compile Include="Unit\StubsAndMocks\SearchServiceMock.cs" />
@@ -450,10 +450,9 @@
     <Compile Include="Unit\StubsAndMocks\UserServiceStub.cs" />
     <Compile Include="Unit\StubsAndMocks\TextPluginStub.cs" />
     <Compile Include="Unit\StubsAndMocks\WikiImporterMock.cs" />
-    <Compile Include="Unit\Text\Parsers\Images\ImageTagProviderTests.cs" />
-    <Compile Include="Unit\Text\Parsers\Links\LinkTagProviderTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Images\ImageHrefParserTests.cs" />
+    <Compile Include="Unit\Text\Parsers\Links\LinkHrefParserTests.cs" />
     <Compile Include="Unit\StubsAndMocks\UrlHelperMock.cs" />
-    <Compile Include="Unit\Text\Parsers\Links\UrlResolverTests.cs" />
     <Compile Include="Unit\Text\Plugins\TextPluginRunnerTests.cs" />
     <Compile Include="Unit\Text\Sanitizer\HtmlSanitizerFactoryTests.cs" />
     <Compile Include="Unit\Text\Parsers\Markdig\MarkdigImageAndLinkWalkerTests.cs" />
@@ -541,7 +540,9 @@
       <Name>Roadkill.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Unit\StubsAndMocks\TODO-addfolders\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

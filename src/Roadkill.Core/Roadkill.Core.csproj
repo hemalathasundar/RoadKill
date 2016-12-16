@@ -540,13 +540,12 @@
     <Compile Include="Text\TextMiddleware\HarmfulTagMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\MarkupParserMiddleware.cs" />
     <Compile Include="Text\TextMiddleware\Middleware.cs" />
-    <Compile Include="Text\Parsers\Images\ImageTagProvider.cs" />
-    <Compile Include="Text\Parsers\Links\LinkTagProvider.cs" />
+    <Compile Include="Text\Parsers\Images\ImageHrefParser.cs" />
+    <Compile Include="Text\Parsers\Links\LinkHrefParser.cs" />
     <Compile Include="Text\Parsers\Links\MarkupLinkUpdater.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigParser.cs" />
     <Compile Include="Text\Parsers\Markdig\MarkdigImageAndLinkWalker.cs" />
     <Compile Include="Text\Plugins\TextPluginRunner.cs" />
-    <Compile Include="Text\Parsers\Links\UrlResolver.cs" />
     <Compile Include="Text\Menu\MenuParser.cs" />
     <Compile Include="Text\Menu\PageHtml.cs" />
     <Compile Include="Text\CustomTokens\TextToken.cs" />

@@ -2,35 +2,34 @@ using NUnit.Framework;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Text.Parsers.Images;
 using Roadkill.Tests.Unit.StubsAndMocks;
+using Roadkill.Tests.Unit.Text.Parsers.Links;
 
 namespace Roadkill.Tests.Unit.Text.Parsers.Images
 {
-	public class ImageTagProviderTests
+	public class ImageHrefParserTests
 	{
 		private ApplicationSettings _applicationSettings;
-		private UrlResolverMock _resolver;
+		private ImageHrefParser _hrefParser;
+		private UrlHelperMock _urlHelper;
 
 		[SetUp]
 		public void Setup()
 		{
 			var container = new MocksAndStubsContainer();
 			_applicationSettings = container.ApplicationSettings;
+			_urlHelper = new UrlHelperMock();
 
-			_resolver = new UrlResolverMock();
-			_resolver.AbsolutePathSuffix = "BlahBlah";
+			_hrefParser = new ImageHrefParser(_applicationSettings, _urlHelper);
 		}
 
 		[Test]
 		public void absolute_paths_should_be_prefixed_with_attachmentpath()
 		{
 			// Arrange
-			var provider = new ImageTagProvider(_applicationSettings, _resolver);
-
 			HtmlImageTag htmlImageTag = new HtmlImageTag("/DSC001.jpg", "/DSC001.jpg", "alt", "title");
-			string x = "";
 
 			// Act
-			HtmlImageTag actualTag = provider.Parse(htmlImageTag);
+			HtmlImageTag actualTag = _hrefParser.Parse(htmlImageTag);
 
 			// Assert
 			Assert.That(actualTag.Src, Is.EqualTo("/Attachments/DSC001.jpgBlahBlah"));
@@ -42,13 +41,10 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Images
 		public void should_ignore_urls_starting_with_http_and_https(string imageUrl)
 		{
 			// Arrange
-			var provider = new ImageTagProvider(_applicationSettings, _resolver);
-
 			HtmlImageTag htmlImageTag = new HtmlImageTag(imageUrl, imageUrl, "alt", "title");
-			string x = "";
 
 			// Act
-			HtmlImageTag actualTag = provider.Parse(htmlImageTag);
+			HtmlImageTag actualTag = _hrefParser.Parse(htmlImageTag);
 
 			// Assert
 			Assert.That(actualTag.Src, Is.EqualTo(imageUrl));

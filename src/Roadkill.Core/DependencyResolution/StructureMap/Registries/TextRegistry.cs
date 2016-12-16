@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.Plugins;
@@ -82,10 +83,10 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			{
 				var pageRepository = ctx.GetInstance<IPageRepository>();
 				var applicationSettings = ctx.GetInstance<ApplicationSettings>();
-				var urlResolver = ctx.GetInstance<UrlResolver>();
+				var urlHelper = ctx.GetInstance<UrlHelper>();
 
-				var provider = new LinkTagProvider(pageRepository, applicationSettings, urlResolver);
-				htmlImageTag = provider.Parse(htmlImageTag);
+				var tokenParser = new LinkHrefParser(pageRepository, applicationSettings, urlHelper);
+				htmlImageTag = tokenParser.Parse(htmlImageTag);
 
 				return htmlImageTag;
 			};
@@ -97,9 +98,9 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			return (htmlImageTag) =>
 			{
 				var appSettings = ctx.GetInstance<ApplicationSettings>();
-				var urlResolver = ctx.GetInstance<UrlResolver>();
+				var urlHelper = ctx.GetInstance<UrlHelper>();
 
-				var provider = new ImageTagProvider(appSettings, urlResolver);
+				var provider = new ImageHrefParser(appSettings, urlHelper);
 				htmlImageTag = provider.Parse(htmlImageTag);
 
 				return htmlImageTag;

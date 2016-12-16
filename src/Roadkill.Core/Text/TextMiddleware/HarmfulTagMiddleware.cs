@@ -6,7 +6,7 @@ namespace Roadkill.Core.Text.TextMiddleware
 {
     public class HarmfulTagMiddleware : Middleware
     {
-        private readonly HtmlSanitizer _sanitizer;
+        private readonly IHtmlSanitizer _sanitizer;
 
         public HarmfulTagMiddleware(IHtmlSanitizerFactory htmlSanitizerFactory)
         {

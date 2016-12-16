@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 using NUnit.Framework;
 using Roadkill.Core.Attachments;
@@ -136,7 +137,7 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 		}
 
 		[Test]
-		public void urlresolver()
+		public void should_inject_httpcontext_into_urlhelper_instance()
 		{
 			// Arrange
 			var route = new Route("test", new PageRouteHandler("~/index.html"));
@@ -147,10 +148,10 @@ namespace Roadkill.Tests.Unit.DependencyResolution
 			container.Configure(x => x.For<HttpContextBase>().Use(httpContext));
 
 			// Act
-			var urlResolver = container.GetInstance<UrlResolver>();
+			var urlHelper = container.GetInstance<UrlHelper>();
 
 			// Assert
-			Assert.That(urlResolver, Is.Not.Null);
+			Assert.That(urlHelper, Is.Not.Null);
 		}
 	}
 }

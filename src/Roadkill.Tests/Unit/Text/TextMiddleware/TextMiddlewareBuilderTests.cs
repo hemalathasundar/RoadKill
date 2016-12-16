@@ -4,6 +4,7 @@ using Roadkill.Core.DependencyResolution.StructureMap;
 using Roadkill.Core.DependencyResolution.StructureMap.Registries;
 using Roadkill.Core.Text.Menu;
 using Roadkill.Core.Text.TextMiddleware;
+using Roadkill.Tests.Unit.StubsAndMocks;
 using StructureMap;
 
 namespace Roadkill.Tests.Unit.Text.TextMiddleware

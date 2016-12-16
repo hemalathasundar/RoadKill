@@ -273,5 +273,11 @@ namespace Roadkill.Tests.Unit.Mvc.ViewModels
 			// Assert
 			Assert.That(actualJavascript, Is.EqualTo(expectedJavascript));
 		}
+
+		[Test]
+		public void EncodePageTitle_todo()
+		{
+			Assert.Fail("todo");
+		}
 	}
 }

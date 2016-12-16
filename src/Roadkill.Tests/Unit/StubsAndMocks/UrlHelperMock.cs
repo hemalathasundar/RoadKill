@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace Roadkill.Tests.Unit.Text.Parsers.Links
+namespace Roadkill.Tests.Unit.StubsAndMocks
 {
 	public class UrlHelperMock : UrlHelper
 	{

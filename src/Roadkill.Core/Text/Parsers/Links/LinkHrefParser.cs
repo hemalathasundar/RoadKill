@@ -2,25 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Routing;
+using System.Web.Mvc;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
+using Roadkill.Core.Mvc.ViewModels;
 
 namespace Roadkill.Core.Text.Parsers.Links
 {
-    public class LinkTagProvider
+	/// <summary>
+	/// Responsible for parsing tokens inside links, e.g. special:, attachment:
+	/// and also internal links. The class also handles CSS classes for external
+	/// and broken links.
+	/// </summary>
+    public class LinkHrefParser
     {
         private readonly IPageRepository _pageRepository;
         private readonly ApplicationSettings _applicationSettings;
         private readonly List<string> _externalLinkPrefixes;
+		private readonly UrlHelper _urlHelper;
 
 		private static readonly Regex _querystringRegex = new Regex("(?<querystring>(\\?).+)", RegexOptions.IgnoreCase);
 		private static readonly Regex _anchorRegex = new Regex("(?<hash>(#|%23).+)", RegexOptions.IgnoreCase);
 
-        public UrlResolver UrlResolver { get; set; }
-
-        public LinkTagProvider(IPageRepository pageRepository, ApplicationSettings applicationSettings, UrlResolver urlResolver)
+		public LinkHrefParser(IPageRepository pageRepository, ApplicationSettings applicationSettings, UrlHelper urlHelper)
         {
 	        if (pageRepository == null)
 		        throw new ArgumentNullException(nameof(pageRepository));
@@ -30,7 +34,7 @@ namespace Roadkill.Core.Text.Parsers.Links
 
 			_pageRepository = pageRepository;
 	        _applicationSettings = applicationSettings;
-			UrlResolver = urlResolver;
+	        _urlHelper = urlHelper;
 
 			_externalLinkPrefixes = new List<string>()
             {
@@ -104,7 +108,7 @@ namespace Roadkill.Core.Text.Parsers.Links
 
             // Get the full path to the attachment
             string attachmentsPath = _applicationSettings.AttachmentsUrlPath;
-            htmlLinkTag.Href = UrlResolver.ConvertToAbsolutePath(attachmentsPath) + href;
+            htmlLinkTag.Href = ConvertToAbsolutePath(attachmentsPath) + href;
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace Roadkill.Core.Text.Parsers.Links
         private void ConvertSpecialPageHrefToFullPath(HtmlLinkTag htmlLinkTag)
         {
             string href = htmlLinkTag.OriginalHref;
-            htmlLinkTag.Href = UrlResolver.ConvertToAbsolutePath("~/wiki/" + href);
+            htmlLinkTag.Href = ConvertToAbsolutePath("~/wiki/" + href);
         }
 
         /// <summary>
@@ -148,24 +152,51 @@ namespace Roadkill.Core.Text.Parsers.Links
             }
 
             // For markdown, only urls with "-" in them are valid, spaces are ignored.
-            // Remove these, so a match is made. No url has a "-" in, so replacing them is ok.
+            // Remove these, so a match is made. No page title should have a "-" in?, so replacing them is ok.
             title = title.Replace("-", " ");
 
             // Find the page, or if it doesn't exist point to the new page url
             Page page = _pageRepository.GetPageByTitle(title);
             if (page != null)
             {
-                href = UrlResolver.GetInternalUrlForTitle(page.Id, page.Title);
+	            string encodedTitle = PageViewModel.EncodePageTitle(page.Title);
+				href = GetInternalUrlForTitle(page.Id, encodedTitle);
                 href += querystringAndAnchor;
             }
             else
             {
-                href = UrlResolver.GetNewPageUrlForTitle(href);
+                href = GetNewPageUrlForTitle(href);
                 htmlLinkTag.CssClass = "missing-page-link";
             }
 
             htmlLinkTag.Href = href;
             htmlLinkTag.Target = "";
         }
-    }
+
+		/// <summary>
+		/// Converts relative paths to absolute ones, e.g. ~/mydir/page1.html to /mywiki/mydir/page1.html.
+		/// </summary>
+		/// <returns>An absolute path for the resource.</returns>
+		public string ConvertToAbsolutePath(string relativeUrl)
+		{
+			return _urlHelper.Content(relativeUrl);
+		}
+
+		/// <summary>
+		/// Gets the internal url of a page based on the page title.
+		/// </summary>
+		public string GetInternalUrlForTitle(int id, string title)
+		{
+			return _urlHelper.Action("Index", "Wiki", new { id = id, title = title });
+		}
+
+		/// <summary>
+		/// Gets a url to the new page resource, appending the title to the querystring.
+		/// For example /pages/new?title=xyz
+		/// </summary>
+		public string GetNewPageUrlForTitle(string title)
+		{
+			return _urlHelper.Action("New", "Pages", new { title = title });
+		}
+	}
 }

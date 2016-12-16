@@ -54,14 +54,12 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			// RouteTable is static
 	        For<RouteCollection>().Use("RouteCollection", ctx => RouteTable.Routes);
 
-			// UrlResolver needs a UrlHelper, which comes from HttpContext
-	        For<UrlResolver>().Use("UrlResolver", ctx =>
+			// UrlHelper for resolving MVC routes in markdown links
+			For<UrlHelper>().Use("UrlHelper", ctx =>
 	        {
 		        var httpContext = ctx.GetInstance<HttpContextBase>();
 		        var routeTable = ctx.GetInstance<RouteCollection>();
-		        var urlHelper = new UrlHelper(httpContext.Request.RequestContext, routeTable);
-
-		        return new UrlResolver(urlHelper);
+		        return new UrlHelper(httpContext.Request.RequestContext, routeTable);
 	        });
 
             // AlwaysUnique is a work around for controllers that use RenderAction() needing to be unique

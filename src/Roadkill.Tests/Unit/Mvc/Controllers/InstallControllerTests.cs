@@ -299,7 +299,7 @@ namespace Roadkill.Tests.Unit.Mvc.Controllers
 			Assert.That(appSettings.UseObjectCache, Is.True);
 			Assert.That(appSettings.UseBrowserCache, Is.True);
 
-			SiteSettings settings = _installerRepository.SiteSettings;	
+			Core.Configuration.SiteSettings settings = _installerRepository.SiteSettings;	
 			Assert.That(settings.AllowedFileTypes, Is.EqualTo("jpg,png,gif,zip,xml,pdf"));
 			Assert.That(settings.Theme, Is.EqualTo("Responsive"));
 			Assert.That(settings.SiteName, Is.EqualTo("my site"));
