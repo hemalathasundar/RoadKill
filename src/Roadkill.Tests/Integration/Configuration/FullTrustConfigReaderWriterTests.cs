@@ -181,6 +181,20 @@ namespace Roadkill.Tests.Integration.Configuration
 		}
 
 		[Test]
+		public void getapplicationsettings_should_strip_slashes_from_atachmentsroutepath()
+		{
+			// Arrange
+			string configFilePath = GetConfigPath("test.config");
+
+			// Act
+			FullTrustConfigReaderWriter configManager = new FullTrustConfigReaderWriter(configFilePath);
+			ApplicationSettings appSettings = configManager.GetApplicationSettings();
+
+			// Assert
+			Assert.That(appSettings.AttachmentsRoutePath, Is.EqualTo("AttachmentsRoutePathTest"), "AttachmentsRoutePath");
+		}
+
+		[Test]
 		public void getapplicationsettings_should_parse_api_keys()
 		{
 			// Arrange

@@ -64,6 +64,38 @@ namespace Roadkill.Tests.Integration.Configuration
 		}
 
 		[Test]
+		public void attachmentsroutepath_should_throw_when_empty()
+		{
+			// Arrange
+			MvcMockContainer container = new MvcMockContainer();
+			HttpContextBase httpContext = MvcMockHelpers.FakeHttpContext(container);
+			container.Request.Setup(x => x.ApplicationPath).Returns("/wiki");
+
+			ApplicationSettings appSettings = new ApplicationSettings(httpContext);
+
+			// Act + Assert
+			Assert.Throws<ArgumentNullException>(() => appSettings.AttachmentsRoutePath = "");
+		}
+
+		[Test]
+		public void attachmentsroutepath_should_strip_slashes_from_beginning_and_end()
+		{
+			// Arrange
+			MvcMockContainer container = new MvcMockContainer();
+			HttpContextBase httpContext = MvcMockHelpers.FakeHttpContext(container);
+			container.Request.Setup(x => x.ApplicationPath).Returns("/wiki");
+
+			ApplicationSettings appSettings = new ApplicationSettings(httpContext);
+			appSettings.AttachmentsRoutePath = "/Should/Remove/TheSlashes/At/Front/And/End/";
+
+			// Act
+			string actualUrlPath = appSettings.AttachmentsUrlPath;
+
+			// Assert
+			Assert.That(actualUrlPath, Is.EqualTo(@"/wiki/Should/Remove/TheSlashes/At/Front/And/End"));
+		}
+
+		[Test]
 		public void attachmentsroutepath_should_use_attachmentsroutepath_and_prepend_applicationpath()
 		{
 			// Arrange
@@ -76,7 +108,7 @@ namespace Roadkill.Tests.Integration.Configuration
 
 			// Act
 			string actualUrlPath = appSettings.AttachmentsUrlPath;
-			
+
 			// Assert
 			Assert.That(actualUrlPath, Is.EqualTo(@"/wiki/Folder1/Folder2"));
 		}

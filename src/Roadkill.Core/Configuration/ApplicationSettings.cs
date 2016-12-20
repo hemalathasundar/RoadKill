@@ -88,7 +88,7 @@ namespace Roadkill.Core.Configuration
 		}
 
 		/// <summary>
-		/// Gets the full path for the attachments folder, including any extra application paths from the url.
+		/// Gets the full URL path for the attachments folder, including any extra application paths from the url.
 		/// Contains a "/" the start and does not contain a trailing "/".
 		/// </summary>
 		public string AttachmentsUrlPath
@@ -97,7 +97,7 @@ namespace Roadkill.Core.Configuration
 			{
 				if (string.IsNullOrEmpty(_attachmentsUrlPath))
 				{
-					_attachmentsUrlPath = ParseAttachmentsPath();
+					_attachmentsUrlPath = CreateAttachmentsPath();
 				}
 
 				return _attachmentsUrlPath;
@@ -115,8 +115,13 @@ namespace Roadkill.Core.Configuration
 			}
 			set
 			{
-				_attachmentsRoutePath = value;
-				_attachmentsUrlPath = "";
+				if (string.IsNullOrEmpty(value))
+				{
+					throw new ArgumentNullException("AttachmentsRoutePath", "The AttachmentsRoutePath cannot be null. Please ensure it's set in roadkill.config.");
+				}
+
+				_attachmentsRoutePath = StripSlashesFromAttachmentRoute(value);
+				_attachmentsUrlPath = CreateAttachmentsPath();
 			}
 		}
 
@@ -337,22 +342,39 @@ namespace Roadkill.Core.Configuration
 			_httpContext = httpContext;
 		}
 
-		private string ParseAttachmentsPath()
+		private string CreateAttachmentsPath()
 		{
 			string attachmentsPath = "/" + AttachmentsRoutePath;
+			string applicationPath = "";
 			if (_httpContext != null)
 			{
-				string applicationPath = _httpContext.Request.ApplicationPath;
-				if (!applicationPath.EndsWith("/"))
-					applicationPath += "/";
-
-				if (attachmentsPath.StartsWith("/"))
-					attachmentsPath = attachmentsPath.Remove(0, 1);
-
-				attachmentsPath = applicationPath + attachmentsPath;
+				applicationPath = _httpContext.Request.ApplicationPath;
 			}
 
+			if (!applicationPath.EndsWith("/"))
+				applicationPath += "/";
+
+			if (attachmentsPath.StartsWith("/"))
+				attachmentsPath = attachmentsPath.Remove(0, 1);
+
+			attachmentsPath = applicationPath + attachmentsPath;
+
 			return attachmentsPath;
+		}
+
+		private string StripSlashesFromAttachmentRoute(string route)
+		{
+			if (route.StartsWith("/"))
+			{
+				route = route.Remove(0, 1);
+			}
+
+			if (route.EndsWith("/"))
+			{
+				route = route.Remove(route.Length - 1, 1);
+			}
+
+			return route;
 		}
 	}
 }
