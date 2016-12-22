@@ -4,11 +4,12 @@ namespace Roadkill.Tests.Unit.StubsAndMocks
 {
 	public class UrlHelperMock : UrlHelper
 	{
-		public string ExpectedContent { get; set; }
+		public bool ContentCalled { get; set; }
 		public string ExpectedAction { get; set; }
 
 		public override string Content(string path)
 		{
+			ContentCalled = true;
 			return path;
 		}
 

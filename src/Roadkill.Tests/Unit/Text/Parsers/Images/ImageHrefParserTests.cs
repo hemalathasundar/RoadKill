@@ -43,7 +43,6 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Images
 		{
 			// Arrange
 			_applicationSettings.AttachmentsRoutePath = "attuchments";
-			_urlHelper.ExpectedContent = "test";
 			HtmlImageTag htmlImageTag = new HtmlImageTag(path, path, "alt", "title");
 
 			// Act

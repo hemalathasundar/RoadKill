@@ -82,7 +82,6 @@ namespace Roadkill.Tests.Unit.Text.Parsers.Markdig
                 link.Href = "new-href";
                 link.Target = "new-target";
                 link.Text = "new-text";
-                link.IsInternalLink = true;
             });
 
             // when

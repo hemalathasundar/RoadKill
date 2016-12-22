@@ -1,4 +1,7 @@
-﻿namespace Roadkill.Core.Text.Parsers.Links
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Roadkill.Core.Text.Parsers.Links
 {
 	/// <summary>
 	/// Holds information when a hyperlink is processed, giving the caller the ability to translate the outputted HTML.
@@ -33,7 +36,26 @@
 		/// <summary>
 		/// True if the link points to another page in the wiki, including Special: urls, and attachments.
 		/// </summary>
-		public bool IsInternalLink { get; set; }
+		public bool IsInternalLink
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(Href))
+					return true;
+
+				return !_externalLinkPrefixes.Any(x => Href.StartsWith(x));
+			}
+		}
+
+		private readonly List<string> _externalLinkPrefixes = new List<string>()
+		{
+			"http://",
+			"https://",
+			"www.",
+			"mailto:",
+			"#",
+			"tag:"
+		};
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="HtmlLinkTag"/> class.
@@ -45,7 +67,6 @@
 			Text = text;
 			Target = target;
 			CssClass = "";
-			IsInternalLink = false;
 		}
 	}
 }

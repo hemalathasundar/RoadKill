@@ -65,8 +65,8 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
         {
 			For<IMarkupParser>().Use("MarkdigParser", ctx =>
 			{
-				Func<HtmlImageTag, HtmlImageTag> imageTagParsed = CreateImageParsedFunc(ctx);
-				Func<HtmlLinkTag, HtmlLinkTag> linkParsed = CreateLinkParsedFunc(ctx);
+				Func<HtmlImageTag, HtmlImageTag> imageTagParsed = OnImageParsed(ctx);
+				Func<HtmlLinkTag, HtmlLinkTag> linkParsed = OnLinkParsed(ctx);
 
 				var parser = new MarkdigParser();
 				parser.ImageParsed = imageTagParsed;
@@ -76,7 +76,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			});
         }
 
-		public static Func<HtmlLinkTag, HtmlLinkTag> CreateLinkParsedFunc(IContext ctx)
+		public static Func<HtmlLinkTag, HtmlLinkTag> OnLinkParsed(IContext ctx)
 		{
 			// Use LinkTagProvider for link parsing callback
 			return (htmlImageTag) =>
@@ -92,7 +92,7 @@ namespace Roadkill.Core.DependencyResolution.StructureMap.Registries
 			};
 		}
 
-		public static Func<HtmlImageTag, HtmlImageTag> CreateImageParsedFunc(IContext ctx)
+		public static Func<HtmlImageTag, HtmlImageTag> OnImageParsed(IContext ctx)
 		{
 			// Use ImageTagProvider for image parsing callback
 			return (htmlImageTag) =>
